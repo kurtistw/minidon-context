@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(gh pr merge)",
+      "Bash(gh pr merge *)",
+      "Bash(git push origin main)",
+      "Bash(git push origin master)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/kurtis/tw/Millwright-MW/bin/millwright hook pre-tool-use"
+          }
+        ]
+      }
+    ]
+  }
+}

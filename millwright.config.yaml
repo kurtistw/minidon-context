@@ -1,0 +1,40 @@
+$schema: https://millwright.dev/schema/v1.json
+version: 1
+
+project:
+  name: minidon
+  capability_repo: ""
+  repos: [/Users/kurtis/tw/test-mw/minidon]
+
+profile: baseline/default@0.1.0
+
+activities: [1, 2, 3, 4]
+
+context:
+  source: codebase
+  verified: false
+
+spec_framework: none
+
+providers:
+  notes:
+    kind: localdocs
+    impl: localdocs-notes
+    root: .mw/notes
+
+  issues:
+    kind: localdocs
+    impl: localdocs-tickets
+    root: .mw/tickets
+
+  docs:
+    kind: localdocs
+    impl: localdocs-docs
+    root: .mw/docs
+
+hosts:
+  - id: claude-code
+    models:
+      reasoning-heavy: claude-opus-4-5
+      balanced: claude-sonnet-4-5
+      fast: claude-haiku-4-5
