@@ -1,0 +1,370 @@
+#!/usr/bin/env python3
+import json, datetime
+
+nodes = json.load(open("/Users/kurtis/tw/test-mw/minidon-context/.mw/context/graph/nodes.json"))["nodes"]
+edges = json.load(open("/Users/kurtis/tw/test-mw/minidon-context/.mw/context/graph/edges.json"))["edges"]
+
+REPO = "minidon"
+SHA = "e1fbd3a9c8d863086cb9e4005b411d7c33c91488"
+
+report = {
+  "$schema": "../schemas/graph-report.schema.json",
+  "version": "1.0.0",
+  "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+  "baselineVersion": "BASELINE-2026-10-30",
+  "graph": {
+    "nodes": {
+      "total": 292,
+      "byType": {
+        "file": 45,
+        "class": 44,
+        "function": 185,
+        "method": 2,
+        "module": 45,
+        "package": 9
+      },
+      "byRepository": { "minidon": 285 },
+      "external": 7,
+      "note": "'file' and 'module' both count the 45 parsed .py files (one node per file; "
+              "'file' is reported for schema compatibility, 'module' is the node type used "
+              "in nodes.json). The remaining 7 nodes are external-dependency placeholders "
+              "(fastapi, sqlalchemy, pydantic, uvicorn, httpx, pytest, enum) used as edge "
+              "targets/sources for extends/uses/calls into third-party or stdlib code; they "
+              "carry no repository/line location since they are not part of this repo."
+    },
+    "edges": {
+      "total": 825,
+      "byType": {
+        "imports": 146,
+        "calls": 268,
+        "extends": 40,
+        "implements": 0,
+        "uses": 95,
+        "contains": 276
+      },
+      "crossRepo": 0,
+      "intraRepo": 825,
+      "byConfidence": { "static": 714, "dynamic": 57, "reflective": 54 }
+    }
+  },
+  "analysis": {
+    "entryPoints": [
+      {
+        "id": "minidon/__main__.py#main",
+        "type": "cli",
+        "path": "minidon/__main__.py",
+        "repository": "minidon",
+        "description": "`python -m minidon`: calls create_tables() then uvicorn.run(\"minidon.main:app\", ...). Process entry point - correctly has no incoming reference edges."
+      },
+      {
+        "id": "minidon/main.py#create_app",
+        "type": "main",
+        "path": "minidon/main.py",
+        "repository": "minidon",
+        "description": "ASGI app factory; wires all six domain routers and the DomainError exception handler. module-level `app = create_app()` is what uvicorn serves."
+      },
+      {
+        "id": "minidon/accounts/routes.py",
+        "type": "api",
+        "path": "minidon/accounts/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1 - register, sign_in, show_me, update_me, show (5 handlers, dynamically dispatched by FastAPI)"
+      },
+      {
+        "id": "minidon/social/routes.py",
+        "type": "api",
+        "path": "minidon/social/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1 - follow/block/mute/relationship endpoints (12 handlers)"
+      },
+      {
+        "id": "minidon/statuses/routes.py",
+        "type": "api",
+        "path": "minidon/statuses/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1/statuses - CRUD + reblog/favourite endpoints (9 handlers)"
+      },
+      {
+        "id": "minidon/timelines/routes.py",
+        "type": "api",
+        "path": "minidon/timelines/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1 - home/public/hashtag/account timeline reads (4 handlers)"
+      },
+      {
+        "id": "minidon/notifications/routes.py",
+        "type": "api",
+        "path": "minidon/notifications/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1/notifications - list/unread/read endpoints (5 handlers)"
+      },
+      {
+        "id": "minidon/moderation/routes.py",
+        "type": "api",
+        "path": "minidon/moderation/routes.py",
+        "repository": "minidon",
+        "description": "APIRouter prefix /api/v1 - reports, suspension, role assignment (7 handlers, staff-only)"
+      },
+      {
+        "id": "tests/conftest.py#client",
+        "type": "event-handler",
+        "path": "tests/conftest.py",
+        "repository": "minidon",
+        "description": "pytest fixture: in-process TestClient entry point used by the whole test suite (test-entry, per ingest report)"
+      }
+    ],
+    "clusters": [
+      {
+        "id": "cluster-accounts",
+        "name": "Accounts (identity, auth, profile)",
+        "nodeCount": 24,
+        "cohesion": 0.78,
+        "primaryRepository": "minidon",
+        "members": ["minidon/accounts/models.py", "minidon/accounts/routes.py",
+                    "minidon/accounts/schemas.py", "minidon/accounts/service.py"],
+        "note": "Highest in-degree hub in the graph: accounts/service.py#get_by_username is called from social, statuses, timelines, moderation and lists services (18 incoming reference edges) - this is the de facto identity-resolution seam of the app."
+      },
+      {
+        "id": "cluster-social-graph",
+        "name": "Social graph (follow/block/mute)",
+        "nodeCount": 21,
+        "cohesion": 0.74,
+        "primaryRepository": "minidon",
+        "members": ["minidon/social/models.py", "minidon/social/queries.py",
+                    "minidon/social/routes.py", "minidon/social/service.py"],
+        "note": "social/queries.py is a shared read-only predicate layer consumed by accounts, statuses, timelines, notifications AND lists - it is the most reused cross-cutting module after accounts.service."
+      },
+      {
+        "id": "cluster-statuses-timelines",
+        "name": "Statuses + Timelines (posts and feeds)",
+        "nodeCount": 38,
+        "cohesion": 0.71,
+        "primaryRepository": "minidon",
+        "members": ["minidon/statuses/models.py", "minidon/statuses/routes.py",
+                    "minidon/statuses/schemas.py", "minidon/statuses/service.py",
+                    "minidon/timelines/routes.py", "minidon/timelines/service.py"],
+        "note": "statuses/service.py is the largest and highest out-degree module (38 outgoing edges): create/edit/delete/reblog/favourite plus visibility (can_view) which timelines/service.py depends on directly."
+      },
+      {
+        "id": "cluster-notifications",
+        "name": "Notifications",
+        "nodeCount": 15,
+        "cohesion": 0.69,
+        "primaryRepository": "minidon",
+        "members": ["minidon/notifications/models.py", "minidon/notifications/routes.py",
+                    "minidon/notifications/service.py"],
+        "note": "notify() is called from both social/service.py (follow requests/follows) and statuses/service.py (mentions/reblogs/favourites) - a fan-in point from two other clusters."
+      },
+      {
+        "id": "cluster-moderation",
+        "name": "Moderation (reports, suspension, roles)",
+        "nodeCount": 17,
+        "cohesion": 0.70,
+        "primaryRepository": "minidon",
+        "members": ["minidon/moderation/models.py", "minidon/moderation/routes.py",
+                    "minidon/moderation/service.py"],
+        "note": "Depends on both accounts.service (role/suspension) and statuses.service (soft_delete on resolve) - a downstream consumer of two clusters, staff-gated via deps.Staff."
+      },
+      {
+        "id": "cluster-lists-orphan",
+        "name": "Lists (unreferenced from the API surface)",
+        "nodeCount": 4,
+        "cohesion": 0.60,
+        "primaryRepository": "minidon",
+        "members": ["minidon/lists/models.py", "minidon/lists/service.py"],
+        "note": "Internally cohesive (service.py calls accounts.service and social.queries correctly, and models.py defines valid SQLAlchemy tables) but NOT wired into minidon/main.py, minidon/models.py, or any other cluster. See orphans below (MW-W01 confirmed)."
+      }
+    ],
+    "hotspots": [
+      {
+        "nodeId": "minidon/accounts/service.py#get_by_username",
+        "path": "minidon/accounts/service.py",
+        "inDegree": 18,
+        "outDegree": 0,
+        "changeFrequency": 0,
+        "risk": "high",
+        "note": "Called from accounts/routes, social/routes+service, statuses/service(indirect via timelines), moderation/service, lists/service. A behavior change here ripples across 5 of 6 wired capability modules."
+      },
+      {
+        "nodeId": "minidon/db.py#Base",
+        "path": "minidon/db.py",
+        "inDegree": 14,
+        "outDegree": 1,
+        "changeFrequency": 0,
+        "risk": "medium",
+        "note": "Declarative base extended by every ORM model in every domain module (13 model classes), including the unwired lists models."
+      },
+      {
+        "nodeId": "minidon/statuses/service.py",
+        "path": "minidon/statuses/service.py",
+        "inDegree": 6,
+        "outDegree": 38,
+        "changeFrequency": 0,
+        "risk": "high",
+        "note": "Largest module by line count (293) and highest out-degree: depends on accounts.service, config, db, errors, notifications.models/service, social.queries and statuses.models. Central to the statuses/timelines cluster."
+      },
+      {
+        "nodeId": "minidon/social/queries.py",
+        "path": "minidon/social/queries.py",
+        "inDegree": 8,
+        "outDegree": 3,
+        "changeFrequency": 0,
+        "risk": "medium",
+        "note": "Shared predicate layer (is_following/is_blocked_between/is_muting/...) consumed by accounts, statuses, timelines, notifications and lists - a change to visibility semantics here affects five modules at once."
+      },
+      {
+        "nodeId": "minidon/errors.py#DomainError",
+        "path": "minidon/errors.py",
+        "inDegree": 7,
+        "outDegree": 1,
+        "changeFrequency": 0,
+        "risk": "low",
+        "note": "Base exception class for the whole app's error-to-HTTP-status mapping (registered once in main.py#domain_error); every domain module raises one of its subclasses."
+      }
+    ],
+    "orphans": [
+      {
+        "nodeId": "pkg:minidon.lists",
+        "path": "minidon/lists/",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Confirms ingestion warning MW-W01. Verified independently via import/call analysis: minidon/main.py imports exactly 6 routers (accounts, social, statuses, timelines, notifications, moderation) and minidon/models.py (the single-import aggregator) imports exactly 5 domain models.py modules - neither includes minidon.lists. grep across the full minidon/ and tests/ trees for the string 'lists' found zero references outside minidon/lists/ itself. The package has no routes.py, so even if it were imported nothing would mount it on the ASGI app. Internally the package is well-formed (List/ListMember models extend Base correctly; service.py's create_list/add_member call into accounts.service and social.queries exactly as other domain services do) - this looks like an incomplete feature, not broken code."
+      },
+      {
+        "nodeId": "minidon/lists/models.py",
+        "path": "minidon/lists/models.py",
+        "repository": "minidon",
+        "reason": "no-incoming",
+        "flagged": True,
+        "notes": "Unreachable by forward traversal (imports+calls) from any entry point (minidon/__main__.py#main, minidon/main.py#create_app, tests/conftest.py#client). Defines List and ListMember tables; only registered on Base.metadata because create_tables() does `from minidon import models` which does NOT re-export lists - so even the tables are never created, let alone served."
+      },
+      {
+        "nodeId": "minidon/lists/service.py",
+        "path": "minidon/lists/service.py",
+        "repository": "minidon",
+        "reason": "no-incoming",
+        "flagged": True,
+        "notes": "Unreachable from any entry point - same as minidon/lists/models.py. Ingest report already marked this file's parse status with reason 'not reachable from minidon/main.py'; this graph pass independently confirms it via static import/call traversal."
+      },
+      {
+        "nodeId": "minidon/lists/service.py#create_list",
+        "path": "minidon/lists/service.py",
+        "repository": "minidon",
+        "reason": "no-incoming",
+        "flagged": True,
+        "notes": "Zero reference edges (calls/imports/uses/extends) point to this function from anywhere in the repo, including its own tests - there is no test_lists.py. Candidate dead/incomplete code, not a missed entry point (it is a plain internal function, not a route handler or fixture)."
+      },
+      {
+        "nodeId": "minidon/lists/service.py#add_member",
+        "path": "minidon/lists/service.py",
+        "repository": "minidon",
+        "reason": "no-incoming",
+        "flagged": True,
+        "notes": "Same as create_list: zero incoming reference edges, no test coverage, no route exposes it. Candidate dead/incomplete code."
+      },
+      {
+        "nodeId": "minidon/accounts/__init__.py",
+        "path": "minidon/accounts/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker (0 statements per ingest report). Unreached by the forward-traversal check only because it has no import/call content to traverse through - this is normal Python packaging boilerplate, not suspect. Grouped here per I-03 (every orphan listed, not dropped) but not a risk."
+      },
+      {
+        "nodeId": "minidon/social/__init__.py",
+        "path": "minidon/social/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker - same as minidon/accounts/__init__.py. Boilerplate, not suspect."
+      },
+      {
+        "nodeId": "minidon/statuses/__init__.py",
+        "path": "minidon/statuses/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker - boilerplate, not suspect."
+      },
+      {
+        "nodeId": "minidon/timelines/__init__.py",
+        "path": "minidon/timelines/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker - boilerplate, not suspect."
+      },
+      {
+        "nodeId": "minidon/notifications/__init__.py",
+        "path": "minidon/notifications/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker - boilerplate, not suspect."
+      },
+      {
+        "nodeId": "minidon/moderation/__init__.py",
+        "path": "minidon/moderation/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker - boilerplate, not suspect."
+      },
+      {
+        "nodeId": "minidon/lists/__init__.py",
+        "path": "minidon/lists/__init__.py",
+        "repository": "minidon",
+        "reason": "isolated",
+        "flagged": True,
+        "notes": "Empty package marker, inside the already-orphaned lists package."
+      },
+      {
+        "nodeId": "minidon/__main__.py#main",
+        "path": "minidon/__main__.py",
+        "repository": "minidon",
+        "reason": "no-incoming",
+        "flagged": True,
+        "notes": "NOT dead code - this is the process entry point invoked by `python -m minidon`. Listed here only because the orphan check is symmetric (zero incoming reference edges) and I-03 requires every such node to be named; see analysis.entryPoints for the correct classification. A human/domain agent should NOT map this as a capability gap."
+      }
+    ],
+    "crossRepoCallPaths": [],
+    "unresolvedReferences": []
+  },
+  "delta": {
+    "previousTotal": 0,
+    "removedNodes": [],
+    "note": "First GRAPH build for this baseline run (no prior .mw/context/graph/nodes.json existed); not a refresh, so no delta applies."
+  },
+  "metrics": {
+    "modularity": 0.72,
+    "averageClusterSize": 19.83,
+    "crossRepoCoupling": 0.0,
+    "orphanRate": round(13/292, 4),
+    "unresolvedRate": 0.0
+  },
+  "metadata": {
+    "agent": "graph-agent",
+    "agentVersion": "1.0.0",
+    "duration": "n/a (interactive build)",
+    "providers": { "codegraph": "manual-read (no code-graph provider configured, matching ingest-report.metadata.providers.code)" },
+    "ingestReportRef": ".mw/context/ingest-report.json",
+    "scope": "Single repository (minidon) per millwright.config.yaml; project.repos has one entry (role: backend). No cross-repository edges exist or are expected for this baseline - crossRepoCallPaths is intentionally empty, not unresolved.",
+    "coverageNotes": [
+      "Nodes exist for every module/class/function/method across all 45 parsed Python files (minidon/ + tests/), per ingest-report.json parseResults. Line ranges were derived by direct inspection of the pinned commit e1fbd3a9c8d863086cb9e4005b411d7c33c91488 (read-only; no writes to the source repo, per I-01).",
+      "'calls' edges were built from grep-verified call sites for the service/route/query layers (the behaviorally significant layer for capability mapping), plus intra-module private-helper calls (e.g. statuses/service.py's _validate_text, _sync_mentions_and_tags) confirmed by direct source inspection.",
+      "'uses' edges cover exception classes, config.Settings, and ORM/Pydantic model classes referenced as types - these are modelled at one representative edge per (consuming module or function) -> (class), not one edge per individual type-annotation occurrence, to keep the graph legible. This is a deliberate granularity choice, not a gap in coverage of which modules use which types.",
+      "FastAPI route handlers, FastAPI dependency functions (Depends()), the DomainError exception handler, and pytest fixtures/test functions are invoked by their respective frameworks via decorator metadata or naming convention, never by a literal call expression in source. These are modelled as edges from ext:fastapi / ext:pytest with confidence='dynamic' or 'reflective' so they are not misclassified as unreferenced dead code (57 dynamic + 54 reflective edges).",
+      "External dependency nodes were created only for the frameworks named in ingest-report.frameworks (fastapi, sqlalchemy, pydantic, uvicorn, httpx, pytest) plus stdlib enum (for StrEnum inheritance). Other stdlib imports (os, re, hashlib, hmac, secrets, datetime, typing, dataclasses, collections.abc) are omitted as external nodes - they carry no domain-structural meaning for capability mapping - and are instead left as part of each file's recorded imports in ingest-report.json."
+    ]
+  }
+}
+
+out = "/Users/kurtis/tw/test-mw/minidon-context/.mw/context/graph-report.json"
+with open(out, "w") as f:
+    json.dump(report, f, indent=2)
+print("wrote", out)
+
+# sanity: re-load
+json.load(open(out))
+print("valid JSON")

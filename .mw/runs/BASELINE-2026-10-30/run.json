@@ -1,0 +1,18 @@
+{
+  "id": "BASELINE-2026-10-30",
+  "type": "baseline",
+  "state": "BASELINE_REVIEW",
+  "classification": "standard",
+  "contextSource": "codebase",
+  "repos": [
+    "minidon"
+  ],
+  "counters": {
+    "baselineAttempts": 0,
+    "planAttempts": 0,
+    "modificationAttempts": 0,
+    "buildAttempts": 0
+  },
+  "createdAt": "2026-10-30T16:48:06.514Z",
+  "updatedAt": "2026-10-30T17:47:08.645Z"
+}

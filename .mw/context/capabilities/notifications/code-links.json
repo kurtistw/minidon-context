@@ -1,0 +1,339 @@
+{
+  "$schema": "../../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "L1-notifications",
+  "timestamp": "2026-10-30T17:30:00Z",
+  "baselineVersion": "BASELINE-2026-10-30",
+  "components": [
+    {
+      "id": "minidon/notifications/models.py",
+      "name": "models.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/notifications/models.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 30
+      },
+      "exports": [
+        {
+          "name": "NotificationKind",
+          "type": "class",
+          "line": 12
+        },
+        {
+          "name": "Notification",
+          "type": "class",
+          "line": 21
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/db.py",
+          "type": "extends",
+          "location": {
+            "path": "minidon/notifications/models.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/models.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/notifications/routes.py",
+      "name": "routes.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/notifications/routes.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 76
+      },
+      "exports": [
+        {
+          "name": "router",
+          "type": "const",
+          "line": 0
+        },
+        {
+          "name": "NotificationOut",
+          "type": "class",
+          "line": 21
+        },
+        {
+          "name": "UnreadCountOut",
+          "type": "class",
+          "line": 30
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/deps.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/notifications/routes.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/notifications/service.py",
+      "name": "service.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/notifications/service.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 93
+      },
+      "exports": [
+        {
+          "name": "notify",
+          "type": "function",
+          "line": 18
+        },
+        {
+          "name": "list_notifications",
+          "type": "function",
+          "line": 46
+        },
+        {
+          "name": "unread_count",
+          "type": "function",
+          "line": 61
+        },
+        {
+          "name": "mark_read",
+          "type": "function",
+          "line": 77
+        },
+        {
+          "name": "mark_all_read",
+          "type": "function",
+          "line": 87
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/notifications/service.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/notifications/__init__.py",
+      "name": "__init__.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/notifications/__init__.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 1
+      },
+      "exports": [],
+      "dependencies": []
+    }
+  ],
+  "contracts": [],
+  "testCoverage": [
+    {
+      "componentId": "minidon/notifications/service.py",
+      "testFiles": [
+        {
+          "path": "tests/test_notifications.py",
+          "type": "integration",
+          "testCount": 8
+        }
+      ],
+      "coverage": {
+        "lines": null,
+        "branches": null,
+        "functions": null
+      }
+    }
+  ],
+  "ruleImplementations": [],
+  "statistics": {
+    "totalComponents": 4,
+    "totalContracts": 0,
+    "totalDependencies": 24,
+    "averageCoverage": null,
+    "unmappedRules": 0
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "{{CAPABILITY_ID}}",
+  "timestamp": "{{TIMESTAMP}}",
+  "baselineVersion": "{{BASELINE_VERSION}}",
+  "components": [
+    {
+      "id": "{{COMPONENT_ID}}",
+      "name": "{{COMPONENT_NAME}}",
+      "type": "service | library | module | class | function",
+      "repository": "{{REPO_NAME}}",
+      "path": "{{FILE_PATH}}",
+      "commit": "{{COMMIT_SHA}}",
+      "lines": {
+        "start": 0,
+        "end": 0
+      },
+      "exports": [
+        {
+          "name": "{{EXPORT_NAME}}",
+          "type": "class | function | const | type | interface",
+          "line": 0
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "{{TARGET_COMPONENT_ID}}",
+          "type": "imports | calls | extends | implements",
+          "location": {
+            "path": "{{FILE_PATH}}",
+            "line": 0
+          }
+        }
+      ]
+    }
+  ],
+  "contracts": [
+    {
+      "id": "{{CONTRACT_ID}}",
+      "name": "{{CONTRACT_NAME}}",
+      "type": "api | event | schema | interface",
+      "repository": "{{REPO_NAME}}",
+      "path": "{{FILE_PATH}}",
+      "commit": "{{COMMIT_SHA}}",
+      "definition": {
+        "format": "openapi | asyncapi | json-schema | typescript",
+        "location": "{{DEFINITION_PATH}}"
+      },
+      "implementedBy": ["{{COMPONENT_ID}}"],
+      "consumedBy": ["{{COMPONENT_ID}}"]
+    }
+  ],
+  "testCoverage": [
+    {
+      "componentId": "{{COMPONENT_ID}}",
+      "testFiles": [
+        {
+          "path": "{{TEST_FILE_PATH}}",
+          "type": "unit | integration | e2e",
+          "testCount": 0
+        }
+      ],
+      "coverage": {
+        "lines": 0.0,
+        "branches": 0.0,
+        "functions": 0.0
+      }
+    }
+  ],
+  "ruleImplementations": [
+    {
+      "ruleId": "BR-{{RULE_ID}}",
+      "implementations": [
+        {
+          "componentId": "{{COMPONENT_ID}}",
+          "path": "{{FILE_PATH}}",
+          "lines": {
+            "start": 0,
+            "end": 0
+          },
+          "confidence": "stated | derived",
+          "evidence": "{{EVIDENCE_DESCRIPTION}}"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "totalComponents": 0,
+    "totalContracts": 0,
+    "totalDependencies": 0,
+    "averageCoverage": 0.0,
+    "unmappedRules": 0
+  }
+}

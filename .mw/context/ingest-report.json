@@ -1,0 +1,166 @@
+{
+  "$schema": "../schemas/ingest-report.schema.json",
+  "version": "1.0.0",
+  "timestamp": "2026-10-30T16:50:03Z",
+  "repositories": [
+    {
+      "name": "minidon",
+      "url": "local:/Users/kurtis/tw/test-mw/minidon",
+      "branch": "master",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "status": "parsed",
+      "reason": "",
+      "buildSystem": {
+        "kind": "python-uv",
+        "manifest": "pyproject.toml",
+        "lockfile": "uv.lock",
+        "buildBackend": "hatchling",
+        "packageManager": "uv",
+        "pythonVersion": ">=3.12 (pinned 3.12 via .python-version)",
+        "testFramework": "pytest (testpaths=[\"tests\"])",
+        "linter": "ruff (select E, F, I, B, UP; line-length 100)"
+      },
+      "frameworks": [
+        "FastAPI (>=0.115) - HTTP API layer, routers per domain module",
+        "SQLAlchemy 2.0 (>=2.0) - ORM, declarative models via minidon.db.Base",
+        "Pydantic - request/response schemas (BaseModel) embedded in routes.py/schemas.py",
+        "Uvicorn (>=0.30) - ASGI server used by minidon/__main__.py",
+        "httpx + FastAPI TestClient - used in tests/conftest.py for in-process API testing",
+        "pytest (>=8) - test runner"
+      ],
+      "entryPoints": [
+        {
+          "path": "minidon/__main__.py",
+          "kind": "cli/dev-server",
+          "description": "`python -m minidon`: calls create_tables() then uvicorn.run(\"minidon.main:app\", host=127.0.0.1, port=8000)"
+        },
+        {
+          "path": "minidon/main.py",
+          "kind": "asgi-app-factory",
+          "description": "create_app() builds the FastAPI app, registers the DomainError exception handler and includes all six domain routers; module-level `app` is the ASGI target uvicorn serves"
+        },
+        {
+          "path": "tests/conftest.py",
+          "kind": "test-entry",
+          "description": "pytest fixtures: in-memory SQLite engine override, `client` (TestClient), `make_user` factory used by every test module"
+        }
+      ],
+      "projectStructure": [
+        { "path": "minidon/", "purpose": "Application package root" },
+        { "path": "minidon/accounts/", "purpose": "Registration, sign-in/tokens, profile, Role enum, AccessToken model" },
+        { "path": "minidon/social/", "purpose": "Follow/block/mute relationships, follow requests, Relationship dataclass" },
+        { "path": "minidon/statuses/", "purpose": "Posts (statuses): create/edit/delete, reblog, favourite, mentions, hashtags, visibility rules" },
+        { "path": "minidon/timelines/", "purpose": "Read-model queries over statuses: home, public, hashtag, per-account" },
+        { "path": "minidon/notifications/", "purpose": "Notification creation (notify()) and delivery/read-state endpoints" },
+        { "path": "minidon/moderation/", "purpose": "Reports, resolution actions, account suspension, role assignment" },
+        { "path": "minidon/lists/", "purpose": "User-curated lists of accounts (models + service only, see warning MW-W01: not wired into the app)" },
+        { "path": "minidon/db.py", "purpose": "SQLAlchemy engine, session factory, declarative Base, create_tables()" },
+        { "path": "minidon/config.py", "purpose": "Settings dataclass sourced from MINIDON_DATABASE_URL / MINIDON_DOMAIN env vars" },
+        { "path": "minidon/deps.py", "purpose": "FastAPI dependency aliases: SessionDep, OptionalAccount, CurrentAccount, Staff" },
+        { "path": "minidon/errors.py", "purpose": "DomainError hierarchy (Invalid, Unauthorized, Forbidden, NotFound, Conflict, RateLimited) mapped to JSON responses" },
+        { "path": "minidon/models.py", "purpose": "Aggregator module re-exporting every ORM model for a single import surface" },
+        { "path": "tests/", "purpose": "pytest suite, one file per domain module plus conftest.py fixtures" }
+      ],
+      "statistics": {
+        "totalFiles": 50,
+        "parsedFiles": 50,
+        "skippedFiles": 0,
+        "failedFiles": 0,
+        "totalLines": 3325,
+        "languages": {
+          "Python": { "files": 45, "lines": 2718 },
+          "Markdown": { "files": 1, "lines": 80 },
+          "TOML": { "files": 2, "lines": 520 },
+          "Config": { "files": 2, "lines": 7 }
+        }
+      },
+      "parseResults": [
+        { "path": "minidon/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/__main__.py", "language": "Python", "status": "success", "reason": "", "exports": ["main"], "imports": ["uvicorn", "minidon.db.create_tables"], "classes": [], "functions": ["main"] },
+        { "path": "minidon/main.py", "language": "Python", "status": "success", "reason": "", "exports": ["create_app", "app"], "imports": ["fastapi.FastAPI", "fastapi.Request", "fastapi.responses.JSONResponse", "minidon.accounts.routes.router", "minidon.errors.DomainError", "minidon.moderation.routes.router", "minidon.notifications.routes.router", "minidon.social.routes.router", "minidon.statuses.routes.router", "minidon.timelines.routes.router"], "classes": [], "functions": ["create_app", "domain_error"] },
+        { "path": "minidon/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["AccessToken", "Account", "Report", "Notification", "Block", "Follow", "Mute", "Favourite", "Mention", "Status", "StatusTag"], "imports": ["minidon.accounts.models", "minidon.moderation.models", "minidon.notifications.models", "minidon.social.models", "minidon.statuses.models"], "classes": [], "functions": [] },
+        { "path": "minidon/config.py", "language": "Python", "status": "success", "reason": "", "exports": ["Settings", "settings"], "imports": ["os", "dataclasses.dataclass"], "classes": ["Settings"], "functions": [] },
+        { "path": "minidon/db.py", "language": "Python", "status": "success", "reason": "", "exports": ["Base", "engine", "utcnow", "get_session", "create_tables"], "imports": ["collections.abc.Iterator", "datetime.UTC", "datetime.datetime", "sqlalchemy.Engine", "sqlalchemy.create_engine", "sqlalchemy.orm.DeclarativeBase", "sqlalchemy.orm.Session", "sqlalchemy.orm.sessionmaker", "minidon.config.settings"], "classes": ["Base"], "functions": ["utcnow", "get_session", "create_tables"] },
+        { "path": "minidon/deps.py", "language": "Python", "status": "success", "reason": "", "exports": ["SessionDep", "OptionalAccount", "CurrentAccount", "Staff", "optional_account", "current_account", "staff_account"], "imports": ["typing.Annotated", "fastapi.Depends", "fastapi.Header", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.db.get_session", "minidon.errors.Forbidden", "minidon.errors.Unauthorized"], "classes": [], "functions": ["optional_account", "current_account", "staff_account"] },
+        { "path": "minidon/errors.py", "language": "Python", "status": "success", "reason": "", "exports": ["DomainError", "Invalid", "Unauthorized", "Forbidden", "NotFound", "Conflict", "RateLimited"], "imports": [], "classes": ["DomainError", "Invalid", "Unauthorized", "Forbidden", "NotFound", "Conflict", "RateLimited"], "functions": [] },
+        { "path": "minidon/accounts/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/accounts/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["Role", "Account", "AccessToken"], "imports": ["enum", "datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.String", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["Role", "Account", "AccessToken"], "functions": [] },
+        { "path": "minidon/accounts/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router", "RegisterIn", "TokenIn", "TokenOut", "ProfileIn"], "imports": ["datetime.datetime", "fastapi.APIRouter", "pydantic.BaseModel", "minidon.accounts.service", "minidon.accounts.schemas.AccountOut", "minidon.accounts.schemas.serialize_account", "minidon.deps.CurrentAccount", "minidon.deps.SessionDep"], "classes": ["RegisterIn", "TokenIn", "TokenOut", "ProfileIn"], "functions": ["register", "sign_in", "show_me", "update_me", "show"] },
+        { "path": "minidon/accounts/schemas.py", "language": "Python", "status": "success", "reason": "", "exports": ["AccountOut", "serialize_account"], "imports": ["datetime.datetime", "pydantic.BaseModel", "sqlalchemy.func", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.models.Account", "minidon.accounts.models.Role", "minidon.config.settings", "minidon.social.queries", "minidon.statuses.models.Status"], "classes": ["AccountOut"], "functions": ["serialize_account"] },
+        { "path": "minidon/accounts/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["hash_password", "verify_password", "register", "issue_token", "authenticate", "revoke_tokens", "find_by_username", "get_by_username", "update_profile"], "imports": ["hashlib", "hmac", "re", "secrets", "datetime.timedelta", "sqlalchemy.delete", "sqlalchemy.func", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.models.AccessToken", "minidon.accounts.models.Account", "minidon.accounts.models.Role", "minidon.config.settings", "minidon.db.utcnow", "minidon.errors.Conflict", "minidon.errors.Forbidden", "minidon.errors.Invalid", "minidon.errors.NotFound", "minidon.errors.Unauthorized"], "classes": [], "functions": ["hash_password", "verify_password", "register", "issue_token", "authenticate", "revoke_tokens", "find_by_username", "get_by_username", "update_profile"] },
+        { "path": "minidon/social/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/social/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["Follow", "Block", "Mute"], "imports": ["datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.UniqueConstraint", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["Follow", "Block", "Mute"], "functions": [] },
+        { "path": "minidon/social/queries.py", "language": "Python", "status": "success", "reason": "", "exports": ["is_following", "is_blocked_between", "is_muting", "following_ids", "muted_ids", "blocked_ids", "count_followers", "count_following"], "imports": ["sqlalchemy.and_", "sqlalchemy.func", "sqlalchemy.or_", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.social.models.Block", "minidon.social.models.Follow", "minidon.social.models.Mute"], "classes": [], "functions": ["is_following", "is_blocked_between", "is_muting", "following_ids", "muted_ids", "blocked_ids", "count_followers", "count_following"] },
+        { "path": "minidon/social/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router"], "imports": ["fastapi.APIRouter", "minidon.accounts.service", "minidon.accounts.schemas.AccountOut", "minidon.accounts.schemas.serialize_account", "minidon.deps.CurrentAccount", "minidon.deps.SessionDep", "minidon.social.service", "minidon.social.service.Relationship"], "classes": [], "functions": ["show_relationship", "follow", "unfollow", "block", "unblock", "mute", "unmute", "list_followers", "list_following", "list_follow_requests", "authorize", "reject"] },
+        { "path": "minidon/social/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["Relationship", "relationship", "follow", "unfollow", "follow_requests", "authorize_request", "reject_request", "block", "unblock", "mute", "unmute", "followers", "following"], "imports": ["dataclasses.dataclass", "sqlalchemy.and_", "sqlalchemy.delete", "sqlalchemy.or_", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.errors.Forbidden", "minidon.errors.Invalid", "minidon.errors.NotFound", "minidon.notifications.models.NotificationKind", "minidon.notifications.service.notify", "minidon.social.queries", "minidon.social.models.Block", "minidon.social.models.Follow", "minidon.social.models.Mute"], "classes": ["Relationship"], "functions": ["relationship", "follow", "unfollow", "follow_requests", "authorize_request", "reject_request", "block", "unblock", "mute", "unmute", "followers", "following", "_find_follow"] },
+        { "path": "minidon/statuses/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/statuses/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["Visibility", "Status", "Favourite", "Mention", "StatusTag"], "imports": ["enum", "datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.String", "sqlalchemy.Text", "sqlalchemy.UniqueConstraint", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["Visibility", "Status", "Favourite", "Mention", "StatusTag"], "functions": [] },
+        { "path": "minidon/statuses/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router", "StatusIn", "StatusEditIn"], "imports": ["fastapi.APIRouter", "pydantic.BaseModel", "minidon.deps.CurrentAccount", "minidon.deps.OptionalAccount", "minidon.deps.SessionDep", "minidon.statuses.service", "minidon.statuses.models.Visibility", "minidon.statuses.schemas.StatusOut", "minidon.statuses.schemas.serialize_status"], "classes": ["StatusIn", "StatusEditIn"], "functions": ["create", "show", "list_replies", "edit", "delete", "reblog", "unreblog", "favourite", "unfavourite"] },
+        { "path": "minidon/statuses/schemas.py", "language": "Python", "status": "success", "reason": "", "exports": ["StatusOut", "serialize_status"], "imports": ["datetime.datetime", "pydantic.BaseModel", "sqlalchemy.func", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.models.Account", "minidon.accounts.schemas.AccountOut", "minidon.accounts.schemas.serialize_account", "minidon.statuses.models.Favourite", "minidon.statuses.models.Mention", "minidon.statuses.models.Status", "minidon.statuses.models.StatusTag", "minidon.statuses.models.Visibility"], "classes": ["StatusOut"], "functions": ["serialize_status", "_count"] },
+        { "path": "minidon/statuses/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["can_view", "get_status", "create_status", "edit_status", "delete_status", "soft_delete", "replies", "reblog", "unreblog", "favourite", "unfavourite"], "imports": ["re", "datetime.timedelta", "sqlalchemy.delete", "sqlalchemy.func", "sqlalchemy.select", "sqlalchemy.update", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.config.settings", "minidon.db.utcnow", "minidon.errors.Conflict", "minidon.errors.Forbidden", "minidon.errors.Invalid", "minidon.errors.NotFound", "minidon.errors.RateLimited", "minidon.notifications.models.NotificationKind", "minidon.notifications.service.notify", "minidon.social.queries", "minidon.statuses.models.Favourite", "minidon.statuses.models.Mention", "minidon.statuses.models.Status", "minidon.statuses.models.StatusTag", "minidon.statuses.models.Visibility"], "classes": [], "functions": ["can_view", "get_status", "create_status", "edit_status", "delete_status", "soft_delete", "replies", "reblog", "unreblog", "favourite", "unfavourite", "_validate_text", "_check_rate_limit", "_sync_mentions_and_tags", "_is_mentioned", "_resolve_boost", "_find_boost"] },
+        { "path": "minidon/timelines/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/timelines/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router"], "imports": ["typing.Annotated", "fastapi.APIRouter", "fastapi.Query", "minidon.deps.CurrentAccount", "minidon.deps.OptionalAccount", "minidon.deps.SessionDep", "minidon.statuses.schemas.StatusOut", "minidon.statuses.schemas.serialize_status", "minidon.timelines.service", "minidon.timelines.service.DEFAULT_LIMIT", "minidon.timelines.service.MAX_LIMIT"], "classes": [], "functions": ["home", "public", "hashtag", "account"] },
+        { "path": "minidon/timelines/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["DEFAULT_LIMIT", "MAX_LIMIT", "home", "public", "account", "hashtag"], "imports": ["collections.abc.Callable", "sqlalchemy.Select", "sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.social.queries", "minidon.statuses.models.Status", "minidon.statuses.models.StatusTag", "minidon.statuses.models.Visibility", "minidon.statuses.service.can_view"], "classes": [], "functions": ["home", "public", "account", "hashtag", "_hidden_authors", "_page"] },
+        { "path": "minidon/notifications/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/notifications/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["NotificationKind", "Notification"], "imports": ["enum", "datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["NotificationKind", "Notification"], "functions": [] },
+        { "path": "minidon/notifications/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router", "NotificationOut", "UnreadCountOut"], "imports": ["datetime.datetime", "fastapi.APIRouter", "fastapi.Query", "pydantic.BaseModel", "sqlalchemy.orm.Session", "minidon.accounts.models.Account", "minidon.accounts.schemas.AccountOut", "minidon.accounts.schemas.serialize_account", "minidon.deps.CurrentAccount", "minidon.deps.SessionDep", "minidon.notifications.service", "minidon.notifications.models.Notification", "minidon.notifications.models.NotificationKind", "minidon.statuses.models.Status", "minidon.statuses.schemas.StatusOut", "minidon.statuses.schemas.serialize_status", "minidon.statuses.service.can_view"], "classes": ["NotificationOut", "UnreadCountOut"], "functions": ["serialize_notification", "list_notifications", "unread_count", "read_all", "read"] },
+        { "path": "minidon/notifications/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["notify", "list_notifications", "unread_count", "mark_read", "mark_all_read"], "imports": ["typing.TYPE_CHECKING", "sqlalchemy.func", "sqlalchemy.select", "sqlalchemy.update", "sqlalchemy.orm.Session", "minidon.accounts.models.Account", "minidon.db.utcnow", "minidon.errors.NotFound", "minidon.notifications.models.Notification", "minidon.notifications.models.NotificationKind", "minidon.social.queries"], "classes": [], "functions": ["notify", "list_notifications", "unread_count", "mark_read", "mark_all_read"] },
+        { "path": "minidon/moderation/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/moderation/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["ReportCategory", "ReportState", "ModerationAction", "Report"], "imports": ["enum", "datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.Text", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["ReportCategory", "ReportState", "ModerationAction", "Report"], "functions": [] },
+        { "path": "minidon/moderation/routes.py", "language": "Python", "status": "success", "reason": "", "exports": ["router", "ReportIn", "ResolveIn", "RoleIn", "ReportOut"], "imports": ["datetime.datetime", "fastapi.APIRouter", "pydantic.BaseModel", "sqlalchemy.orm.Session", "minidon.accounts.models.Account", "minidon.accounts.models.Role", "minidon.accounts.schemas.AccountOut", "minidon.accounts.schemas.serialize_account", "minidon.deps.CurrentAccount", "minidon.deps.SessionDep", "minidon.deps.Staff", "minidon.moderation.service", "minidon.moderation.models.ModerationAction", "minidon.moderation.models.Report", "minidon.moderation.models.ReportCategory", "minidon.moderation.models.ReportState"], "classes": ["ReportIn", "ResolveIn", "RoleIn", "ReportOut"], "functions": ["serialize_report", "file_report", "list_reports", "resolve_report", "suspend", "unsuspend", "set_role"] },
+        { "path": "minidon/moderation/service.py", "language": "Python", "status": "success", "reason": "", "exports": ["file_report", "list_reports", "resolve_report", "suspend", "unsuspend", "set_role"], "imports": ["sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.accounts.models.Role", "minidon.db.utcnow", "minidon.errors.Conflict", "minidon.errors.Forbidden", "minidon.errors.Invalid", "minidon.errors.NotFound", "minidon.moderation.models.ModerationAction", "minidon.moderation.models.Report", "minidon.moderation.models.ReportCategory", "minidon.moderation.models.ReportState", "minidon.statuses.service", "minidon.statuses.models.Status"], "classes": [], "functions": ["file_report", "list_reports", "resolve_report", "suspend", "unsuspend", "set_role", "_find_any", "_check_can_suspend", "_suspend"] },
+        { "path": "minidon/lists/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "minidon/lists/models.py", "language": "Python", "status": "success", "reason": "", "exports": ["List", "ListMember"], "imports": ["datetime.datetime", "sqlalchemy.ForeignKey", "sqlalchemy.String", "sqlalchemy.UniqueConstraint", "sqlalchemy.orm.Mapped", "sqlalchemy.orm.mapped_column", "minidon.db.Base", "minidon.db.utcnow"], "classes": ["List", "ListMember"], "functions": [] },
+        { "path": "minidon/lists/service.py", "language": "Python", "status": "success", "reason": "not reachable from minidon/main.py - no routes.py in this package and no other module imports it; see summary.warnings MW-W01", "exports": ["create_list", "add_member"], "imports": ["sqlalchemy.select", "sqlalchemy.orm.Session", "minidon.accounts.service", "minidon.accounts.models.Account", "minidon.errors.Forbidden", "minidon.errors.Invalid", "minidon.errors.NotFound", "minidon.lists.models.List", "minidon.lists.models.ListMember", "minidon.social.queries"], "classes": [], "functions": ["create_list", "add_member"] },
+        { "path": "tests/__init__.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "tests/conftest.py", "language": "Python", "status": "success", "reason": "", "exports": ["PASSWORD", "client", "User", "make_user"], "imports": ["collections.abc.Callable", "collections.abc.Iterator", "dataclasses.dataclass", "typing.Any", "pytest", "fastapi.testclient.TestClient", "httpx.Response", "sqlalchemy.create_engine", "sqlalchemy.orm.Session", "sqlalchemy.orm.sessionmaker", "sqlalchemy.pool.StaticPool", "minidon.db.create_tables", "minidon.db.get_session", "minidon.main.create_app"], "classes": ["User"], "functions": ["client", "make_user"] },
+        { "path": "tests/test_accounts.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": ["pytest", "tests.conftest.PASSWORD"], "classes": [], "functions": ["register", "test_register_returns_the_new_profile", "test_the_first_account_runs_the_instance", "test_usernames_are_unique_regardless_of_case", "test_emails_are_unique", "test_register_rejects_invalid_input", "test_sign_in_with_the_wrong_password_fails", "test_requests_without_a_token_are_refused", "test_update_profile", "test_display_names_are_limited"] },
+        { "path": "tests/test_moderation.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": ["pytest", "tests.conftest.PASSWORD"], "classes": [], "functions": ["admin", "promote", "test_suspending_through_a_report_hides_the_account", "test_deleting_the_reported_status_keeps_the_account", "test_a_report_closes_once", "test_reported_statuses_must_belong_to_the_reported_account", "test_you_cannot_report_yourself", "test_regular_users_cannot_see_reports", "test_moderators_cannot_suspend_other_staff", "test_only_admins_change_roles", "test_only_admins_lift_suspensions"] },
+        { "path": "tests/test_notifications.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": ["kinds", "unread", "test_interactions_notify_the_author", "test_locked_accounts_are_notified_of_follow_requests", "test_you_are_not_notified_about_your_own_actions", "test_muted_accounts_do_not_notify_you", "test_marking_notifications_read", "test_you_cannot_read_someone_elses_notifications"] },
+        { "path": "tests/test_social.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": ["test_following_an_open_account_is_immediate", "test_following_a_locked_account_sends_a_request", "test_rejecting_a_follow_request", "test_unfollowing", "test_blocking_removes_follows_both_ways", "test_you_cannot_follow_yourself", "test_followers_and_following_lists"] },
+        { "path": "tests/test_statuses.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": ["datetime.timedelta", "minidon.db.utcnow", "minidon.statuses.service"], "classes": [], "functions": ["test_posting_parses_mentions_and_hashtags", "test_empty_statuses_are_refused", "test_a_content_warning_counts_towards_the_length_limit", "test_followers_only_statuses_are_hidden_from_everyone_else", "test_direct_statuses_are_visible_only_to_mentioned_accounts", "test_blocked_accounts_cannot_see_your_statuses", "test_editing_within_the_window", "test_editing_after_the_window_closes_is_refused", "test_only_the_author_can_edit", "test_users_cannot_delete_other_peoples_statuses", "test_deleting_a_status_removes_its_boosts", "test_followers_only_statuses_cannot_be_boosted", "test_a_status_can_only_be_boosted_once", "test_favourites_are_counted_once", "test_replies_are_listed_under_their_parent", "test_posting_is_rate_limited"] },
+        { "path": "tests/test_timelines.py", "language": "Python", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": ["contents", "test_home_shows_your_statuses_and_those_you_follow", "test_home_hides_muted_accounts_and_their_boosted_statuses", "test_home_hides_replies_to_accounts_you_do_not_follow", "test_public_shows_only_public_original_statuses", "test_hashtag_timeline", "test_profile_timeline_respects_visibility", "test_timelines_page_with_max_id"] },
+        { "path": "README.md", "language": "Markdown", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "pyproject.toml", "language": "TOML", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": "uv.lock", "language": "TOML", "status": "success", "reason": "generated dependency lockfile; read for dependency inventory only, no code constructs", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": ".gitignore", "language": "Config", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] },
+        { "path": ".python-version", "language": "Config", "status": "success", "reason": "", "exports": [], "imports": [], "classes": [], "functions": [] }
+      ],
+      "unparsedFiles": []
+    }
+  ],
+  "summary": {
+    "totalRepositories": 1,
+    "parsedRepositories": 1,
+    "partialRepositories": 0,
+    "failedRepositories": 0,
+    "totalFiles": 50,
+    "parsedFiles": 50,
+    "parseRate": 1.0,
+    "languages": ["Python", "Markdown", "TOML", "Config"],
+    "warnings": [
+      {
+        "code": "MW-W01",
+        "message": "minidon/lists/ (models.py, service.py) defines a List/ListMember feature but has no routes.py and is never imported by minidon/main.py or any other module - it is unreachable from the API surface and not mentioned in README.md's endpoint table or the test suite. Likely an incomplete/orphaned capability; flag for the graph/domain agents so it is not mapped to a user-facing capability without confirmation.",
+        "repository": "minidon",
+        "path": "minidon/lists/"
+      },
+      {
+        "code": "MW-W02",
+        "message": "minidon/__pycache__/ and tests/__pycache__/ directories exist on disk but are excluded by .gitignore (__pycache__/, *.pyc) and were not walked or counted in this report.",
+        "repository": "minidon",
+        "path": "minidon/__pycache__"
+      }
+    ],
+    "errors": []
+  },
+  "metadata": {
+    "agent": "ingestion-agent",
+    "agentVersion": "1.0.0",
+    "duration": "0ms",
+    "providers": {
+      "code": "manual-read (no code-graph provider configured)",
+      "gitHistory": "git-cli"
+    }
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "$schema": "../../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "L1-accounts",
+  "timestamp": "2026-10-30T17:30:00Z",
+  "baselineVersion": "BASELINE-2026-10-30",
+  "components": [
+    {
+      "id": "minidon/accounts/models.py",
+      "name": "models.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/accounts/models.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 46
+      },
+      "exports": [
+        {
+          "name": "Role",
+          "type": "class",
+          "line": 12
+        },
+        {
+          "name": "Account",
+          "type": "class",
+          "line": 21
+        },
+        {
+          "name": "AccessToken",
+          "type": "class",
+          "line": 40
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/db.py",
+          "type": "extends",
+          "location": {
+            "path": "minidon/accounts/models.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/models.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/accounts/routes.py",
+      "name": "routes.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/accounts/routes.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 65
+      },
+      "exports": [
+        {
+          "name": "router",
+          "type": "const",
+          "line": 0
+        },
+        {
+          "name": "RegisterIn",
+          "type": "class",
+          "line": 15
+        },
+        {
+          "name": "TokenIn",
+          "type": "class",
+          "line": 21
+        },
+        {
+          "name": "TokenOut",
+          "type": "class",
+          "line": 26
+        },
+        {
+          "name": "ProfileIn",
+          "type": "class",
+          "line": 32
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/deps.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/routes.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/accounts/schemas.py",
+      "name": "schemas.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/accounts/schemas.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 51
+      },
+      "exports": [
+        {
+          "name": "AccountOut",
+          "type": "class",
+          "line": 15
+        },
+        {
+          "name": "serialize_account",
+          "type": "function",
+          "line": 29
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/schemas.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/accounts/service.py",
+      "name": "service.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/accounts/service.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 132
+      },
+      "exports": [
+        {
+          "name": "hash_password",
+          "type": "function",
+          "line": 24
+        },
+        {
+          "name": "verify_password",
+          "type": "function",
+          "line": 30
+        },
+        {
+          "name": "register",
+          "type": "function",
+          "line": 38
+        },
+        {
+          "name": "issue_token",
+          "type": "function",
+          "line": 65
+        },
+        {
+          "name": "authenticate",
+          "type": "function",
+          "line": 81
+        },
+        {
+          "name": "revoke_tokens",
+          "type": "function",
+          "line": 91
+        },
+        {
+          "name": "find_by_username",
+          "type": "function",
+          "line": 96
+        },
+        {
+          "name": "get_by_username",
+          "type": "function",
+          "line": 105
+        },
+        {
+          "name": "update_profile",
+          "type": "function",
+          "line": 113
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/accounts/service.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/accounts/__init__.py",
+      "name": "__init__.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/accounts/__init__.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 1
+      },
+      "exports": [],
+      "dependencies": []
+    }
+  ],
+  "contracts": [],
+  "testCoverage": [
+    {
+      "componentId": "minidon/accounts/service.py",
+      "testFiles": [
+        {
+          "path": "tests/test_accounts.py",
+          "type": "integration",
+          "testCount": 10
+        }
+      ],
+      "coverage": {
+        "lines": null,
+        "branches": null,
+        "functions": null
+      }
+    }
+  ],
+  "ruleImplementations": [],
+  "statistics": {
+    "totalComponents": 5,
+    "totalContracts": 0,
+    "totalDependencies": 23,
+    "averageCoverage": null,
+    "unmappedRules": 0
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "$schema": "../../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "L1-moderation",
+  "timestamp": "2026-10-30T17:30:00Z",
+  "baselineVersion": "BASELINE-2026-10-30",
+  "components": [
+    {
+      "id": "minidon/moderation/models.py",
+      "name": "models.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/moderation/models.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 44
+      },
+      "exports": [
+        {
+          "name": "ReportCategory",
+          "type": "class",
+          "line": 12
+        },
+        {
+          "name": "ReportState",
+          "type": "class",
+          "line": 18
+        },
+        {
+          "name": "ModerationAction",
+          "type": "class",
+          "line": 24
+        },
+        {
+          "name": "Report",
+          "type": "class",
+          "line": 30
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/db.py",
+          "type": "extends",
+          "location": {
+            "path": "minidon/moderation/models.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/models.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/moderation/routes.py",
+      "name": "routes.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/moderation/routes.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 97
+      },
+      "exports": [
+        {
+          "name": "router",
+          "type": "const",
+          "line": 0
+        },
+        {
+          "name": "ReportIn",
+          "type": "class",
+          "line": 18
+        },
+        {
+          "name": "ResolveIn",
+          "type": "class",
+          "line": 25
+        },
+        {
+          "name": "RoleIn",
+          "type": "class",
+          "line": 30
+        },
+        {
+          "name": "ReportOut",
+          "type": "class",
+          "line": 34
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/deps.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/moderation/routes.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/moderation/service.py",
+      "name": "service.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/moderation/service.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 136
+      },
+      "exports": [
+        {
+          "name": "file_report",
+          "type": "function",
+          "line": 17
+        },
+        {
+          "name": "list_reports",
+          "type": "function",
+          "line": 47
+        },
+        {
+          "name": "resolve_report",
+          "type": "function",
+          "line": 51
+        },
+        {
+          "name": "suspend",
+          "type": "function",
+          "line": 87
+        },
+        {
+          "name": "unsuspend",
+          "type": "function",
+          "line": 95
+        },
+        {
+          "name": "set_role",
+          "type": "function",
+          "line": 104
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/moderation/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/moderation/service.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/moderation/__init__.py",
+      "name": "__init__.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/moderation/__init__.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 1
+      },
+      "exports": [],
+      "dependencies": []
+    }
+  ],
+  "contracts": [],
+  "testCoverage": [
+    {
+      "componentId": "minidon/moderation/service.py",
+      "testFiles": [
+        {
+          "path": "tests/test_moderation.py",
+          "type": "integration",
+          "testCount": 11
+        }
+      ],
+      "coverage": {
+        "lines": null,
+        "branches": null,
+        "functions": null
+      }
+    }
+  ],
+  "ruleImplementations": [],
+  "statistics": {
+    "totalComponents": 4,
+    "totalContracts": 0,
+    "totalDependencies": 23,
+    "averageCoverage": null,
+    "unmappedRules": 0
+  }
+}

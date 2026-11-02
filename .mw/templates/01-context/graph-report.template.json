@@ -1,0 +1,125 @@
+{
+  "$schema": "../schemas/graph-report.schema.json",
+  "version": "1.0.0",
+  "timestamp": "{{TIMESTAMP}}",
+  "baselineVersion": "{{BASELINE_VERSION}}",
+  "graph": {
+    "nodes": {
+      "total": 0,
+      "byType": {
+        "file": 0,
+        "class": 0,
+        "function": 0,
+        "method": 0,
+        "module": 0,
+        "package": 0
+      },
+      "byRepository": {
+        "{{REPO_NAME}}": 0
+      }
+    },
+    "edges": {
+      "total": 0,
+      "byType": {
+        "imports": 0,
+        "calls": 0,
+        "extends": 0,
+        "implements": 0,
+        "uses": 0,
+        "contains": 0
+      },
+      "crossRepo": 0,
+      "intraRepo": 0
+    }
+  },
+  "analysis": {
+    "entryPoints": [
+      {
+        "id": "{{NODE_ID}}",
+        "type": "api | cli | event-handler | main",
+        "path": "{{FILE_PATH}}",
+        "repository": "{{REPO_NAME}}"
+      }
+    ],
+    "clusters": [
+      {
+        "id": "{{CLUSTER_ID}}",
+        "name": "{{CLUSTER_NAME}}",
+        "nodeCount": 0,
+        "cohesion": 0.0,
+        "primaryRepository": "{{REPO_NAME}}"
+      }
+    ],
+    "hotspots": [
+      {
+        "nodeId": "{{NODE_ID}}",
+        "path": "{{FILE_PATH}}",
+        "inDegree": 0,
+        "outDegree": 0,
+        "changeFrequency": 0,
+        "risk": "low | medium | high"
+      }
+    ],
+    "orphans": [
+      {
+        "nodeId": "{{NODE_ID}}",
+        "path": "{{FILE_PATH}}",
+        "repository": "{{REPO_NAME}}",
+        "reason": "no-incoming | no-outgoing | isolated",
+        "flagged": true,
+        "notes": "{{NOTES}}"
+      }
+    ],
+    "crossRepoCallPaths": [
+      {
+        "from": {
+          "repository": "{{SOURCE_REPO}}",
+          "path": "{{SOURCE_PATH}}",
+          "symbol": "{{SOURCE_SYMBOL}}"
+        },
+        "to": {
+          "repository": "{{TARGET_REPO}}",
+          "path": "{{TARGET_PATH}}",
+          "symbol": "{{TARGET_SYMBOL}}"
+        },
+        "type": "direct | transitive",
+        "resolved": true
+      }
+    ],
+    "unresolvedReferences": [
+      {
+        "from": "{{SOURCE_PATH}}",
+        "reference": "{{REFERENCE}}",
+        "type": "import | call | type",
+        "reason": "missing-export | external-package | circular"
+      }
+    ]
+  },
+  "delta": {
+    "previousTotal": 0,
+    "removedNodes": [
+      {
+        "nodeId": "{{NODE_ID}}",
+        "path": "{{FILE_PATH}}",
+        "repository": "{{REPO_NAME}}",
+        "reason": "{{WHY_THE_NODE_IS_GONE}}"
+      }
+    ]
+  },
+  "metrics": {
+    "modularity": 0.0,
+    "averageClusterSize": 0.0,
+    "crossRepoCoupling": 0.0,
+    "orphanRate": 0.0,
+    "unresolvedRate": 0.0
+  },
+  "metadata": {
+    "agent": "graph-agent",
+    "agentVersion": "{{AGENT_VERSION}}",
+    "duration": "{{DURATION_MS}}ms",
+    "providers": {
+      "codegraph": "{{CODEGRAPH_PROVIDER}}"
+    },
+    "ingestReportRef": "{{INGEST_REPORT_PATH}}"
+  }
+}

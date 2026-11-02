@@ -1,0 +1,82 @@
+{
+  "$schema": "../schemas/ingest-report.schema.json",
+  "version": "1.0.0",
+  "timestamp": "{{TIMESTAMP}}",
+  "repositories": [
+    {
+      "name": "{{REPO_NAME}}",
+      "url": "{{REPO_URL}}",
+      "branch": "{{BRANCH}}",
+      "commit": "{{COMMIT_SHA}}",
+      "status": "parsed | partial | failed",
+      "reason": "{{REASON_IF_NOT_PARSED}}",
+      "statistics": {
+        "totalFiles": 0,
+        "parsedFiles": 0,
+        "skippedFiles": 0,
+        "failedFiles": 0,
+        "totalLines": 0,
+        "languages": {
+          "{{LANGUAGE}}": {
+            "files": 0,
+            "lines": 0
+          }
+        }
+      },
+      "parseResults": [
+        {
+          "path": "{{FILE_PATH}}",
+          "language": "{{LANGUAGE}}",
+          "status": "success | skipped | failed",
+          "reason": "{{REASON_IF_NOT_SUCCESS}}",
+          "exports": ["{{EXPORT_NAME}}"],
+          "imports": ["{{IMPORT_PATH}}"],
+          "classes": ["{{CLASS_NAME}}"],
+          "functions": ["{{FUNCTION_NAME}}"]
+        }
+      ],
+      "unparsedFiles": [
+        {
+          "path": "{{FILE_PATH}}",
+          "reason": "unsupported-language | binary | too-large | parse-error",
+          "details": "{{ERROR_DETAILS}}"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalRepositories": 0,
+    "parsedRepositories": 0,
+    "partialRepositories": 0,
+    "failedRepositories": 0,
+    "totalFiles": 0,
+    "parsedFiles": 0,
+    "parseRate": 0.0,
+    "languages": ["{{LANGUAGE}}"],
+    "warnings": [
+      {
+        "code": "{{WARNING_CODE}}",
+        "message": "{{WARNING_MESSAGE}}",
+        "repository": "{{REPO_NAME}}",
+        "path": "{{FILE_PATH}}"
+      }
+    ],
+    "errors": [
+      {
+        "code": "{{ERROR_CODE}}",
+        "message": "{{ERROR_MESSAGE}}",
+        "repository": "{{REPO_NAME}}",
+        "path": "{{FILE_PATH}}"
+      }
+    ]
+  },
+  "metadata": {
+    "agent": "ingestion-agent",
+    "agentVersion": "{{AGENT_VERSION}}",
+    "duration": "{{DURATION_MS}}ms",
+    "providers": {
+      "code": "{{CODE_PROVIDER}}",
+      "gitHistory": "{{GIT_PROVIDER}}"
+    }
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "$schema": "../../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "L1-posting",
+  "timestamp": "2026-10-30T17:30:00Z",
+  "baselineVersion": "BASELINE-2026-10-30",
+  "components": [
+    {
+      "id": "minidon/statuses/models.py",
+      "name": "models.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/statuses/models.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 65
+      },
+      "exports": [
+        {
+          "name": "Visibility",
+          "type": "class",
+          "line": 12
+        },
+        {
+          "name": "Status",
+          "type": "class",
+          "line": 19
+        },
+        {
+          "name": "Favourite",
+          "type": "class",
+          "line": 40
+        },
+        {
+          "name": "Mention",
+          "type": "class",
+          "line": 50
+        },
+        {
+          "name": "StatusTag",
+          "type": "class",
+          "line": 59
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/db.py",
+          "type": "extends",
+          "location": {
+            "path": "minidon/statuses/models.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/models.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/statuses/routes.py",
+      "name": "routes.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/statuses/routes.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 81
+      },
+      "exports": [
+        {
+          "name": "router",
+          "type": "const",
+          "line": 0
+        },
+        {
+          "name": "StatusIn",
+          "type": "class",
+          "line": 14
+        },
+        {
+          "name": "StatusEditIn",
+          "type": "class",
+          "line": 21
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/deps.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/schemas.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/routes.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/statuses/schemas.py",
+      "name": "schemas.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/statuses/schemas.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 76
+      },
+      "exports": [
+        {
+          "name": "StatusOut",
+          "type": "class",
+          "line": 14
+        },
+        {
+          "name": "serialize_status",
+          "type": "function",
+          "line": 33
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/schemas.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/schemas.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/statuses/service.py",
+      "name": "service.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/statuses/service.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 293
+      },
+      "exports": [
+        {
+          "name": "can_view",
+          "type": "function",
+          "line": 24
+        },
+        {
+          "name": "get_status",
+          "type": "function",
+          "line": 54
+        },
+        {
+          "name": "create_status",
+          "type": "function",
+          "line": 61
+        },
+        {
+          "name": "edit_status",
+          "type": "function",
+          "line": 109
+        },
+        {
+          "name": "delete_status",
+          "type": "function",
+          "line": 131
+        },
+        {
+          "name": "soft_delete",
+          "type": "function",
+          "line": 142
+        },
+        {
+          "name": "replies",
+          "type": "function",
+          "line": 153
+        },
+        {
+          "name": "reblog",
+          "type": "function",
+          "line": 163
+        },
+        {
+          "name": "unreblog",
+          "type": "function",
+          "line": 182
+        },
+        {
+          "name": "favourite",
+          "type": "function",
+          "line": 192
+        },
+        {
+          "name": "unfavourite",
+          "type": "function",
+          "line": 214
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/config.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/statuses/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/statuses/service.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/statuses/__init__.py",
+      "name": "__init__.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/statuses/__init__.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 1
+      },
+      "exports": [],
+      "dependencies": []
+    }
+  ],
+  "contracts": [],
+  "testCoverage": [
+    {
+      "componentId": "minidon/statuses/service.py",
+      "testFiles": [
+        {
+          "path": "tests/test_statuses.py",
+          "type": "integration",
+          "testCount": 16
+        }
+      ],
+      "coverage": {
+        "lines": null,
+        "branches": null,
+        "functions": null
+      }
+    }
+  ],
+  "ruleImplementations": [],
+  "statistics": {
+    "totalComponents": 5,
+    "totalContracts": 0,
+    "totalDependencies": 30,
+    "averageCoverage": null,
+    "unmappedRules": 0
+  }
+}

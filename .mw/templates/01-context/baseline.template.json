@@ -1,0 +1,93 @@
+{
+  "$schema": "../schemas/baseline.schema.json",
+  "version": "{{BASELINE_VERSION}}",
+  "timestamp": "{{TIMESTAMP}}",
+  "status": "draft | review | confirmed",
+  "confirmedBy": {
+    "actor": "{{ACTOR_ID}}",
+    "role": "domain-expert | product-owner | tech-lead",
+    "timestamp": "{{CONFIRMATION_TIMESTAMP}}",
+    "method": "pr-approval | ledger-signoff"
+  },
+  "repositories": [
+    {
+      "name": "{{REPO_NAME}}",
+      "url": "{{REPO_URL}}",
+      "branch": "{{BRANCH}}",
+      "commit": "{{COMMIT_SHA}}",
+      "ingestStatus": "complete | partial | failed"
+    }
+  ],
+  "capabilities": {
+    "total": 0,
+    "byLevel": {
+      "L0": 0,
+      "L1": 0,
+      "L2": 0,
+      "L3": 0,
+      "L4": 0
+    },
+    "index": [
+      {
+        "id": "{{CAPABILITY_ID}}",
+        "name": "{{CAPABILITY_NAME}}",
+        "level": "L0 | L1 | L2 | L3 | L4",
+        "parent": "{{PARENT_CAPABILITY_ID}}",
+        "documentPath": "{{CAPABILITY_DOC_PATH}}",
+        "ruleCount": 0,
+        "componentCount": 0
+      }
+    ]
+  },
+  "coverage": {
+    "mappedCodePercent": 0.0,
+    "unmappedPaths": [
+      {
+        "repository": "{{REPO_NAME}}",
+        "path": "{{PATH}}",
+        "reason": "{{REASON}}",
+        "owner": "{{OWNER}}"
+      }
+    ]
+  },
+  "openQuestions": [
+    {
+      "id": "OQ-{{ID}}",
+      "question": "{{QUESTION_TEXT}}",
+      "context": "{{CONTEXT}}",
+      "owner": "{{OWNER}}",
+      "status": "open | answered | deferred",
+      "answer": "{{ANSWER_IF_RESOLVED}}",
+      "createdAt": "{{CREATED_TIMESTAMP}}",
+      "resolvedAt": "{{RESOLVED_TIMESTAMP}}"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "CF-{{ID}}",
+      "type": "rule-disagreement | boundary-overlap | ownership-unclear",
+      "description": "{{CONFLICT_DESCRIPTION}}",
+      "affectedCapabilities": ["{{CAPABILITY_ID}}"],
+      "astInterpretation": "{{AST_VIEW}}",
+      "llmInterpretation": "{{LLM_VIEW}}",
+      "resolution": "{{RESOLUTION}}",
+      "status": "open | resolved | resolved-by-code",
+      "evidence": ["{{REPO}}@{{SHA}}:{{PATH}}:{{LINES}}"]
+    }
+  ],
+  "integrity": {
+    "domainMapHash": "{{DOMAIN_MAP_SHA256}}",
+    "capabilityDocHashes": {
+      "{{CAPABILITY_ID}}": "{{CAPABILITY_DOC_SHA256}}"
+    },
+    "rulesTraceHashes": {
+      "{{CAPABILITY_ID}}": "{{RULES_TRACE_SHA256}}"
+    }
+  },
+  "metadata": {
+    "agent": "context-curator-agent",
+    "agentVersion": "{{AGENT_VERSION}}",
+    "runId": "{{RUN_ID}}",
+    "previousVersion": "{{PREVIOUS_BASELINE_VERSION}}"
+  }
+}

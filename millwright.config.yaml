@@ -4,7 +4,10 @@ version: 1
 project:
   name: minidon
   capability_repo: ""
-  repos: [/Users/kurtis/tw/test-mw/minidon]
+  repos:
+    - name: minidon
+      path: /Users/kurtis/tw/test-mw/minidon
+      role: backend
 
 profile: baseline/default@0.1.0
 
@@ -37,4 +40,4 @@ hosts:
     models:
       reasoning-heavy: claude-opus-4-5
       balanced: claude-sonnet-4-5
-      fast: claude-haiku-4-5
+      fast: claude-sonnet-4-5

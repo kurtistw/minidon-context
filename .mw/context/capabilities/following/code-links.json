@@ -1,0 +1,446 @@
+{
+  "$schema": "../../schemas/code-links.schema.json",
+  "version": "1.0.0",
+  "capabilityId": "L1-following",
+  "timestamp": "2026-10-30T17:30:00Z",
+  "baselineVersion": "BASELINE-2026-10-30",
+  "components": [
+    {
+      "id": "minidon/social/models.py",
+      "name": "models.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/social/models.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 41
+      },
+      "exports": [
+        {
+          "name": "Follow",
+          "type": "class",
+          "line": 11
+        },
+        {
+          "name": "Block",
+          "type": "class",
+          "line": 24
+        },
+        {
+          "name": "Mute",
+          "type": "class",
+          "line": 34
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/db.py",
+          "type": "extends",
+          "location": {
+            "path": "minidon/social/models.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/db.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/models.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/social/queries.py",
+      "name": "queries.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/social/queries.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 85
+      },
+      "exports": [
+        {
+          "name": "is_following",
+          "type": "function",
+          "line": 12
+        },
+        {
+          "name": "is_blocked_between",
+          "type": "function",
+          "line": 25
+        },
+        {
+          "name": "is_muting",
+          "type": "function",
+          "line": 40
+        },
+        {
+          "name": "following_ids",
+          "type": "function",
+          "line": 47
+        },
+        {
+          "name": "muted_ids",
+          "type": "function",
+          "line": 55
+        },
+        {
+          "name": "blocked_ids",
+          "type": "function",
+          "line": 59
+        },
+        {
+          "name": "count_followers",
+          "type": "function",
+          "line": 66
+        },
+        {
+          "name": "count_following",
+          "type": "function",
+          "line": 77
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/social/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/queries.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/queries.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/social/routes.py",
+      "name": "routes.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/social/routes.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 73
+      },
+      "exports": [
+        {
+          "name": "router",
+          "type": "const",
+          "line": 0
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/deps.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/schemas.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/service.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/routes.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/social/service.py",
+      "name": "service.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/social/service.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 187
+      },
+      "exports": [
+        {
+          "name": "Relationship",
+          "type": "class",
+          "line": 18
+        },
+        {
+          "name": "relationship",
+          "type": "function",
+          "line": 29
+        },
+        {
+          "name": "follow",
+          "type": "function",
+          "line": 44
+        },
+        {
+          "name": "unfollow",
+          "type": "function",
+          "line": 66
+        },
+        {
+          "name": "follow_requests",
+          "type": "function",
+          "line": 76
+        },
+        {
+          "name": "authorize_request",
+          "type": "function",
+          "line": 91
+        },
+        {
+          "name": "reject_request",
+          "type": "function",
+          "line": 101
+        },
+        {
+          "name": "block",
+          "type": "function",
+          "line": 111
+        },
+        {
+          "name": "unblock",
+          "type": "function",
+          "line": 134
+        },
+        {
+          "name": "mute",
+          "type": "function",
+          "line": 143
+        },
+        {
+          "name": "unmute",
+          "type": "function",
+          "line": 153
+        },
+        {
+          "name": "followers",
+          "type": "function",
+          "line": 160
+        },
+        {
+          "name": "following",
+          "type": "function",
+          "line": 172
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/models.py",
+          "type": "imports",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/queries.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/service.py",
+          "type": "calls",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/accounts/service.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/errors.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/social/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        },
+        {
+          "target": "minidon/notifications/models.py",
+          "type": "uses",
+          "location": {
+            "path": "minidon/social/service.py",
+            "line": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "minidon/social/__init__.py",
+      "name": "__init__.py",
+      "type": "module",
+      "repository": "minidon",
+      "path": "minidon/social/__init__.py",
+      "commit": "e1fbd3a9c8d863086cb9e4005b411d7c33c91488",
+      "lines": {
+        "start": 1,
+        "end": 1
+      },
+      "exports": [],
+      "dependencies": []
+    }
+  ],
+  "contracts": [],
+  "testCoverage": [
+    {
+      "componentId": "minidon/social/service.py",
+      "testFiles": [
+        {
+          "path": "tests/test_social.py",
+          "type": "integration",
+          "testCount": 7
+        }
+      ],
+      "coverage": {
+        "lines": null,
+        "branches": null,
+        "functions": null
+      }
+    }
+  ],
+  "ruleImplementations": [],
+  "statistics": {
+    "totalComponents": 5,
+    "totalContracts": 0,
+    "totalDependencies": 26,
+    "averageCoverage": null,
+    "unmappedRules": 0
+  }
+}

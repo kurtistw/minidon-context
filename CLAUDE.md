@@ -34,4 +34,4 @@ writes and shell commands, and blocks calls that would break I-01, I-14 or I-15.
 
 ## Repositories
 
-No repositories configured yet.
+- minidon (backend): /Users/kurtis/tw/test-mw/minidon
