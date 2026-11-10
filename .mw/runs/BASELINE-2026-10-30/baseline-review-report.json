@@ -1,0 +1,147 @@
+{
+  "runId": "BASELINE-2026-10-30",
+  "baselineVersion": "0.1.0",
+  "reviewStarted": "2026-11-02T17:05:22.613Z",
+  "decision": "approved",
+  "domains": [
+    {
+      "id": "L0-minidon",
+      "name": "Minidon Social Network",
+      "childCapabilities": [
+        "L1-accounts",
+        "L1-following",
+        "L1-posting",
+        "L1-timelines",
+        "L1-notifications",
+        "L1-moderation"
+      ],
+      "status": "approved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-10T17:06:30.905Z",
+      "comments": "All 6 capabilities reviewed; conflicts and open questions resolved"
+    }
+  ],
+  "comments": [],
+  "conflictsResolution": [
+    {
+      "id": "CF-001",
+      "type": "unknown",
+      "resolution": "60 minutes is correct; the code (config.py:15, statuses/service.py:117-118, tests) reflects intended behaviour. README.md:24 and the 2026-10-01 decision record are wrong and must be updated to 60. ADR-001-edit-window.md is malformed (mis-captured heredoc) and must be repaired/superseded with a decision recording 60 minutes. BR-009 (30 min) is retired; BR-010 (60 min) stands as STATED. Owner: BA / Product.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:43:23.546Z"
+    },
+    {
+      "id": "CF-002",
+      "type": "unknown",
+      "resolution": "Remove. minidon/lists/ is confirmed dead code (unreachable, tables never created, no tests) and is excluded from the baseline. Schedule its deletion as a follow-up change. If user-curated lists are wanted later, they will be specified and built as a new capability. Closes OQ-020 and OQ-021. Owner: BA / Product.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:43:24.070Z"
+    },
+    {
+      "id": "CF-003",
+      "type": "unknown",
+      "resolution": "Leave as a plain import. social/queries.py is not formalised as a shared-kernel contract for now; the current coupling (5 of 6 capabilities) is accepted. It remains owned by L1-following. Revisit if visibility semantics change. Closes OQ-005. Owner: BA / Product / Domain modelling.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:43:24.604Z"
+    },
+    {
+      "id": "CF-004",
+      "type": "unknown",
+      "resolution": "Formalise. accounts/service.py#get_by_username is designated a stable identity-resolution API owned by L1-accounts. Its signature and behaviour are a cross-capability contract; changes require review by consuming capabilities (following, posting, timelines, moderation). Document the contract as a follow-up. Closes OQ-018. Owner: Tech Lead.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:44:20.446Z"
+    },
+    {
+      "id": "CF-005",
+      "type": "unknown",
+      "resolution": "Keep one capability. L1-posting stays a single capability with two L2 sub-capabilities (status-composition, status-interactions), matching the single statuses/ package. README's Posting and Interacting sections map to those L2s. Closes OQ-019. Owner: BA / Product.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:44:20.684Z"
+    },
+    {
+      "id": "CF-006",
+      "type": "unknown",
+      "resolution": "Accept. Moderation calling statuses/service.py#soft_delete directly is accepted, and the cascading boost deletion is intended behaviour when staff delete a reported status. Update moderation docs (BR-015) to state the cascade explicitly. No narrower API for now. Closes OQ-017. Owner: Tech Lead / BA Product.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:44:20.916Z"
+    },
+    {
+      "id": "CF-007",
+      "type": "unknown",
+      "resolution": "Code is correct. Boosting is restricted to public and unlisted statuses (BOOSTABLE frozenset); followers-only and direct statuses are not boostable, to avoid rebroadcasting beyond the author's chosen audience. README.md:28 must be updated to state the restriction. Closes OQ-008. Owner: BA / Product.",
+      "status": "resolved",
+      "reviewer": "kurtis",
+      "timestamp": "2026-11-09T21:45:03.942Z"
+    }
+  ],
+  "sessionLog": [
+    {
+      "timestamp": "2026-11-02T17:05:22.613Z",
+      "actor": "kurtis",
+      "action": "review_started",
+      "details": "Review session started for run BASELINE-2026-10-30"
+    },
+    {
+      "timestamp": "2026-11-09T21:43:23.546Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-001: 60 minutes is correct; the code (config.py:15, sta..."
+    },
+    {
+      "timestamp": "2026-11-09T21:43:24.070Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-002: Remove. minidon/lists/ is confirmed dead code (unr..."
+    },
+    {
+      "timestamp": "2026-11-09T21:43:24.604Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-003: Leave as a plain import. social/queries.py is not ..."
+    },
+    {
+      "timestamp": "2026-11-09T21:44:20.446Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-004: Formalise. accounts/service.py#get_by_username is ..."
+    },
+    {
+      "timestamp": "2026-11-09T21:44:20.684Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-005: Keep one capability. L1-posting stays a single cap..."
+    },
+    {
+      "timestamp": "2026-11-09T21:44:20.916Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-006: Accept. Moderation calling statuses/service.py#sof..."
+    },
+    {
+      "timestamp": "2026-11-09T21:45:03.942Z",
+      "actor": "kurtis",
+      "action": "conflict_resolved",
+      "details": "CF-007: Code is correct. Boosting is restricted to public ..."
+    },
+    {
+      "timestamp": "2026-11-10T17:06:30.905Z",
+      "actor": "kurtis",
+      "action": "domain_signoff",
+      "details": "L0-minidon: approved"
+    },
+    {
+      "timestamp": "2026-11-10T17:06:46.201Z",
+      "actor": "kurtis",
+      "action": "decision_submitted",
+      "details": "approve: CF-001..007 resolved, OQ-001..021 answered; follow..."
+    }
+  ],
+  "decisionRationale": "CF-001..007 resolved, OQ-001..021 answered; follow-ups captured for Activity 2",
+  "reviewCompleted": "2026-11-10T17:06:46.201Z"
+}
