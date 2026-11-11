@@ -34,4 +34,5 @@ writes and shell commands, and blocks calls that would break I-01, I-14 or I-15.
 
 ## Repositories
 
-- minidon (backend): /Users/kurtis/tw/test-mw/minidon
+- minidon (backend, Python, read-only reference): /Users/kurtis/tw/test-mw/minidon
+- minidon-rust (backend, Rust rebuild target): /Users/kurtis/tw/test-mw/minidon-rust

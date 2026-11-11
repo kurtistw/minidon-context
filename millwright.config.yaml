@@ -8,6 +8,9 @@ project:
     - name: minidon
       path: /Users/kurtis/tw/test-mw/minidon
       role: backend
+    - name: minidon-rust
+      path: /Users/kurtis/tw/test-mw/minidon-rust
+      role: backend
 
 profile: baseline/default@0.1.0
 
