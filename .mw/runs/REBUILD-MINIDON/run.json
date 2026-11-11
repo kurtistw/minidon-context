@@ -1,0 +1,19 @@
+{
+  "id": "REBUILD-MINIDON",
+  "type": "feature",
+  "state": "PULLED",
+  "classification": "major",
+  "repos": [
+    "minidon",
+    "minidon-rust"
+  ],
+  "counters": {
+    "baselineAttempts": 0,
+    "planAttempts": 0,
+    "modificationAttempts": 0,
+    "buildAttempts": 0
+  },
+  "research": true,
+  "createdAt": "2026-11-11T23:15:50.958Z",
+  "updatedAt": "2026-11-11T23:15:50.958Z"
+}
