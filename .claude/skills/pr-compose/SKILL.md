@@ -1,5 +1,5 @@
 ---
-name: PR Composition
+name: pr-compose
 description: Compose PR with ticket/spec/report links
 allowed-tools: [Bash, Read]
 ---

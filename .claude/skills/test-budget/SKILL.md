@@ -1,5 +1,5 @@
 ---
-name: Test Budget
+name: test-budget
 description: Check suite runtime against budget
 allowed-tools: [Bash, Read]
 ---

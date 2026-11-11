@@ -1,5 +1,5 @@
 ---
-name: EARS Authoring
+name: ears-authoring
 description: Write requirements using EARS patterns
 allowed-tools: [Write, Edit]
 ---

@@ -119,6 +119,13 @@ From `domain-map.md` "Unmapped Code" section:
    - Domain list with status
    - Pending items per domain
 
+4. **Suggest a grilling session where review is heavy**
+   For a domain with many `DERIVED` rules or open conflicts, add a Reviewer Checklist item
+   suggesting the reviewer run a grilling session on it: `grill-business-context` for rules,
+   boundaries, terms and question owners; `grill-architecture-context` for unparsed repos,
+   cross-repo calls, orphans and unmapped code. Name the domain and why. The sessions are
+   optional; the reviewer starts them, and you never run one yourself.
+
 ## Output Artifacts
 
 ### review-findings.md
@@ -334,5 +341,8 @@ millwright transition --run <RUN_ID> --to BASELINE_REVIEW --actor baseline-revie
 - provenance-verification
 - conflict-analysis
 - coverage-analysis
+- grilling
+- grill-business-context
+- grill-architecture-context
 
-<!-- millwright prompt b9d85231d5a5 -->
+<!-- millwright prompt 15b6cc627138 -->

@@ -1,5 +1,5 @@
 ---
-name: Run Navigation
+name: run-navigation
 description: Navigate Millwright states and transitions
 allowed-tools: [Bash]
 ---

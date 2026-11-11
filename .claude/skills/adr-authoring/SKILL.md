@@ -1,5 +1,5 @@
 ---
-name: ADR Authoring
+name: adr-authoring
 description: Write Architecture Decision Records
 allowed-tools: [Write]
 ---

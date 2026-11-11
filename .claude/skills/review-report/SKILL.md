@@ -1,5 +1,5 @@
 ---
-name: Review Report
+name: review-report
 description: Create graded findings report
 allowed-tools: [Write, Read]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Provenance Labelling
+name: provenance-labelling
 description: Label requirements as STATED or DERIVED with source
 allowed-tools: [Edit]
 ---

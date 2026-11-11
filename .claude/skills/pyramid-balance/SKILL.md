@@ -1,5 +1,5 @@
 ---
-name: Test Pyramid Balance
+name: pyramid-balance
 description: Choose test layer that proves requirement
 allowed-tools: [Read]
 ---

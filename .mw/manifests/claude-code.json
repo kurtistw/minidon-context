@@ -5,433 +5,433 @@
     {
       "path": ".claude/agents/ingestion-agent.md",
       "hash": "3c80a33a7445b7207d0640999bcef308877c699a399953a2e6401db8d6cbeee5",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.877Z",
       "edited": false
     },
     {
       "path": ".claude/agents/graph-agent.md",
       "hash": "3435462cc1b9d8072a3d448b47c9cf449b84409f3b8e65df956e46a09ad265a5",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.877Z",
       "edited": false
     },
     {
       "path": ".claude/agents/domain-agent.md",
       "hash": "4e7ff6215063114147e62a454d28cd26bd172315b942eb0afb0ff938df564ea2",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.877Z",
       "edited": false
     },
     {
       "path": ".claude/agents/ba-agent.md",
       "hash": "0e046392f07718ade3b91cc56249eecbfe2ce81d870b3e4eff05f8dcc4eab593",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/context-curator-agent.md",
       "hash": "dedc30d8d36c4e1fcbf8b114520c79f84e4d42c1e4aa5557e289083046b78413",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/baseline-review-agent.md",
-      "hash": "58634aab95452d1ae2522fefee76fb4c826af58fbc3a9ee28e9a3889a21182d0",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "hash": "dae22d08979ef76cfabdaa347212b376de5ca255d565e4639f7bb0c437f56075",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/planning-agent.md",
       "hash": "eed975ef82c2a3408803996597921bd2722cd623236e1eab433215b8a3def56e",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/spec-agent.md",
       "hash": "0de91a4c380f6ece17ca699e7cd2c87cc4fc747742c9dbc68969a6c7f9853286",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/qa-planning-agent.md",
       "hash": "3df281028c4d38e4cb869161036883dc0bae1b191888ffe9a2158390f572820c",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/design-agent.md",
       "hash": "fe5bd491ec4681faf7c74f2b44d4441428bff5a6f7c7a9ef596fa38952f5e24f",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/ux-context-agent.md",
       "hash": "523af039df3f993f0f5870bc6828fcc0df079ab232a7abcbf3fea87ba2389fca",
-      "generatedAt": "2026-10-30T16:46:45.791Z",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
       "edited": false
     },
     {
       "path": ".claude/agents/code-plan-agent.md",
       "hash": "50c427c8f49df9f5dc0fba451fcfce8fa02eb1fc40569b1650338d24fc5f686d",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/plan-reviewer-agent.md",
       "hash": "c7929d612a19817ab762037687d80ae083a65f34cd6fcf1e507effafecec9902",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/coding-agent.md",
       "hash": "d1ec04372c04f0a2a36f7cf625e7596b7dacd54b635ff04fe33e1bd3e1e9a899",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/testing-agent.md",
       "hash": "3d83c2f43bff74b33260a05132c2bd0675fa7705af24dece4a44bc0564a245b2",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/review-agent.md",
       "hash": "f3c1b582b010991d6d3f4aee16496514ae1afa9f6cc0be2bc93a2f472a871cb0",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/pr-agent.md",
       "hash": "ac60e4b0774c20b396ca98c2827b18c45ab51c1eb94f07354343520a71f060f3",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/acceptance-agent.md",
       "hash": "cdedd598753e5cae3e4afbc8b80357afd4777cb0064f5205ae7d3cb570e2dab5",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/deployment-agent.md",
       "hash": "1f9c4758ead95580623d5295490e41452839f62890e22750ed08262ce1f991bd",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/monitoring-agent.md",
       "hash": "82ae3a93dbee81b23125e14428ac6a89454c4cfb4ebeda1ebf3866e5bdb272ea",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/orchestrator.md",
       "hash": "a74287c26b30f8006b86b99faea01d768afb391bedd63274567a21117fa6210a",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/agents/sensor-agent.md",
       "hash": "49095c8346ad404ca89dfd04d8fbe63117f6abf5b82519fffefa540c41636fc6",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/subgraph-query/SKILL.md",
-      "hash": "a08877b5471219f82fc456923cd10687003e1f84a7dd8a845e7c520ce4d9d7c4",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "09a74343d834033d19c20694c7bd304f93da7c0f7068af108c2ee904915e551a",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/capability-resolve/SKILL.md",
-      "hash": "ebb13109be8cb6823a49f20b0d2b37a873356452c8b8085cba4385b117d86770",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "855dda30aafe7576072d2fed8663a3f3b7398c4e1e1799d64aa762f95154699d",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/issue-hierarchy/SKILL.md",
-      "hash": "e70002ca772c58d0bcd4d03e87cf6e6ab84c4cfa2d4f8f6cccc8005d7b64d1b1",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "62998ffd622041158a540fc2536951ea1442d11b99389e454f8d8c5f380a0f7a",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/doc-harvest/SKILL.md",
-      "hash": "1d7ff1469d4614bc0b2f054503497568ac7471d04df581e07a2d53606d71d7bd",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "280ab25b6ca64f512eaf64bea5f86504ab1db795bb5e3c9a04fab7592f172e73",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/notes-write/SKILL.md",
-      "hash": "e1dd84242f15c26a6419802f38b242d934f1a6739f0cc4218b99d1d185d24bf0",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "d368cd4a26c6a11fe76848ea3b02336b5a9797cd9b37e6e6d22ab385a65ae9cf",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
       "edited": false
     },
     {
       "path": ".claude/skills/design-context/SKILL.md",
-      "hash": "4be76332b7896f5a134ad7858e7dbf38194c8d44d8892885d58bb97995e14bf1",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "6f4197fbcc698cbd7c83f25bb42c0de52e7c8054fdb651406d4347fcb9c055cd",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/provenance-trace/SKILL.md",
-      "hash": "6807ac5d1df1155ea62fbdbf612811f945af2431d4a1dbcffd326c716354f09f",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "66a4fcfb3b01652154a76cf6f186b178a1a79b1cafa3718609dd7f075d03540a",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/context-reconcile/SKILL.md",
-      "hash": "91c014572a9a417235aaafd9f4a73d19a0801af241df4b49ef9b4d3f3b02e10c",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "bd7571b674c0124ae68f9c32790de5880657736a0a9601455fc9564e8b2b3301",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/ears-authoring/SKILL.md",
-      "hash": "6e170eae61bd0fd4f7f8417c89442a2570668378f329ca72ad97ec6cd44faa69",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "bb4835131f8f100f775df521f9f9edcc729c9c0c1fdf6be17432d489a55a6c6d",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/gwt-authoring/SKILL.md",
-      "hash": "73b4f1200bc2166b4a042cf37f4d0fb79c2e6827e9efb7a05e288eb39ed93dc1",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "cd56a6f863ea1f0fc526cc4f28bd4024c3f8780a46e69042fc985cd7a422845b",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/provenance-labelling/SKILL.md",
-      "hash": "2177d533e0aeb149a58ccfa3879a3c42250f120d09a2d1077706c1a2fa3832a2",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "2f9edbef0823107d2dd6e7cde7851b9bd151bb9e7fe177edf6f30f688c181a9d",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/open-point-routing/SKILL.md",
-      "hash": "f6854f57b535c4df6a0d6a68553c1989d49f95f948e4998a37c896ebdfba9cda",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "aa75a948b94ccb1e8e3182a42b37acf0902fcb08d86e3e2cee50261255c4776f",
+      "generatedAt": "2026-11-11T20:03:22.880Z",
       "edited": false
     },
     {
       "path": ".claude/skills/spec-delta/SKILL.md",
-      "hash": "18c5be996dcf8d15119edb564209cb655f54be0d64fb375a5219ec266ae683da",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "31a91f6b9249d9f0e77f0a757ce6eae862c4525a8cb494094e53ec665818cc48",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
       "edited": false
     },
     {
       "path": ".claude/skills/onepager-craft/SKILL.md",
-      "hash": "4b9b245fc8fa7344e3115d0379ad5f428fecb581d72af80cb59e2d698e8a489d",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "871b7851b8dfc51f30a22eaa25f3cf6087126c6603cee8c7964ad283ffcd1890",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
       "edited": false
     },
     {
       "path": ".claude/skills/adr-authoring/SKILL.md",
-      "hash": "607136f7df06b606c7306b24e4af98f8f9a4edbd4d965c45a478d7e49deef93e",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "12883b5d3497761a6d67316db13d1b10ff5902249dbb53829ec58ceed6e394f4",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
       "edited": false
     },
     {
       "path": ".claude/skills/threat-model-delta/SKILL.md",
-      "hash": "81c2e0cf5ba7681047a304dab49f9d729fdd63eec9380c7e00015663cbf6d96b",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "b5c9144540c5d6e75116a21988103765081220764147d21d2fb29e87d66f66c1",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
       "edited": false
     },
     {
       "path": ".claude/skills/repo-plan-decompose/SKILL.md",
-      "hash": "425dc9bcd0193f68ce9b27fedc301c3a14a0451fe7c7616cef3159a3e465bbe0",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "9083af61f9fc20fe09188c92a3f73338331b46fda5097f1e20733a965e3cdb60",
+      "generatedAt": "2026-11-11T20:03:22.882Z",
       "edited": false
     },
     {
       "path": ".claude/skills/wave-order/SKILL.md",
-      "hash": "05e36bd20248627855478e6be0741cf15eaf64ed4d293e23c5860d2512b30ca1",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "c3f7d23a2434effb4d9616c9ccd6c10bc22f69497d86806fbf4c70deccbadee1",
+      "generatedAt": "2026-11-11T20:03:22.882Z",
       "edited": false
     },
     {
       "path": ".claude/skills/contract-compat/SKILL.md",
-      "hash": "39380ca8b21b68865541d3924dbdd593c566cf25f323c9a5256b28de6e73eea0",
-      "generatedAt": "2026-10-30T16:46:45.792Z",
+      "hash": "1fef09c079ec7ac9cd386e1ee7b235a77c617fedb137fd94b6047dc670c63927",
+      "generatedAt": "2026-11-11T20:03:22.882Z",
       "edited": false
     },
     {
       "path": ".claude/skills/test-first-loop/SKILL.md",
-      "hash": "84e4e97025113e283624d38311f282007923242fc6b420c6c76b169613ba9f12",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "191df8f591e73f6ffc676317d981401c20bd9e217ab1c71844cd861beff8b977",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/change-sizing/SKILL.md",
-      "hash": "10483a2946bdf89bda25b7291e2e6627da6251014412746a5b5d91ec908034c0",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "8e5cd15ff763d2ad5139c862e063f99f560bc3e2cac0ab76b170f6e40405eae4",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/pyramid-balance/SKILL.md",
-      "hash": "7caa7caa729597b0aa7dd6b81709d9d9f58c1700f6f8b249173ed6d7d08e4a31",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "9490f334cde0f1d0b302760207524b79165918ccc45f0dcd3dc60b0a7e1fb84b",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/traceability-matrix/SKILL.md",
-      "hash": "c5e7e93b92b98239f2eb3aaf2b57f876f378371f67338a0bd864ba5e9ed027a2",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "5d46fd1607675bbe96b941a8f96a6843cb51c4a86b640f502173f075198cd510",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/coverage-delta/SKILL.md",
-      "hash": "a451735e9a4cdda2f0134e9199c78ef8d305595fca53d378417b4ffb27da4b15",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "8788adc4a711cb6c626a35aa00d1384b7499b730717d93ee462c8adeeefcf82f",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/playwright-authoring/SKILL.md",
-      "hash": "bf8520f6c7ccb1ceccc1264661d9c676d907dac49994efa6ead1f1508bbbea49",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "1fb7175698e5cca5bacf5e27e5c42a22d0c53ca445ab94ae4a29fe04db0ea55d",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/test-budget/SKILL.md",
-      "hash": "5246ffc91dd918c26aacb6523ffd70dacc30260e1b221c414a5bf460174022e9",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "74c0cd0ffea7ed068c56910a6e2c216a0eba312e1dacd6080848b31c35042977",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/spec-conformance/SKILL.md",
-      "hash": "2060616fdb7c55ff7225c0c161ff0d84219e03ada2f84542b1b57f208470178a",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "c95f6542b9114a167d6e0f61509bce3cbc0368ed8ba9487b8f94bd1247e47553",
+      "generatedAt": "2026-11-11T20:03:22.883Z",
       "edited": false
     },
     {
       "path": ".claude/skills/review-report/SKILL.md",
-      "hash": "0091ffb07d91a3064066a8326f6016e8f32bede6798363e8a2279bcae826d16b",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "4ce613f90103ec6ecb9d6856ca651f270e39cf9c0d86b3575a817b2706f8d80b",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
       "edited": false
     },
     {
       "path": ".claude/skills/pr-compose/SKILL.md",
-      "hash": "b5d2579641fc51ff947a3b613837a849c63ea1764b04af9b67710a1830b1b794",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "e87665f628a40768bc8f6d7c7f0f3f8e2e8a5e30803b032a6205044269a42fda",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
       "edited": false
     },
     {
       "path": ".claude/skills/release-readiness/SKILL.md",
-      "hash": "2d8e7fbcc9aa88787c6117f3c3e8bc57d34a1ac93ca5c87c4e858e45ed82335c",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "96c1c12a00767256ca1562224d75b2a51f928a8ea1e6ca1d6188306727fc17cd",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
       "edited": false
     },
     {
       "path": ".claude/skills/rollback-plan/SKILL.md",
-      "hash": "6dde93b28222392a9180503c74a2db9f39859b5087c7018f6bd2c8cf646713c5",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "a558a2e780f6012b51d3df0be17c6e12778d8ac17c4517239eafaf433254940c",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
       "edited": false
     },
     {
       "path": ".claude/skills/sensor-authoring/SKILL.md",
-      "hash": "a9a4dcc928d15a26b89cad357dc709ebfe3cc4add918023517e23afdffa90a18",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "8c13ca9396aa574726177f79d6814dab5f6d8b819bf73630d5f279fafdab7175",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
       "edited": false
     },
     {
       "path": ".claude/skills/run-navigation/SKILL.md",
-      "hash": "4a2b92df904c3910d670e83f0ae1cc08b9836774a7c459713a730b4d86e16130",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "fc9ced44b7ab6320c18631fb3b917eb388bbdf90e37b60d52b507fc27295d064",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/skills/gate-etiquette/SKILL.md",
-      "hash": "d80741423afb1687c9f3c3870a4935d8ef1405f79292aff38ba911fee7959a3d",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "f0657952c6e18841df45db27722714abe99f4e1c95992c5773d2c67e93f63a18",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw.md",
-      "hash": "9ac58c25b83e19585628e7e2af5403c6291727b3b197b1bc26c096f5dcafd899",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "1c05023b5202573204a05f6d643d0d2cf2e58c8e869e9d4e8ab8294c9eac475f",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-status.md",
       "hash": "8b1cf8f5f3468f18f6ed569737be1fe00bbb0a511dab488af155a2e759a6e5f4",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-gate.md",
-      "hash": "8e48b719869557879e4b139c093e27e8b598ffc812c9ec1298ca51b5b0449305",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "hash": "562c997b94937a73f0862f507c91d490ffc345ebef0f1b04d157677db1ce8e95",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-start.md",
       "hash": "e0e34fe36ea3431992e47a134fc69ceeb8c2f942e7af079cd735434983832572",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-plan.md",
       "hash": "23e1324f6afca6340d510a347d9ed365ca7e87a2718579b9aa9f09124f7a8db1",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-spec.md",
       "hash": "c089f3c385c5f62d49f90a0e9e44fec58b24f72952283b4efc81e518dc4d8077",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-design.md",
       "hash": "e99a2766409e4f8687510c6b93500a87c3014f6cdc7225ba2c7c34637e4db9b9",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-code-plan.md",
       "hash": "dbd929aafbdddbd79c8fbcadfeb8f177d778865e0ed473a11438d4f221494b16",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-build.md",
       "hash": "694c79f6e74250b32ece2b11cec0b6b19310cdfb4924080dc8ef493c944a738b",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-review.md",
       "hash": "0b651f9993bb9d6ee8d1a2d68c0dc56f956588867a720cff5c4f21f5612f92e2",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-pr.md",
       "hash": "9fe5c61a9981448fb019c716e33f5e288637e55c4a896fd20a17581aaafb4555",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-qa.md",
       "hash": "34c08e54ca155db405726ec1b8f2078139ca7c78c4a3673a902a2897edd8a59e",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-release.md",
       "hash": "ad5b47bafd54842f489106283a70dad17737bd637a80e82bd2d0cb0278d3ecac",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-monitor.md",
       "hash": "161110f36d4c611a75cca68a945a4b0529a4cab23d2d89f5d796aa96d0537489",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/commands/mw-context.md",
       "hash": "1b22772f67156274f19618c93f61f7f3dfc5b43a0afab2f1e49c2f09495e35b0",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     },
     {
       "path": ".claude/settings.json",
       "hash": "17e7b7a77c279be28769d52f4ac7ea06f7573dfbad7a7eb6ba29bf34f2b59bcc",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false,
       "managed": [
         "Bash(gh pr merge)",
@@ -443,15 +443,75 @@
     {
       "path": ".mcp.json",
       "hash": "38935ac9bd01a9a91be32d16fc131d8b9d46fbcede88855e85c01f31c7347615",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.886Z",
       "edited": false
     },
     {
       "path": "CLAUDE.md",
       "hash": "71f8a53736fd0c5a45a2363ca59281840d281e47f7e4983d6f5ad00b2ecea5cc",
-      "generatedAt": "2026-10-30T16:46:45.793Z",
+      "generatedAt": "2026-11-11T20:03:22.886Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/agents/research-agent.md",
+      "hash": "965ae6bfc4b6eded958a4eceb4efd1f1c8cc1990697d093693b09a13a64366d5",
+      "generatedAt": "2026-11-11T20:03:22.878Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/agents/research-reviewer-agent.md",
+      "hash": "ededc5871ae868ba8c872703258e47ad5e331e5689ba3ca65ae4ca6b214b2551",
+      "generatedAt": "2026-11-11T20:03:22.879Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/research-intake/SKILL.md",
+      "hash": "ffc913988deed21ea9981793b4f20eb1280a9031a3d5e4349960868fa2041035",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/outcome-authoring/SKILL.md",
+      "hash": "317ccc59c140f152fc513ae5f0ad5a1b83ca96cd1739a4990570b8047e80155d",
+      "generatedAt": "2026-11-11T20:03:22.881Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/flow-mapping/SKILL.md",
+      "hash": "55a8015a8ae4529ab168551a19cd3d7ce5bab7a1c82f65aa35aa71c6b8302e2e",
+      "generatedAt": "2026-11-11T20:03:22.882Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/research-estimate/SKILL.md",
+      "hash": "a373782871662870ff1f234c41896b59f11b71c5e801ddb97617ec79f13ff2fe",
+      "generatedAt": "2026-11-11T20:03:22.882Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/grilling/SKILL.md",
+      "hash": "a5efa503eb2b3ac04a0cab45fe479898aa4d93935e9f9f367ecdeef3405c0995",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/grill-business-context/SKILL.md",
+      "hash": "1962ab6d9ce009072e41e3d3c85a4df3d2341ccb9309139a30a07e83923e2fb7",
+      "generatedAt": "2026-11-11T20:03:22.884Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/skills/grill-architecture-context/SKILL.md",
+      "hash": "f9cc38d5385c7058e281c7edbb66b73b093ef9cf2af3c2ff7e2abe159bea7606",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
+      "edited": false
+    },
+    {
+      "path": ".claude/commands/mw-research.md",
+      "hash": "651e5d4eba51103023b2393273a2fe634423762308a8434e39dd937c507d3d21",
+      "generatedAt": "2026-11-11T20:03:22.885Z",
       "edited": false
     }
   ],
-  "lastSync": "2026-10-30T16:46:45.793Z"
+  "lastSync": "2026-11-11T20:03:22.886Z"
 }

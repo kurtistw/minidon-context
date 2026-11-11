@@ -1,5 +1,5 @@
 ---
-name: Design Context
+name: design-context
 description: Extract Figma context with metadata-first approach
 allowed-tools: [mcp:figma]
 ---

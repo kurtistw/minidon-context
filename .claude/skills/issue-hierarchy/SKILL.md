@@ -1,5 +1,5 @@
 ---
-name: Issue Hierarchy
+name: issue-hierarchy
 description: Resolve epic → feature → story with two round-trips
 allowed-tools: [mcp:atlassian]
 ---

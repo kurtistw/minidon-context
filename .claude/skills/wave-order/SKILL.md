@@ -1,5 +1,5 @@
 ---
-name: Wave Order
+name: wave-order
 description: Derive build waves from contract dependencies
 allowed-tools: [Read, Bash]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Spec Conformance
+name: spec-conformance
 description: Verify code does what spec said
 allowed-tools: [Read, Grep]
 ---

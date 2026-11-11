@@ -1,5 +1,5 @@
 ---
-name: Document Harvest
+name: doc-harvest
 description: Find relevant Confluence/local pages by CQL/tag
 allowed-tools: [Read, mcp:atlassian]
 ---

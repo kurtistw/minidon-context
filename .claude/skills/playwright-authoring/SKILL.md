@@ -1,5 +1,5 @@
 ---
-name: Playwright Authoring
+name: playwright-authoring
 description: Write accessibility-first Playwright tests
 allowed-tools: [Write, mcp:playwright]
 ---

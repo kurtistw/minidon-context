@@ -1,5 +1,5 @@
 ---
-name: Change Sizing
+name: change-sizing
 description: Estimate if change integrates same-day
 allowed-tools: [Read, Grep]
 ---

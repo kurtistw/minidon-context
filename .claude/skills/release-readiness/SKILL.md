@@ -1,5 +1,5 @@
 ---
-name: Release Readiness
+name: release-readiness
 description: Check UAT evidence and observability
 allowed-tools: [Read, Bash]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Capability Resolution
+name: capability-resolve
 description: Map a ticket to exactly one L3/L4 capability
 allowed-tools: [Read, Grep]
 ---

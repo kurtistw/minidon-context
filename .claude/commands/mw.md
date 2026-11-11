@@ -41,23 +41,28 @@ edit `run.json` / `ledger.jsonl` to change state — agents advance a run only w
 
 | State | Delegate to |
 |-------|-------------|
-| PULLED, CONTEXT_READY, PLAN_DRAFT | planning-agent |
-| SPEC_DRAFT | spec-agent |
+| PULLED, CONTEXT_READY, PLAN_DRAFT, PRD_NEEDS_MODIFICATION | planning-agent |
+| RESEARCH_INTAKE, RESEARCH_DRAFT, RESEARCH_ESTIMATE, RESEARCH_NEEDS_MODIFICATION | research-agent (with design-agent, qa-planning-agent and ux-context-agent contributing in RESEARCH_DRAFT) |
+| RESEARCH_SECURITY | design-agent |
+| RESEARCH_FLOWS | ux-context-agent |
+| RESEARCH_READY | research-reviewer-agent |
+| SPEC_DRAFT | ux-context-agent, then spec-agent |
+| READY_FOR_DEV_NEEDS_MODIFICATION, READY_FOR_DEV_PENDING, SPEC_FOLDBACK | spec-agent |
 | QA_TEST_AUTHOR | qa-planning-agent |
 | ARCH_DECISION | design-agent |
-| REPO_PLAN | code-plan-agent |
+| REPO_PLAN, GATE_A_NEEDS_MODIFICATION | code-plan-agent |
 | PLAN_REVIEW | plan-reviewer-agent |
-| BUILD | coding-agent |
+| BUILD, GATE_B_NEEDS_MODIFICATION, GATE_C_NEEDS_MODIFICATION | coding-agent |
 | TESTS_LANDED | testing-agent |
 | CHANGE_REVIEW | review-agent |
-| PR_RAISED | pr-agent |
+| PR_RAISED | pr-agent (raises the PR; a named human merges it, I-15) |
 | ACCEPTANCE_AUTOMATION | acceptance-agent |
 | UAT_DEPLOYED, RELEASED | deployment-agent |
 | MONITORING | monitoring-agent |
 
 ## 4. Stop at Gates
 
-If state is a gate (PRD_REVIEW, READY_FOR_DEV, GATE_A, GATE_B, GATE_C):
+If state is a gate (RESEARCH_REVIEW, PRD_REVIEW, READY_FOR_DEV, GATE_A, GATE_B, GATE_C):
 - Report the gate status to the user
 - Explain what materials are ready for review
 - Wait for human to use `/mw-gate approve` or `/mw-gate reject`

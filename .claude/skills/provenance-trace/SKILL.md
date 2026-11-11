@@ -1,5 +1,5 @@
 ---
-name: Provenance Trace
+name: provenance-trace
 description: Produce rules-trace.md with repo@sha:path:lines
 allowed-tools: [Read, Grep, Bash]
 ---

@@ -1,5 +1,5 @@
 ---
-name: One-Pager Craft
+name: onepager-craft
 description: Create BA-readable one-pager without code paths
 allowed-tools: [Write, Edit]
 ---

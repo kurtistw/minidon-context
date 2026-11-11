@@ -1,5 +1,5 @@
 ---
-name: Rollback Plan
+name: rollback-plan
 description: Document tested rollback procedure
 allowed-tools: [Write, Read]
 ---

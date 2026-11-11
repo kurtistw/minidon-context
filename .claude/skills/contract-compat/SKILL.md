@@ -1,5 +1,5 @@
 ---
-name: Contract Compatibility
+name: contract-compat
 description: Check API/schema/event compatibility
 allowed-tools: [Read, Bash]
 ---

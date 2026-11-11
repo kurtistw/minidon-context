@@ -1,5 +1,5 @@
 ---
-name: Gate Etiquette
+name: gate-etiquette
 description: Understand what gates need, never self-approve
 ---
 

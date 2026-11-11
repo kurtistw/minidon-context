@@ -1,5 +1,5 @@
 ---
-name: Open Point Routing
+name: open-point-routing
 description: Route open points to BA/Tech Lead/PO with owner
 allowed-tools: [Write, Edit]
 ---

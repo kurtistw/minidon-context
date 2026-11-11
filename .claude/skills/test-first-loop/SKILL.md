@@ -1,5 +1,5 @@
 ---
-name: Test-First Loop
+name: test-first-loop
 description: Red→green discipline with proper commits
 allowed-tools: [Write, Edit, Bash]
 ---

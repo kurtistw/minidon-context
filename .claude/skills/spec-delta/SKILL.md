@@ -1,5 +1,5 @@
 ---
-name: Spec Delta
+name: spec-delta
 description: Write changes as ADDED/MODIFIED/REMOVED
 allowed-tools: [Write, Edit]
 ---

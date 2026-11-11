@@ -1,5 +1,5 @@
 ---
-name: Threat Model Delta
+name: threat-model-delta
 description: STRIDE-lite delta against change surface
 allowed-tools: [Write, Read]
 ---

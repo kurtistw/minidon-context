@@ -1,5 +1,5 @@
 ---
-name: Traceability Matrix
+name: traceability-matrix
 description: Build criterion → test → layer mapping
 allowed-tools: [Read, Write, Bash]
 ---

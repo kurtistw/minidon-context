@@ -1,5 +1,5 @@
 ---
-name: Sensor Authoring
+name: sensor-authoring
 description: Turn escaped defect into test/alert/policy
 allowed-tools: [Write, Read]
 ---

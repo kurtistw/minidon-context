@@ -1,5 +1,5 @@
 ---
-name: Notes Writer
+name: notes-write
 description: Write to the local markdown notes store
 allowed-tools: [Write, Edit]
 ---

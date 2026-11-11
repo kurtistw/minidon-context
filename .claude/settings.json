@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/kurtis/tw/Millwright-MW/bin/millwright hook pre-tool-use"
+            "command": "npx --no millwright hook pre-tool-use"
           }
         ]
       }

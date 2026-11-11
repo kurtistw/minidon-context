@@ -28,7 +28,7 @@ decided; ask for their name or handle if you don't know it. Never decide a gate 
 `/mw-gate approve`
 
 1. Run `millwright next --run <TICKET>` to confirm the run is at a gate
-   (PRD_REVIEW, READY_FOR_DEV, GATE_A, GATE_B, GATE_C) and to see the next state
+   (RESEARCH_REVIEW, PRD_REVIEW, READY_FOR_DEV, GATE_A, GATE_B, GATE_C) and to see the next state
 2. Record the decision:
 ```bash
 millwright transition --run <TICKET> --to <NEXT_STATE> --trigger gate.approve --actor <human-name>

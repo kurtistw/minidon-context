@@ -1,5 +1,5 @@
 ---
-name: Repo Plan Decomposition
+name: repo-plan-decompose
 description: Create per-file plans with Why lines
 allowed-tools: [Write, Read, Grep]
 ---

@@ -1,5 +1,5 @@
 ---
-name: GWT Authoring
+name: gwt-authoring
 description: Write Given/When/Then acceptance criteria
 allowed-tools: [Write, Edit]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Coverage Delta
+name: coverage-delta
 description: Compute diff-scoped coverage
 allowed-tools: [Bash, Read]
 ---

@@ -1,5 +1,5 @@
 ---
-name: Subgraph Query
+name: subgraph-query
 description: Pull minimal impacted subgraph for a story
 allowed-tools: [Read, Grep, Glob]
 ---
