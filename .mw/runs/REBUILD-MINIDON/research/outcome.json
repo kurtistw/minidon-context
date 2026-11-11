@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "id": "OUT-001",
+  "run": "REBUILD-MINIDON",
+  "researchVersion": 1,
+  "pinned": {},
+  "classification": "major",
+  "status": "draft",
+  "outcome": {
+    "statement": "",
+    "problem": "",
+    "affected": [],
+    "why": {
+      "summary": "",
+      "source": {
+        "type": "ticket",
+        "reference": "ticket.md"
+      },
+      "confidence": "DERIVED"
+    }
+  },
+  "valueHypothesis": {
+    "for": "",
+    "if": "",
+    "then": "",
+    "because": [],
+    "metrics": [],
+    "confidence": "DERIVED",
+    "falsifiedIf": ""
+  },
+  "metrics": [],
+  "scope": {
+    "in": [],
+    "out": [],
+    "nonGoals": []
+  },
+  "capabilities": [],
+  "guardrails": [],
+  "stakeholders": {
+    "decisionMakers": [],
+    "accountableOwner": ""
+  },
+  "links": {}
+}
