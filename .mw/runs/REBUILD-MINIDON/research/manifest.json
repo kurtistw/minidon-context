@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 2,
+  "researchVersion": 4,
   "entries": [
     {
       "path": "inputs/README.md",
@@ -41,6 +41,46 @@
       "archive": "history/inputs.v001.json",
       "sha256": "sha256:6c5b45dfb7433e35e23026c929c2cfd58db1ea7384c3698db826d782d57a6433",
       "ts": "2026-11-11T23:39:18.144Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs/baseline-metrics.md",
+      "version": 1,
+      "archive": "history/inputs__baseline-metrics.v001.md",
+      "sha256": "sha256:1d6ebec970f46df1b8f3e8fe7622bfe4a51bb99b73240c2212ed020dd7eb3924",
+      "ts": "2026-11-12T03:30:24.374Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs/decision-makers.md",
+      "version": 1,
+      "archive": "history/inputs__decision-makers.v001.md",
+      "sha256": "sha256:2cb69fcbc972a7befce4ddb4bdef3e325ce1a6b131f35e77ab01e6503b004162",
+      "ts": "2026-11-12T03:30:24.374Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 2,
+      "archive": "history/gaps.v002.json",
+      "sha256": "sha256:3978dfc2195bc829343314d9e9cacde43a74f4fb7ea2b8af5e4dbdd6fb0e73ac",
+      "ts": "2026-11-12T03:30:24.381Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 2,
+      "archive": "history/gaps.v002.md",
+      "sha256": "sha256:bfe443815c43f1674740a6372b3e995ca68001be050ef87734750b14169b1f43",
+      "ts": "2026-11-12T03:30:24.381Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs.json",
+      "version": 2,
+      "archive": "history/inputs.v002.json",
+      "sha256": "sha256:005603a3767afd00c0abd437f1c4555e978ee89a74c7a1283f6436c26dc24f6a",
+      "ts": "2026-11-12T03:30:24.382Z",
       "actor": "kurtis.angell@thoughtworks.com"
     }
   ]

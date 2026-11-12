@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 2,
+  "researchVersion": 4,
   "gaps": [
     {
       "id": "GAP-001",
@@ -43,17 +43,32 @@
           "result": "no metric has a sourced, non-weak baseline"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "research/inputs/baseline-metrics.md"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": "research/inputs/baseline-metrics.md",
+          "hash": "sha256:1d6ebec970f46df1b8f3e8fe7622bfe4a51bb99b73240c2212ed020dd7eb3924"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-002",
@@ -95,17 +110,32 @@
           "result": "no named decision-maker or reviewer"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "research/inputs/decision-makers.md"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": "research/inputs/decision-makers.md",
+          "hash": "sha256:2cb69fcbc972a7befce4ddb4bdef3e325ce1a6b131f35e77ab01e6503b004162"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-003",
@@ -145,13 +175,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -193,13 +229,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -241,13 +283,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -293,13 +341,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -345,13 +399,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -393,13 +453,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -441,13 +507,19 @@
       ],
       "status": "open",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
           "event": "opened",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
         }
       ]
     },
@@ -484,9 +556,9 @@
           "result": "open question OQ-001"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -494,8 +566,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-011",
@@ -530,9 +617,9 @@
           "result": "open question OQ-002"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -540,8 +627,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-012",
@@ -576,9 +678,9 @@
           "result": "open question OQ-003"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -586,8 +688,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-013",
@@ -622,9 +739,9 @@
           "result": "open question OQ-004"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -632,8 +749,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-014",
@@ -668,9 +800,9 @@
           "result": "open question OQ-005"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -678,8 +810,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-015",
@@ -714,9 +861,9 @@
           "result": "open question OQ-006"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -724,8 +871,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-016",
@@ -760,9 +922,9 @@
           "result": "open question OQ-007"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -770,8 +932,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-017",
@@ -806,9 +983,9 @@
           "result": "open question OQ-008"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -816,8 +993,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-018",
@@ -852,9 +1044,9 @@
           "result": "open question OQ-009"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -862,8 +1054,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-019",
@@ -898,9 +1105,9 @@
           "result": "open question OQ-010"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -908,8 +1115,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-020",
@@ -944,9 +1166,9 @@
           "result": "open question OQ-011"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -954,8 +1176,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-021",
@@ -990,9 +1227,9 @@
           "result": "open question OQ-012"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1000,8 +1237,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-022",
@@ -1036,9 +1288,9 @@
           "result": "open question OQ-013"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1046,8 +1298,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-023",
@@ -1082,9 +1349,9 @@
           "result": "open question OQ-014"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1092,8 +1359,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-024",
@@ -1128,9 +1410,9 @@
           "result": "open question OQ-015"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1138,8 +1420,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-025",
@@ -1174,9 +1471,9 @@
           "result": "open question OQ-016"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1184,8 +1481,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-026",
@@ -1220,9 +1532,9 @@
           "result": "open question OQ-017"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1230,8 +1542,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-027",
@@ -1266,9 +1593,9 @@
           "result": "open question OQ-018"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1276,8 +1603,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-028",
@@ -1312,9 +1654,9 @@
           "result": "open question OQ-019"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1322,8 +1664,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-029",
@@ -1358,9 +1715,9 @@
           "result": "open question OQ-020"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1368,8 +1725,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     },
     {
       "id": "GAP-030",
@@ -1404,9 +1776,9 @@
           "result": "open question OQ-021"
         }
       ],
-      "status": "open",
+      "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 2,
+      "lastSeenVersion": 4,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -1414,8 +1786,23 @@
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 2,
           "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
         }
-      ]
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
     }
   ]
 }
