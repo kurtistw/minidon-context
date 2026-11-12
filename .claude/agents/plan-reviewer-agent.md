@@ -1,7 +1,7 @@
 ---
 name: plan-reviewer-agent
 description: Review implementation plans against specs
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Plan Reviewer Agent

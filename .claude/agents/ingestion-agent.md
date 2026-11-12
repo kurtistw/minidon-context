@@ -1,7 +1,7 @@
 ---
 name: ingestion-agent
 description: Discover and index source repositories, identifying file types, languages, entry points, and project structure for baseline runs.
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Ingestion Agent

@@ -1,7 +1,7 @@
 ---
 name: testing-agent
 description: Write tests at planned layers, compute coverage delta
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Testing Agent

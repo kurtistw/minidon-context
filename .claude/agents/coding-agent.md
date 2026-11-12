@@ -1,7 +1,7 @@
 ---
 name: coding-agent
 description: Implement code following test-first discipline
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Coding Agent

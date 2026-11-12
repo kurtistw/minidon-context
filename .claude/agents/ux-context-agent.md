@@ -1,7 +1,7 @@
 ---
 name: ux-context-agent
 description: Extract Figma context for implementation
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # UX Context Agent

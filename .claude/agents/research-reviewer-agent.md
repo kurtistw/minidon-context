@@ -1,7 +1,7 @@
 ---
 name: research-reviewer-agent
 description: Independently check the research pack before the research gate
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Research Reviewer Agent

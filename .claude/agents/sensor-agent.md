@@ -1,7 +1,7 @@
 ---
 name: sensor-agent
 description: Analyze rejection patterns, propose new policies
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Sensor Agent

@@ -1,7 +1,7 @@
 ---
 name: review-agent
 description: Review code changes for spec conformance
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Review Agent

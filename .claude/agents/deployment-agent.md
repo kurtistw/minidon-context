@@ -1,7 +1,7 @@
 ---
 name: deployment-agent
 description: Manage UAT and production deployments
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Deployment Agent

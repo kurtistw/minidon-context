@@ -1,7 +1,7 @@
 ---
 name: ba-agent
 description: Business Analyst agent that drafts capability documentation and rule traces from the domain map, graph, and existing docs.
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # BA Agent (Business Analyst)

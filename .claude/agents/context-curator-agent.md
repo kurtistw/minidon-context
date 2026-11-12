@@ -1,7 +1,7 @@
 ---
 name: context-curator-agent
 description: Reconcile context sources without picking a winner, list conflicts, and compile baseline.json with every open question owned.
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Context Curator Agent

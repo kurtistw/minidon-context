@@ -1,7 +1,7 @@
 ---
 name: acceptance-agent
 description: Run acceptance tests against merged code
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Acceptance Agent

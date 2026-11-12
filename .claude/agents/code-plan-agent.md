@@ -1,7 +1,7 @@
 ---
 name: code-plan-agent
 description: Decompose specs into per-file implementation plans
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Code Plan Agent

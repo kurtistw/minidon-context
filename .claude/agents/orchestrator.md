@@ -1,7 +1,7 @@
 ---
 name: orchestrator
 description: Primary agent that delegates to specialists
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Orchestrator

@@ -1,7 +1,7 @@
 ---
 name: domain-agent
 description: Extract domain concepts and business terms and map code to capabilities, listing any code that belongs to no capability.
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Domain Agent

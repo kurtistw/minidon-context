@@ -1,7 +1,7 @@
 ---
 name: planning-agent
 description: Map tickets to capabilities, draft one-pager plans
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Planning Agent

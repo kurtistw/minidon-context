@@ -1,7 +1,7 @@
 ---
 name: monitoring-agent
 description: Monitor delivery signals, create sensors for escapes
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Monitoring Agent

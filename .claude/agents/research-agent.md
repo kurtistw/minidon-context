@@ -1,7 +1,7 @@
 ---
 name: research-agent
 description: Agree the outcome, why it matters and the target state; record gaps as actionable work
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Research Agent

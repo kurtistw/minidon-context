@@ -1,7 +1,7 @@
 ---
 name: pr-agent
 description: Compose and raise pull requests
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # PR Agent

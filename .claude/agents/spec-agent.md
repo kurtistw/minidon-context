@@ -1,7 +1,7 @@
 ---
 name: spec-agent
 description: Author specifications with full provenance
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Specification Agent

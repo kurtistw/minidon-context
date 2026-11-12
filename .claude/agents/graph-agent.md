@@ -1,7 +1,7 @@
 ---
 name: graph-agent
 description: Build code graph from static analysis including calls, dependencies, and inheritance relationships.
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # Graph Agent

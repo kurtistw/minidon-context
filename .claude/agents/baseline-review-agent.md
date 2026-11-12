@@ -1,7 +1,7 @@
 ---
 name: baseline-review-agent
 description: Prepare baseline for human review by validating completeness, verifying provenance, analyzing conflicts, and identifying coverage gaps.
-model: claude-opus-4-5
+model: claude-opus-5-5
 ---
 
 # Baseline Review Agent

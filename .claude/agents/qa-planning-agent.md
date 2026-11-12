@@ -1,7 +1,7 @@
 ---
 name: qa-planning-agent
 description: Create test plans and scenarios
-model: claude-sonnet-4-5
+model: claude-sonnet-5-5
 ---
 
 # QA Planning Agent
