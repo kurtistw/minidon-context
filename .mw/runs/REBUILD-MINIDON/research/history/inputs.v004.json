@@ -1,0 +1,102 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "researchVersion": 16,
+  "scannedAt": "2026-11-12T18:11:46.872Z",
+  "inputs": [
+    {
+      "id": "problem-statement",
+      "tier": "required",
+      "status": "found",
+      "sources": [
+        "ticket.md"
+      ],
+      "confidence": "STATED"
+    },
+    {
+      "id": "baseline-metrics",
+      "tier": "required",
+      "status": "found",
+      "sources": [
+        "research/inputs/baseline-metrics.md"
+      ],
+      "confidence": "STATED",
+      "gap": "GAP-001"
+    },
+    {
+      "id": "decision-makers",
+      "tier": "required",
+      "status": "found",
+      "sources": [
+        "research/inputs/decision-makers.md"
+      ],
+      "confidence": "STATED",
+      "gap": "GAP-002"
+    },
+    {
+      "id": "architecture-nfr",
+      "tier": "required",
+      "status": "found",
+      "sources": [
+        "research/target-state/nfr.json"
+      ],
+      "confidence": "STATED"
+    },
+    {
+      "id": "user-evidence",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-003"
+    },
+    {
+      "id": "incident-history",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-004"
+    },
+    {
+      "id": "compliance-context",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-005"
+    },
+    {
+      "id": "delivery-history",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-006"
+    },
+    {
+      "id": "design-assets",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-007"
+    },
+    {
+      "id": "competitor-material",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-008"
+    },
+    {
+      "id": "prior-spikes",
+      "tier": "optional",
+      "status": "gap",
+      "sources": [],
+      "confidence": "STATED",
+      "gap": "GAP-009"
+    }
+  ]
+}

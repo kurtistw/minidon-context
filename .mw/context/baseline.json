@@ -435,9 +435,9 @@
       "context": "L1-accounts capability.md: a COUNT(*)-based check in accounts/service.py grants Admin to the first account ever registered on an instance. Significant operational behaviour with no mention in README.md or any other documentation found.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Rust keeps first-registrant-becomes-Admin.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Bootstrap-only mechanism, accepted for fresh installs; follow-up to secure admin seeding (env/CLI) - instance takeover risk",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-002",
@@ -445,19 +445,19 @@
       "context": "L1-accounts capability.md BR-007, BR-010, BR-013; minidon/accounts/service.py and minidon/config.py. None of these values appear in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Rust uses the same constants.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Accept constants as intended, except raise minimum password length 8 -> 12 as a follow-up (NIST)",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-003",
       "question": "Is PBKDF2-HMAC-SHA256 at 100,000 iterations (BR-007) an acceptable password-hashing parameter, given it is below current OWASP guidance for PBKDF2-SHA256 (recommended 600,000+)?",
       "context": "L1-accounts capability.md Open Questions, flagged explicitly as a security observation about the code, not a business rule dispute. minidon/accounts/service.py:21 (PBKDF2_ITERATIONS = 100_000).",
       "owner": "Security reviewer",
-      "status": "deferred",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Rust must verify existing 100,000 iteration PBKDF2 hashes so current accounts keep working. Raising the iteration count (rehash on login) is a follow-up ticket, not part of the lift and shift.",
+      "status": "resolved",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Known gap - raise to OWASP level (600k PBKDF2-SHA256, rehash on login) or move to argon2id as follow-up",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-004",
@@ -465,19 +465,19 @@
       "context": "L1-following capability.md BR-007; minidon/social/service.py:120-131. README.md only describes block's forward-looking effect, not this retroactive cleanup.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Blocking still deletes existing follows in both directions.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, intended (retroactive two-way follow removal on block)",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-005",
       "question": "Should minidon/social/queries.py be formally documented as a stable cross-capability contract rather than an implicit shared import, given it is consumed directly by five of six capabilities?",
       "context": "Tracked as CF-003 in conflicts.md (boundary-overlap). Raised independently by L1-following capability.md and domain-map.md Boundary Question 1.",
       "owner": "BA / Product / Domain modelling",
-      "status": "deferred",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Internal structure is a design choice. Rust keeps an equivalent shared module. Decide in design (ADR).",
+      "status": "resolved",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-003: plain import, not a formal contract",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-006",
@@ -485,9 +485,9 @@
       "context": "L1-following capability.md BR-015; .mw/notes/glossary/relationship.md. README.md lists the individual states but never names their combined view.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Keep 'Relationship' as the working term. No renaming in a lift and shift.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, adopt \"Relationship\" as the official business term",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-007",
@@ -495,9 +495,9 @@
       "context": "Tracked as CF-001 in conflicts.md (rule-disagreement), high priority. L1-posting capability.md BR-009/BR-010; minidon/config.py:15; minidon/statuses/service.py:117-118; .mw/notes/decisions/ADR-001-edit-window.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. The code is the source of truth: 60 minutes. Parity copies the code. Correcting the README and the 2026-10-01 decision record is a follow-up.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-001: 60 minutes",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-008",
@@ -505,9 +505,9 @@
       "context": "Tracked as CF-007 in conflicts.md (rule-disagreement). L1-posting capability.md/rules-trace.md BR-016; minidon/statuses/service.py:21,165-166.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Followers-only and direct statuses stay un-boostable.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-007: yes, remain un-boostable",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-009",
@@ -515,9 +515,9 @@
       "context": "L1-posting capability.md BR-013; minidon/statuses/service.py:135-138. README's ## Posting section documents only the self-delete case.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Staff can still delete any status directly.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, staff direct delete is intended; follow-up to add an audit trail",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-010",
@@ -525,9 +525,9 @@
       "context": "L1-posting capability.md BR-020; minidon/config.py:16; minidon/statuses/service.py:233-244. Not documented anywhere in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Rate limit stays at 30 original posts per rolling hour.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, 30 posts/rolling hour intended; document in README",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-011",
@@ -535,9 +535,9 @@
       "context": "L1-timelines capability.md BR-007; minidon/timelines/service.py:14-15; minidon/timelines/routes.py:14. Undocumented in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Pagination defaults stay 20 default and 40 maximum.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, 20 default / 40 max intended; no client override above 40",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-012",
@@ -545,9 +545,9 @@
       "context": "L1-notifications capability.md BR-002/BR-003/BR-004; minidon/notifications/service.py:30-35. Flagged as easy to silently break when adding a new notification kind; none are documented in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. All three suppression rules stay.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, all three suppression rules intended; follow-up to add a test guard for new notification kinds",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-013",
@@ -555,9 +555,9 @@
       "context": "L1-notifications capability.md BR-009; minidon/notifications/routes.py:55; minidon/notifications/service.py:46-48. Undocumented in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Limits stay 40 default and 80 maximum.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, 40 default / 80 max intended",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-014",
@@ -565,9 +565,9 @@
       "context": "L1-moderation capability.md BR-004; minidon/moderation/service.py:14,28-29. Undocumented in README.md.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Report comment limit stays 1000 characters.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, 1000-char limit intended",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-015",
@@ -575,9 +575,9 @@
       "context": "L1-moderation capability.md BR-010; minidon/moderation/service.py:132-136; minidon/accounts/service.py:96-110; minidon/statuses/service.py:27-28.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Suspension keeps its full current effects.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, full suspension scope intended; update README beyond \"can no longer sign in\"",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-016",
@@ -585,29 +585,29 @@
       "context": "L1-moderation capability.md BR-011/BR-012; minidon/moderation/service.py:95-97,104-110,122-129. Refines README's undifferentiated description of \"Moderators\"; especially confirm moderators are meant to have no suspend/unsuspend authority over each other.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Preserve the implemented behaviour exactly (feature parity). Revisit after migration. Staff hierarchy rules stay as implemented.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): Yes, implemented staff hierarchy matches policy",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-017",
       "question": "Should Moderation's \"delete reported status\" resolution action keep calling Posting's soft_delete directly, or go through a narrower moderation-facing API, so the two capabilities' delete semantics can evolve independently?",
       "context": "Tracked as CF-006 in conflicts.md (boundary-overlap). L1-moderation capability.md BR-015; minidon/moderation/service.py:71; domain-map.md Boundary Question 4.",
       "owner": "Tech Lead",
-      "status": "deferred",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. How Moderation calls Posting is internal structure. Decide in design (ADR); external behaviour must not change.",
+      "status": "resolved",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-006: no, direct call accepted",
       "createdAt": "2026-10-30T18:00:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-018",
       "question": "Should accounts/service.py#get_by_username be formalised as a stable identity-resolution API, given it is the graph's highest in-degree hotspot (18 incoming edges, called from 5 of 6 capability modules)?",
       "context": "Tracked as CF-004 in conflicts.md (boundary-overlap). domain-map.md Boundary Question 2; graph-report.json analysis.hotspots.",
       "owner": "Tech Lead",
-      "status": "deferred",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Internal API shape is a design choice. Decide in design (ADR).",
+      "status": "resolved",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-004: yes, formal identity API",
       "createdAt": "2026-10-30T17:30:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-019",
@@ -615,19 +615,19 @@
       "context": "Tracked as CF-005 in conflicts.md (boundary-overlap). domain-map.md Overview \"Capability naming\" and Boundary Question 3.",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Keep the merged L1-posting capability as in the baseline.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-005: yes, one L1 with two L2s",
       "createdAt": "2026-10-30T17:30:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-020",
       "question": "If the orphaned Lists feature (minidon/lists/) is ever completed, should it become a new L1 capability, or an L2 sub-capability of Following (since it curates accounts, like Following does)?",
       "context": "Tracked as CF-002 in conflicts.md (ownership-unclear). domain-map.md Unmapped Code and Boundary Question 5. Not committed to either boundary while the code is unreachable and unowned.",
       "owner": "BA / Product",
-      "status": "deferred",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Out of scope. Lists is not being completed in this rebuild.",
+      "status": "resolved",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-002: n/a, Lists removed",
       "createdAt": "2026-10-30T17:30:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     },
     {
       "id": "OQ-021",
@@ -635,9 +635,9 @@
       "context": "Tracked as CF-002 in conflicts.md (ownership-unclear). Independently confirmed dead/unreachable by ingestion-agent (MW-W01) and graph-agent (BFS orphan analysis); domain-map.md assigns it no owner beyond \"Unassigned - product decision needed\".",
       "owner": "BA / Product",
       "status": "resolved",
-      "answer": "DEMO ANSWER, proposed by Claude, pending human review. Do not port the orphaned Lists code. It is unreachable, so it has no behaviour to preserve. Revisit separately if wanted.",
+      "answer": "Gate answer (kurtis, 2026-11-10, per baseline-review-report.md): = CF-002: remove",
       "createdAt": "2026-10-30T17:30:00Z",
-      "resolvedAt": "2026-11-11T00:00:00Z"
+      "resolvedAt": "2026-11-10T17:06:46Z"
     }
   ],
   "conflicts": [

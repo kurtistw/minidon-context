@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 12,
-  "scannedAt": "2026-11-12T03:47:15.291Z",
+  "researchVersion": 16,
+  "scannedAt": "2026-11-12T18:11:46.872Z",
   "inputs": [
     {
       "id": "problem-statement",
@@ -38,9 +38,9 @@
       "tier": "required",
       "status": "found",
       "sources": [
-        "discovery:.mw/notes/decisions/"
+        "research/target-state/nfr.json"
       ],
-      "confidence": "DERIVED"
+      "confidence": "STATED"
     },
     {
       "id": "user-evidence",

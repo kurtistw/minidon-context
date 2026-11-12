@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 13,
+  "researchVersion": 16,
   "entries": [
     {
       "path": "inputs/README.md",
@@ -314,6 +314,54 @@
       "sha256": "sha256:e894c039881d543c99a5d2bf6f4f3b6b74fa0d5169ff2d39e8ec0c5b0cb3cd01",
       "ts": "2026-11-12T16:17:52.265Z",
       "actor": "research-agent"
+    },
+    {
+      "path": "reviews/research-review-001.md",
+      "version": 1,
+      "archive": "history/reviews__research-review-001.v001.md",
+      "sha256": "sha256:8dd0c9531b011ba3572f1aa1ea5853395497830346be62124d59fdd9255b12d3",
+      "ts": "2026-11-12T18:11:38.662Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs/baseline-metrics.md",
+      "version": 2,
+      "archive": "history/inputs__baseline-metrics.v002.md",
+      "sha256": "sha256:50b5c7d21fb3734951dcaf2a837df92ccb67e7a8c27c3c1130bf290b6cec4381",
+      "ts": "2026-11-12T18:11:46.874Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs/human-decisions.md",
+      "version": 1,
+      "archive": "history/inputs__human-decisions.v001.md",
+      "sha256": "sha256:ab5cbb41884c7158220eaa38f7e4c49597ca5cb8301a89131e0d08cc285b12c1",
+      "ts": "2026-11-12T18:11:46.874Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 11,
+      "archive": "history/gaps.v011.json",
+      "sha256": "sha256:1c103d2649f4cf2eab9f43172baf48cf594edfdb2ed841f541dd2be54a892554",
+      "ts": "2026-11-12T18:11:46.878Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 11,
+      "archive": "history/gaps.v011.md",
+      "sha256": "sha256:c0584e5c8ddeeb8cc7e1152052836d664840d031aea53288d738ce9b9eb747e1",
+      "ts": "2026-11-12T18:11:46.878Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs.json",
+      "version": 4,
+      "archive": "history/inputs.v004.json",
+      "sha256": "sha256:ea1b83920eb69f0e634a325bb0da2e0b2cf2c33488c570b0f451c81112dbb49e",
+      "ts": "2026-11-12T18:11:46.879Z",
+      "actor": "kurtis.angell@thoughtworks.com"
     }
   ]
 }
