@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 4,
+  "researchVersion": 12,
   "gaps": [
     {
       "id": "GAP-001",
@@ -45,7 +45,7 @@
       ],
       "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 4,
+      "lastSeenVersion": 12,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -112,7 +112,7 @@
       ],
       "status": "resolved",
       "firstSeenVersion": 2,
-      "lastSeenVersion": 4,
+      "lastSeenVersion": 12,
       "history": [
         {
           "ts": "2026-11-11T23:39:18.133Z",
@@ -173,7 +173,7 @@
           "result": "no file named user-evidence / user-research / interviews"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -188,8 +188,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:13.700Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "Lift and shift: the problem is the platform, not user need. No new user evidence required."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "Lift and shift: the problem is the platform, not user need. No new user evidence required.",
+        "ts": "2026-11-12T03:47:13.700Z"
+      }
     },
     {
       "id": "GAP-004",
@@ -227,7 +239,7 @@
           "result": "no file named incident-history / incidents / defects"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -242,8 +254,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:13.918Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "No incident history is available for this demo. Behaviour is copied as-is, so past defects are carried over, not fixed."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "No incident history is available for this demo. Behaviour is copied as-is, so past defects are carried over, not fixed.",
+        "ts": "2026-11-12T03:47:13.918Z"
+      }
     },
     {
       "id": "GAP-005",
@@ -281,7 +305,7 @@
           "result": "no file named compliance-context / compliance / data-classification"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -296,8 +320,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:14.147Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "Compliance and data classification are unchanged by a like-for-like rebuild. Revisit at cutover."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "Compliance and data classification are unchanged by a like-for-like rebuild. Revisit at cutover.",
+        "ts": "2026-11-12T03:47:14.147Z"
+      }
     },
     {
       "id": "GAP-006",
@@ -339,7 +375,7 @@
           "result": "not frozen yet"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -354,8 +390,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:14.380Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "No prior delivery history exists for this system. The estimate uses stated ranges instead."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "No prior delivery history exists for this system. The estimate uses stated ranges instead.",
+        "ts": "2026-11-12T03:47:14.380Z"
+      }
     },
     {
       "id": "GAP-007",
@@ -397,7 +445,7 @@
           "result": "missing"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -412,8 +460,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:14.615Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "minidon is a backend API with no screens. There are no designs to rebuild."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "minidon is a backend API with no screens. There are no designs to rebuild.",
+        "ts": "2026-11-12T03:47:14.615Z"
+      }
     },
     {
       "id": "GAP-008",
@@ -451,7 +511,7 @@
           "result": "no file named competitor-material / market-scan / competitors"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -466,8 +526,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:14.843Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "Market and competitor material is irrelevant to a platform rebuild with feature parity."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "Market and competitor material is irrelevant to a platform rebuild with feature parity.",
+        "ts": "2026-11-12T03:47:14.843Z"
+      }
     },
     {
       "id": "GAP-009",
@@ -505,7 +577,7 @@
           "result": "no file named prior-spikes / spikes / abandoned-attempts"
         }
       ],
-      "status": "open",
+      "status": "waived",
       "firstSeenVersion": 2,
       "lastSeenVersion": 4,
       "history": [
@@ -520,8 +592,20 @@
           "event": "rescan-still-open",
           "actor": "kurtis.angell@thoughtworks.com",
           "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:15.071Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "No prior spikes or abandoned attempts are known. Add one if the team finds any."
         }
-      ]
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "No prior spikes or abandoned attempts are known. Add one if the team finds any.",
+        "ts": "2026-11-12T03:47:15.071Z"
+      }
     },
     {
       "id": "GAP-010",

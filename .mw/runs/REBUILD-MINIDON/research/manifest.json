@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 4,
+  "researchVersion": 12,
   "entries": [
     {
       "path": "inputs/README.md",
@@ -81,6 +81,142 @@
       "archive": "history/inputs.v002.json",
       "sha256": "sha256:005603a3767afd00c0abd437f1c4555e978ee89a74c7a1283f6436c26dc24f6a",
       "ts": "2026-11-12T03:30:24.382Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 3,
+      "archive": "history/gaps.v003.json",
+      "sha256": "sha256:4b42b0a3ddaf5692581b08bc05cd438ad044d924821f63b117e9a5519dd56193",
+      "ts": "2026-11-12T03:47:13.709Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 3,
+      "archive": "history/gaps.v003.md",
+      "sha256": "sha256:67cd4742858f18c3d22cc7bf6c70667d64bbecc69d29b87ba7a4e260ef072f1e",
+      "ts": "2026-11-12T03:47:13.709Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 4,
+      "archive": "history/gaps.v004.json",
+      "sha256": "sha256:fc9661096c1da4a9992671c30d3a5d9a48d4a1755fb5b881e552760b4806ff31",
+      "ts": "2026-11-12T03:47:13.926Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 4,
+      "archive": "history/gaps.v004.md",
+      "sha256": "sha256:eff13ba6ccb879c53b4d61ed320b46a113087d3118bb337b3d520b1f3ac31b34",
+      "ts": "2026-11-12T03:47:13.926Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 5,
+      "archive": "history/gaps.v005.json",
+      "sha256": "sha256:a646e94e6a83f7dfa3162e92a3a1659363602761eb9e6155b1b953cecb0af988",
+      "ts": "2026-11-12T03:47:14.154Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 5,
+      "archive": "history/gaps.v005.md",
+      "sha256": "sha256:ea225b3f54f6061bf11474585fe1b5691658542bedb4c233387ca86b2a97b252",
+      "ts": "2026-11-12T03:47:14.154Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 6,
+      "archive": "history/gaps.v006.json",
+      "sha256": "sha256:f36f3f9a62c6c249004c650acc31be8c46891922530493ad8ce13f3762be2458",
+      "ts": "2026-11-12T03:47:14.387Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 6,
+      "archive": "history/gaps.v006.md",
+      "sha256": "sha256:ffddb9ff945ab321a4df0beb45278522ba677469587c700d16de31d266001694",
+      "ts": "2026-11-12T03:47:14.387Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 7,
+      "archive": "history/gaps.v007.json",
+      "sha256": "sha256:d3aa73d1ca37b784ce0f5bf7bd4a4f5627099fa43ab1afd1b342e983e62267ff",
+      "ts": "2026-11-12T03:47:14.623Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 7,
+      "archive": "history/gaps.v007.md",
+      "sha256": "sha256:f8ad7da21d825a88c1ae24dc564294ed320452e57168acde7805ffd9a4a9042b",
+      "ts": "2026-11-12T03:47:14.623Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 8,
+      "archive": "history/gaps.v008.json",
+      "sha256": "sha256:9d49ed1065dd0d2988f1488bc6c7e5c91c5581fb0bafaed79e46cbf2678dce3d",
+      "ts": "2026-11-12T03:47:14.846Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 8,
+      "archive": "history/gaps.v008.md",
+      "sha256": "sha256:14a2d15e1e7c3dcd465ddf0fc9f5a950a9599fd016f5c800fc8e6415ba37549d",
+      "ts": "2026-11-12T03:47:14.846Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 9,
+      "archive": "history/gaps.v009.json",
+      "sha256": "sha256:7096398f81fb5f7005ef2853c3cd42c3fa6e8dce897c688098989954fd5acb8a",
+      "ts": "2026-11-12T03:47:15.074Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 9,
+      "archive": "history/gaps.v009.md",
+      "sha256": "sha256:2eeb9b0faf9e33baa9095a35f4f1b83d02c12433e195f1bdd0152b19268ebd48",
+      "ts": "2026-11-12T03:47:15.075Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.json",
+      "version": 10,
+      "archive": "history/gaps.v010.json",
+      "sha256": "sha256:aee1aabab949483ab7519219d2fe734c5ac4256f1198b4352adbfb209d9721a8",
+      "ts": "2026-11-12T03:47:15.298Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "gaps.md",
+      "version": 10,
+      "archive": "history/gaps.v010.md",
+      "sha256": "sha256:90deb85dbef4b1bc0e7d45d1350ea5face97463f4401455ea68f55d083c07a38",
+      "ts": "2026-11-12T03:47:15.298Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "inputs.json",
+      "version": 3,
+      "archive": "history/inputs.v003.json",
+      "sha256": "sha256:d0ba983f2359bda7a8cc870afde75629a3beca965198de4a5dc0e4e555224105",
+      "ts": "2026-11-12T03:47:15.298Z",
       "actor": "kurtis.angell@thoughtworks.com"
     }
   ]

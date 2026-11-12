@@ -1,87 +1,20 @@
 # Gap Register: REBUILD-MINIDON
 
-Research version 4. Generated from `gaps.json`; edit that, not this.
+Research version 12. Generated from `gaps.json`; edit that, not this.
 
-## BA
-
-### GAP-003 · User and customer evidence not found
-
-- Severity: **weakens** (optional, missing); weakens outcome.json
-- Owner source: routed
-- Do: Drop summaries of interviews, support themes or analytics
-  - Drop a file at `research/inputs/user-evidence.md`
-  - Answer: Evidence that the problem is real for the affected users
-- Done when: Evidence that the problem is real for the affected users
-- Discovery checked: research/inputs/ (no file named user-evidence / user-research / interviews)
-
-### GAP-007 · Design assets not found
-
-- Severity: **weakens** (optional, missing); weakens flows/journeys.md
-- Owner source: routed
-- Do: Link the Figma files or drop existing journey maps
-  - Drop a file at `research/inputs/design-assets.md`
-  - Answer: Links or files for the affected screens and journeys
-- Done when: Links or files for the affected screens and journeys
-- Discovery checked: research/inputs/ (no file named design-assets / figma-links / journeys); design/figma-context.json (missing)
-
-## PO
-
-### GAP-008 · Competitor or market material not found
-
-- Severity: **weakens** (optional, missing); weakens outcome.json
-- Owner source: routed
-- Do: Drop competitor or market notes
-  - Drop a file at `research/inputs/competitor-material.md`
-  - Answer: Notes relevant to the outcome
-- Done when: Notes relevant to the outcome
-- Discovery checked: research/inputs/ (no file named competitor-material / market-scan / competitors)
-
-## Tech Lead
-
-### GAP-004 · Incident and defect history not found
-
-- Severity: **weakens** (optional, missing); weakens risks.json
-- Owner source: routed
-- Do: Drop recent incidents and escaped defects for the affected capabilities
-  - Drop a file at `research/inputs/incident-history.md`
-  - Answer: A list of relevant incidents with dates
-- Done when: A list of relevant incidents with dates
-- Discovery checked: research/inputs/ (no file named incident-history / incidents / defects)
-
-### GAP-005 · Compliance and data classification not found
-
-- Severity: **weakens** (optional, missing); weakens security.md
-- Owner source: routed
-- Do: Drop the compliance regimes and the classification of the data this change touches
-  - Drop a file at `research/inputs/compliance-context.md`
-  - Answer: The regimes and data classes that apply
-- Done when: The regimes and data classes that apply
-- Discovery checked: research/inputs/ (no file named compliance-context / compliance / data-classification)
-
-### GAP-006 · Delivery history not found
-
-- Severity: **weakens** (optional, missing); weakens estimate.json
-- Owner source: routed
-- Do: Freeze pre-agentic numbers in .mw/metrics/baseline.json, or drop cycle-time and throughput history
-  - Drop a file at `research/inputs/delivery-history.md`
-  - Answer: Historical delivery numbers for comparable changes
-- Done when: Historical delivery numbers for comparable changes
-- Discovery checked: research/inputs/ (no file named delivery-history / cycle-time); .mw/metrics/baseline.json (not frozen yet)
-
-### GAP-009 · Prior spikes and abandoned attempts not found
-
-- Severity: **weakens** (optional, missing); weakens risks.json
-- Owner source: routed
-- Do: Drop notes on earlier spikes or attempts
-  - Drop a file at `research/inputs/prior-spikes.md`
-  - Answer: What was tried and what was learned
-- Done when: What was tried and what was learned
-- Discovery checked: research/inputs/ (no file named prior-spikes / spikes / abandoned-attempts)
+No open gaps.
 
 ## Closed
 
 - GAP-001 · Baseline metrics not found: resolved at version 4 (research/inputs/baseline-metrics.md)
 - GAP-002 · Decision-makers and reviewer roster not found: resolved at version 4 (research/inputs/decision-makers.md)
+- GAP-003 · User and customer evidence not found: waived by kurtis.angell@thoughtworks.com: Lift and shift: the problem is the platform, not user need. No new user evidence required.
+- GAP-004 · Incident and defect history not found: waived by kurtis.angell@thoughtworks.com: No incident history is available for this demo. Behaviour is copied as-is, so past defects are carried over, not fixed.
+- GAP-005 · Compliance and data classification not found: waived by kurtis.angell@thoughtworks.com: Compliance and data classification are unchanged by a like-for-like rebuild. Revisit at cutover.
+- GAP-006 · Delivery history not found: waived by kurtis.angell@thoughtworks.com: No prior delivery history exists for this system. The estimate uses stated ranges instead.
+- GAP-007 · Design assets not found: waived by kurtis.angell@thoughtworks.com: minidon is a backend API with no screens. There are no designs to rebuild.
+- GAP-008 · Competitor or market material not found: waived by kurtis.angell@thoughtworks.com: Market and competitor material is irrelevant to a platform rebuild with feature parity.
+- GAP-009 · Prior spikes and abandoned attempts not found: waived by kurtis.angell@thoughtworks.com: No prior spikes or abandoned attempts are known. Add one if the team finds any.
 - GAP-010 · Is the first-registrant-becomes-Admin behaviour (BR-006) intended production behaviour, or a development convenience that should be environment-gated?: resolved at version 4 (.mw/context/baseline.json)
 - GAP-011 · Are the undocumented numeric/algorithmic constants in Accounts (PBKDF2 params, 30-day token TTL, 30/500-char display name/bio limits, 8-char minimum password length) the intended business values, or implementation defaults nobody has reviewed?: resolved at version 4 (.mw/context/baseline.json)
 - GAP-012 · Is PBKDF2-HMAC-SHA256 at 100,000 iterations (BR-007) an acceptable password-hashing parameter, given it is below current OWASP guidance for PBKDF2-SHA256 (recommended 600,000+)?: resolved at version 4 (.mw/context/baseline.json)

@@ -1,0 +1,1820 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "researchVersion": 4,
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "inputRef": "baseline-metrics",
+      "tier": "required",
+      "kind": "missing",
+      "title": "Baseline metrics not found",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "blocks",
+      "owner": {
+        "role": "PO",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop the current measurements (value, date, source) into research/inputs/, or read them through a metrics provider",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/baseline-metrics.md"
+          },
+          {
+            "type": "question",
+            "text": "At least one numeric baseline with a date and a source"
+          }
+        ],
+        "acceptance": "At least one numeric baseline with a date and a source"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named baseline-metrics / metrics-baseline / funnel"
+        },
+        {
+          "path": "research/outcome.json",
+          "result": "no metric has a sourced, non-weak baseline"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "research/inputs/baseline-metrics.md"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": "research/inputs/baseline-metrics.md",
+          "hash": "sha256:1d6ebec970f46df1b8f3e8fe7622bfe4a51bb99b73240c2212ed020dd7eb3924"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-002",
+      "inputRef": "decision-makers",
+      "tier": "required",
+      "kind": "missing",
+      "title": "Decision-makers and reviewer roster not found",
+      "affects": [
+        {
+          "artifact": "reviewers.json"
+        }
+      ],
+      "severity": "blocks",
+      "owner": {
+        "role": "PO",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Name the decision-maker and a reviewer per expertise lane, including integration owners",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/decision-makers.md"
+          },
+          {
+            "type": "question",
+            "text": "A named accountable owner and at least one named reviewer"
+          }
+        ],
+        "acceptance": "A named accountable owner and at least one named reviewer"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named decision-makers / reviewer-roster / stakeholders"
+        },
+        {
+          "path": "research/outcome.json",
+          "result": "no named decision-maker or reviewer"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "research/inputs/decision-makers.md"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": "research/inputs/decision-makers.md",
+          "hash": "sha256:2cb69fcbc972a7befce4ddb4bdef3e325ce1a6b131f35e77ab01e6503b004162"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-003",
+      "inputRef": "user-evidence",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "User and customer evidence not found",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "BA",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop summaries of interviews, support themes or analytics",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/user-evidence.md"
+          },
+          {
+            "type": "question",
+            "text": "Evidence that the problem is real for the affected users"
+          }
+        ],
+        "acceptance": "Evidence that the problem is real for the affected users"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named user-evidence / user-research / interviews"
+        }
+      ],
+      "status": "waived",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        },
+        {
+          "ts": "2026-11-12T03:47:13.700Z",
+          "event": "waived",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": "Lift and shift: the problem is the platform, not user need. No new user evidence required."
+        }
+      ],
+      "waiver": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "reason": "Lift and shift: the problem is the platform, not user need. No new user evidence required.",
+        "ts": "2026-11-12T03:47:13.700Z"
+      }
+    },
+    {
+      "id": "GAP-004",
+      "inputRef": "incident-history",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Incident and defect history not found",
+      "affects": [
+        {
+          "artifact": "risks.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Tech Lead",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop recent incidents and escaped defects for the affected capabilities",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/incident-history.md"
+          },
+          {
+            "type": "question",
+            "text": "A list of relevant incidents with dates"
+          }
+        ],
+        "acceptance": "A list of relevant incidents with dates"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named incident-history / incidents / defects"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-005",
+      "inputRef": "compliance-context",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Compliance and data classification not found",
+      "affects": [
+        {
+          "artifact": "security.md"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Tech Lead",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop the compliance regimes and the classification of the data this change touches",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/compliance-context.md"
+          },
+          {
+            "type": "question",
+            "text": "The regimes and data classes that apply"
+          }
+        ],
+        "acceptance": "The regimes and data classes that apply"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named compliance-context / compliance / data-classification"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-006",
+      "inputRef": "delivery-history",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Delivery history not found",
+      "affects": [
+        {
+          "artifact": "estimate.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Tech Lead",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Freeze pre-agentic numbers in .mw/metrics/baseline.json, or drop cycle-time and throughput history",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/delivery-history.md"
+          },
+          {
+            "type": "question",
+            "text": "Historical delivery numbers for comparable changes"
+          }
+        ],
+        "acceptance": "Historical delivery numbers for comparable changes"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named delivery-history / cycle-time"
+        },
+        {
+          "path": ".mw/metrics/baseline.json",
+          "result": "not frozen yet"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-007",
+      "inputRef": "design-assets",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Design assets not found",
+      "affects": [
+        {
+          "artifact": "flows/journeys.md"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "BA",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Link the Figma files or drop existing journey maps",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/design-assets.md"
+          },
+          {
+            "type": "question",
+            "text": "Links or files for the affected screens and journeys"
+          }
+        ],
+        "acceptance": "Links or files for the affected screens and journeys"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named design-assets / figma-links / journeys"
+        },
+        {
+          "path": "design/figma-context.json",
+          "result": "missing"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-008",
+      "inputRef": "competitor-material",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Competitor or market material not found",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "PO",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop competitor or market notes",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/competitor-material.md"
+          },
+          {
+            "type": "question",
+            "text": "Notes relevant to the outcome"
+          }
+        ],
+        "acceptance": "Notes relevant to the outcome"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named competitor-material / market-scan / competitors"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-009",
+      "inputRef": "prior-spikes",
+      "tier": "optional",
+      "kind": "missing",
+      "title": "Prior spikes and abandoned attempts not found",
+      "affects": [
+        {
+          "artifact": "risks.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Tech Lead",
+        "source": "routed"
+      },
+      "action": {
+        "summary": "Drop notes on earlier spikes or attempts",
+        "how": [
+          {
+            "type": "drop-file",
+            "path": "research/inputs/prior-spikes.md"
+          },
+          {
+            "type": "question",
+            "text": "What was tried and what was learned"
+          }
+        ],
+        "acceptance": "What was tried and what was learned"
+      },
+      "discoveryChecked": [
+        {
+          "path": "research/inputs/",
+          "result": "no file named prior-spikes / spikes / abandoned-attempts"
+        }
+      ],
+      "status": "open",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "rescan-still-open",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4
+        }
+      ]
+    },
+    {
+      "id": "GAP-010",
+      "inputRef": "discovery:OQ-001",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is the first-registrant-becomes-Admin behaviour (BR-006) intended production behaviour, or a development convenience that should be environment-gated?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-001"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-001",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is the first-registrant-becomes-Admin behaviour (BR-006) intended production behaviour, or a development convenience that should be environment-gated?"
+          }
+        ],
+        "acceptance": "OQ-001 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-001"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-011",
+      "inputRef": "discovery:OQ-002",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Are the undocumented numeric/algorithmic constants in Accounts (PBKDF2 params, 30-day token TTL, 30/500-char display name/bio limits, 8-char minimum password length) the intended business values, or implementation defaults nobody has reviewed?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-002"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-002",
+        "how": [
+          {
+            "type": "question",
+            "text": "Are the undocumented numeric/algorithmic constants in Accounts (PBKDF2 params, 30-day token TTL, 30/500-char display name/bio limits, 8-char minimum password length) the intended business values, or implementation defaults nobody has reviewed?"
+          }
+        ],
+        "acceptance": "OQ-002 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-002"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-012",
+      "inputRef": "discovery:OQ-003",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is PBKDF2-HMAC-SHA256 at 100,000 iterations (BR-007) an acceptable password-hashing parameter, given it is below current OWASP guidance for PBKDF2-SHA256 (recommended 600,000+)?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "Security reviewer",
+        "source": "discovery:open-question OQ-003"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-003",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is PBKDF2-HMAC-SHA256 at 100,000 iterations (BR-007) an acceptable password-hashing parameter, given it is below current OWASP guidance for PBKDF2-SHA256 (recommended 600,000+)?"
+          }
+        ],
+        "acceptance": "OQ-003 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-003"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-013",
+      "inputRef": "discovery:OQ-004",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is it intended business behaviour that blocking an account retroactively deletes any existing follow relationship between the two accounts, in both directions, not just future follows?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-004"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-004",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is it intended business behaviour that blocking an account retroactively deletes any existing follow relationship between the two accounts, in both directions, not just future follows?"
+          }
+        ],
+        "acceptance": "OQ-004 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-004"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-014",
+      "inputRef": "discovery:OQ-005",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Should minidon/social/queries.py be formally documented as a stable cross-capability contract rather than an implicit shared import, given it is consumed directly by five of six capabilities?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product / Domain modelling",
+        "source": "discovery:open-question OQ-005"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-005",
+        "how": [
+          {
+            "type": "question",
+            "text": "Should minidon/social/queries.py be formally documented as a stable cross-capability contract rather than an implicit shared import, given it is consumed directly by five of six capabilities?"
+          }
+        ],
+        "acceptance": "OQ-005 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-005"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-015",
+      "inputRef": "discovery:OQ-006",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Does the business want to adopt \"Relationship\" (the code's own term for the five-field follow/block/mute status between two accounts) as the official business term, or prefer another name?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-006"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-006",
+        "how": [
+          {
+            "type": "question",
+            "text": "Does the business want to adopt \"Relationship\" (the code's own term for the five-field follow/block/mute status between two accounts) as the official business term, or prefer another name?"
+          }
+        ],
+        "acceptance": "OQ-006 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-006"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-016",
+      "inputRef": "discovery:OQ-007",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Which value is correct for the status edit window: README's documented 30 minutes, or the code's enforced 60 minutes? Should the documentation (and the 2026-10-01 decision record) change, or should the code change?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-007"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-007",
+        "how": [
+          {
+            "type": "question",
+            "text": "Which value is correct for the status edit window: README's documented 30 minutes, or the code's enforced 60 minutes? Should the documentation (and the 2026-10-01 decision record) change, or should the code change?"
+          }
+        ],
+        "acceptance": "OQ-007 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-007"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-017",
+      "inputRef": "discovery:OQ-008",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Should followers-only and direct statuses remain un-boostable even by a viewer who can see them, or should the documentation be updated to describe this restriction (and should README's \"boost any status you can see\" wording change)?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-008"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-008",
+        "how": [
+          {
+            "type": "question",
+            "text": "Should followers-only and direct statuses remain un-boostable even by a viewer who can see them, or should the documentation be updated to describe this restriction (and should README's \"boost any status you can see\" wording change)?"
+          }
+        ],
+        "acceptance": "OQ-008 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-008"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-018",
+      "inputRef": "discovery:OQ-009",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is it intended that any staff member can delete any status directly via DELETE /statuses/{id}, independent of Moderation's report-resolve flow, or should staff deletions be expected to always go through a report?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-009"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-009",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is it intended that any staff member can delete any status directly via DELETE /statuses/{id}, independent of Moderation's report-resolve flow, or should staff deletions be expected to always go through a report?"
+          }
+        ],
+        "acceptance": "OQ-009 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-009"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-019",
+      "inputRef": "discovery:OQ-010",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is the 30-original-posts-per-rolling-hour rate limit (BR-020) an intended, business-reviewed limit?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-010"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-010",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is the 30-original-posts-per-rolling-hour rate limit (BR-020) an intended, business-reviewed limit?"
+          }
+        ],
+        "acceptance": "OQ-010 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-010"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-020",
+      "inputRef": "discovery:OQ-011",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Are the timeline pagination defaults (20 default page size, 40 maximum) the intended product values, and should clients ever be able to request more than 40?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-011"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-011",
+        "how": [
+          {
+            "type": "question",
+            "text": "Are the timeline pagination defaults (20 default page size, 40 maximum) the intended product values, and should clients ever be able to request more than 40?"
+          }
+        ],
+        "acceptance": "OQ-011 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-011"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-021",
+      "inputRef": "discovery:OQ-012",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Do the three notification suppression rules (no self-notification, no notification across a block, no notification while the recipient mutes the actor) match intended product behaviour?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-012"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-012",
+        "how": [
+          {
+            "type": "question",
+            "text": "Do the three notification suppression rules (no self-notification, no notification across a block, no notification while the recipient mutes the actor) match intended product behaviour?"
+          }
+        ],
+        "acceptance": "OQ-012 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-012"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-022",
+      "inputRef": "discovery:OQ-013",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Are the notification list's numeric limits (40 default, 80 maximum) the intended product values?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-013"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-013",
+        "how": [
+          {
+            "type": "question",
+            "text": "Are the notification list's numeric limits (40 default, 80 maximum) the intended product values?"
+          }
+        ],
+        "acceptance": "OQ-013 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-013"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-023",
+      "inputRef": "discovery:OQ-014",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is the 1000-character limit on moderation report comments (BR-004) the intended value?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-014"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-014",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is the 1000-character limit on moderation report comments (BR-004) the intended value?"
+          }
+        ],
+        "acceptance": "OQ-014 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-014"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-024",
+      "inputRef": "discovery:OQ-015",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Is the full scope of suspension's effects (revokes all access tokens everywhere, hides the account and its statuses from everyone) as implemented, intended - beyond README's \"can no longer sign in\"?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-015"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-015",
+        "how": [
+          {
+            "type": "question",
+            "text": "Is the full scope of suspension's effects (revokes all access tokens everywhere, hides the account and its statuses from everyone) as implemented, intended - beyond README's \"can no longer sign in\"?"
+          }
+        ],
+        "acceptance": "OQ-015 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-015"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-025",
+      "inputRef": "discovery:OQ-016",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Does the implemented staff hierarchy - a moderator cannot suspend themselves, an admin, or another moderator; only an admin can lift a suspension or change roles - match intended policy?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-016"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-016",
+        "how": [
+          {
+            "type": "question",
+            "text": "Does the implemented staff hierarchy - a moderator cannot suspend themselves, an admin, or another moderator; only an admin can lift a suspension or change roles - match intended policy?"
+          }
+        ],
+        "acceptance": "OQ-016 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-016"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-026",
+      "inputRef": "discovery:OQ-017",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Should Moderation's \"delete reported status\" resolution action keep calling Posting's soft_delete directly, or go through a narrower moderation-facing API, so the two capabilities' delete semantics can evolve independently?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "Tech Lead",
+        "source": "discovery:open-question OQ-017"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-017",
+        "how": [
+          {
+            "type": "question",
+            "text": "Should Moderation's \"delete reported status\" resolution action keep calling Posting's soft_delete directly, or go through a narrower moderation-facing API, so the two capabilities' delete semantics can evolve independently?"
+          }
+        ],
+        "acceptance": "OQ-017 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-017"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-027",
+      "inputRef": "discovery:OQ-018",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Should accounts/service.py#get_by_username be formalised as a stable identity-resolution API, given it is the graph's highest in-degree hotspot (18 incoming edges, called from 5 of 6 capability modules)?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "Tech Lead",
+        "source": "discovery:open-question OQ-018"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-018",
+        "how": [
+          {
+            "type": "question",
+            "text": "Should accounts/service.py#get_by_username be formalised as a stable identity-resolution API, given it is the graph's highest in-degree hotspot (18 incoming edges, called from 5 of 6 capability modules)?"
+          }
+        ],
+        "acceptance": "OQ-018 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-018"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-028",
+      "inputRef": "discovery:OQ-019",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "Does the domain-map's merge of README's \"Posting\" and \"Interacting\" sections into one L1-posting capability (because the code implements both in one package) match what the business means by \"Posting\"?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-019"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-019",
+        "how": [
+          {
+            "type": "question",
+            "text": "Does the domain-map's merge of README's \"Posting\" and \"Interacting\" sections into one L1-posting capability (because the code implements both in one package) match what the business means by \"Posting\"?"
+          }
+        ],
+        "acceptance": "OQ-019 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-019"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-029",
+      "inputRef": "discovery:OQ-020",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "If the orphaned Lists feature (minidon/lists/) is ever completed, should it become a new L1 capability, or an L2 sub-capability of Following (since it curates accounts, like Following does)?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-020"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-020",
+        "how": [
+          {
+            "type": "question",
+            "text": "If the orphaned Lists feature (minidon/lists/) is ever completed, should it become a new L1 capability, or an L2 sub-capability of Following (since it curates accounts, like Following does)?"
+          }
+        ],
+        "acceptance": "OQ-020 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-020"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    },
+    {
+      "id": "GAP-030",
+      "inputRef": "discovery:OQ-021",
+      "tier": "optional",
+      "kind": "unverified",
+      "title": "What should happen to the orphaned Lists feature (minidon/lists/models.py, minidon/lists/service.py): finish it, remove it, or leave it dormant and unowned?",
+      "affects": [
+        {
+          "artifact": "outcome.json"
+        }
+      ],
+      "severity": "weakens",
+      "owner": {
+        "role": "Discovery owner",
+        "person": "BA / Product",
+        "source": "discovery:open-question OQ-021"
+      },
+      "action": {
+        "summary": "Answer the discovery open question OQ-021",
+        "how": [
+          {
+            "type": "question",
+            "text": "What should happen to the orphaned Lists feature (minidon/lists/models.py, minidon/lists/service.py): finish it, remove it, or leave it dormant and unowned?"
+          }
+        ],
+        "acceptance": "OQ-021 is answered or deferred in .mw/context/baseline.json"
+      },
+      "discoveryChecked": [
+        {
+          "path": ".mw/context/baseline.json",
+          "result": "open question OQ-021"
+        }
+      ],
+      "status": "resolved",
+      "firstSeenVersion": 2,
+      "lastSeenVersion": 4,
+      "history": [
+        {
+          "ts": "2026-11-11T23:39:18.133Z",
+          "event": "opened",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 2,
+          "note": "imported from discovery"
+        },
+        {
+          "ts": "2026-11-12T03:30:24.372Z",
+          "event": "resolved",
+          "actor": "kurtis.angell@thoughtworks.com",
+          "researchVersion": 4,
+          "note": ".mw/context/baseline.json"
+        }
+      ],
+      "resolution": {
+        "by": "kurtis.angell@thoughtworks.com",
+        "evidence": {
+          "path": ".mw/context/baseline.json",
+          "hash": "sha256:b9ba4b95ad4d5791a93a8cd25fb59fb1dddf6bb78680cd241045177ec1377478"
+        },
+        "atVersion": 4
+      }
+    }
+  ]
+}
