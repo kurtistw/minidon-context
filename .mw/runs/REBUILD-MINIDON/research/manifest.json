@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 16,
+  "researchVersion": 19,
   "entries": [
     {
       "path": "inputs/README.md",
@@ -361,6 +361,118 @@
       "archive": "history/inputs.v004.json",
       "sha256": "sha256:ea1b83920eb69f0e634a325bb0da2e0b2cf2c33488c570b0f451c81112dbb49e",
       "ts": "2026-11-12T18:11:46.879Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "reviews/research-review-001.md",
+      "version": 2,
+      "archive": "history/reviews__research-review-001.v002.md",
+      "sha256": "sha256:9f61e29e67e57a02fd14b1a3dc99f3312f35ad435d10ff9e72a672d71de01df8",
+      "ts": "2026-11-12T20:15:19.219Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "estimate.json",
+      "version": 2,
+      "archive": "history/estimate.v002.json",
+      "sha256": "sha256:70f610edd007905f59fe8cb049cbcb955b37c54c2f6fb44a10d8a788ad3269ac",
+      "ts": "2026-11-12T20:21:46.938Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "flows/journeys.md",
+      "version": 2,
+      "archive": "history/flows__journeys.v002.md",
+      "sha256": "sha256:d63157878e8b31835d2368e56eeb32d167a97c4ccc0a184ef3912ea776fae91b",
+      "ts": "2026-11-12T20:21:46.938Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "flows/value-stream.md",
+      "version": 2,
+      "archive": "history/flows__value-stream.v002.md",
+      "sha256": "sha256:3f43012d7446bdc738ac77c1eba3870c79b6b9064264959c8a39b632fc1aef02",
+      "ts": "2026-11-12T20:21:46.938Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "outcome-brief.md",
+      "version": 2,
+      "archive": "history/outcome-brief.v002.md",
+      "sha256": "sha256:f89c8ced9c83d5997cbc6031b12c964ead3ff13bb0ca4cdceebf6f8f5496aec4",
+      "ts": "2026-11-12T20:21:46.938Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "outcome.json",
+      "version": 3,
+      "archive": "history/outcome.v003.json",
+      "sha256": "sha256:864e5a1dd260e59f4814aca4c470eebdd70b8f968447230ed83ea8049ef63f68",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "reviewers.json",
+      "version": 2,
+      "archive": "history/reviewers.v002.json",
+      "sha256": "sha256:e02b07a30f268565be90f3fa0158e1ddaeb690ba83ed23cf7048f14f4e29942f",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "risks.json",
+      "version": 2,
+      "archive": "history/risks.v002.json",
+      "sha256": "sha256:acae98863e3ad03dc309daef9ee0c6c01220e111906a271eb45ba8c14a31cbf4",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "security.md",
+      "version": 2,
+      "archive": "history/security.v002.md",
+      "sha256": "sha256:2de7ab4628987da03c6084146e655d22131ed07ddea4dea7beed56334b918966",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "target-state/adr-candidates.md",
+      "version": 2,
+      "archive": "history/target-state__adr-candidates.v002.md",
+      "sha256": "sha256:c72afcbf11a02d9a1780428cb152a679395e60d74d6708ac523c554b3ae285f0",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "target-state/capability-deltas.json",
+      "version": 2,
+      "archive": "history/target-state__capability-deltas.v002.json",
+      "sha256": "sha256:865911677db5190d2a3c5a064d6faa4b2a12ea31ed0e1dd335902b96760e52f8",
+      "ts": "2026-11-12T20:21:46.939Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "target-state/nfr.json",
+      "version": 2,
+      "archive": "history/target-state__nfr.v002.json",
+      "sha256": "sha256:7a620751f441385bd81bbe3b34bfe70862f1d35cbd6bca6fd876902fc9934ced",
+      "ts": "2026-11-12T20:21:46.940Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "target-state/principles.md",
+      "version": 2,
+      "archive": "history/target-state__principles.v002.md",
+      "sha256": "sha256:e6085f50fe72dd85e238ea047cc4562e37270187fe62d94ae9b286b80376418e",
+      "ts": "2026-11-12T20:21:46.940Z",
+      "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "reviews/research-review-001.md",
+      "version": 3,
+      "archive": "history/reviews__research-review-001.v003.md",
+      "sha256": "sha256:8dd0c9531b011ba3572f1aa1ea5853395497830346be62124d59fdd9255b12d3",
+      "ts": "2026-11-12T20:22:55.087Z",
       "actor": "kurtis.angell@thoughtworks.com"
     }
   ]

@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "note": "DERIVED by research-agent on 2026-11-12, revised the same day after research review 001. ADDED means 'implemented anew in minidon-rust'. External behaviour of every capability is UNCHANGED: each delta is a new implementation of the same live baseline rules, not a behaviour change. Rule counts are (capability, BR id) pairs from .mw/context/capabilities/*/rules-trace.md: 81 in total, 80 live after the retirement of L1-posting/BR-009 at the baseline gate (CF-001). Cross-capability decisions cite the baseline gate record (.mw/runs/BASELINE-2026-10-30/baseline-review-report.json).",
+  "deltas": [
+    {
+      "capability": "L1-accounts",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (14 rules): registration (409 on username taken or email registered), first-registrant-becomes-Admin (L1-accounts/BR-006), PBKDF2 verification of existing hashes, 30-day tokens, profile limits counted in code points. get_by_username is a stable identity-resolution API owned by L1-accounts (gate decision CF-004); design decides only its Rust shape.",
+      "rules": 14,
+      "liveRules": 14,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-following",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (15 rules): follow, unfollow, follow requests, block (deletes follows both ways), mute, Relationship (the official term, OQ-006). The social queries module stays a plain module owned by L1-following, not a formal contract (gate decision CF-003).",
+      "rules": 15,
+      "liveRules": 15,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-posting",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (20 rules, 19 live): compose with Unicode-aware mention and hashtag parsing, 60-minute edit window (L1-posting/BR-010), soft delete with cascading boost removal, replies, boost only public and unlisted (409 if already boosted), favourite, 30 original posts per rolling hour (429). L1-posting/BR-009 (30-minute window from the README) was retired at the baseline gate and gets no parity test.",
+      "rules": 20,
+      "liveRules": 19,
+      "retired": ["L1-posting/BR-009"],
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-timelines",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (8 rules): home, public, tag and account timelines with 20 default and 40 maximum page size; tag lookup lower-cased with Python semantics.",
+      "rules": 8,
+      "liveRules": 8,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-notifications",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (9 rules, BR-001 to BR-009): suppression for self, blocks and mutes; 40 default and 80 maximum list size; unread count and read marking.",
+      "rules": 9,
+      "liveRules": 9,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-moderation",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (15 rules): reports with 1000-character comments, resolve actions (409 if already closed), suspension (revokes all tokens, hides account and statuses), staff hierarchy, role changes. Moderation calls Posting's soft delete directly and the boost cascade is intended (gate decision CF-006).",
+      "rules": 15,
+      "liveRules": 15,
+      "behaviourChange": "none"
+    }
+  ],
+  "platform": [
+    {
+      "component": "Shared infrastructure (minidon/main.py, __main__.py, models.py, config.py, db.py, deps.py, errors.py)",
+      "op": "ADDED",
+      "summary": "Not owned by a capability (Platform/Core in baseline.json coverage.unmappedPaths) but observable: app wiring of the six routers, DomainError to HTTP status mapping (400, 401, 403, 404, 409, 422, 429) with body {\"error\": msg}, framework validation errors (422 with {\"detail\": [...]}), auth dependencies, configuration, the development entry point on 127.0.0.1:8000, and SQLite access. Rebuilt in Rust with the same behaviour. Whether the API docs routes and the 404 and 405 bodies are contract is ADR candidate 3."
+    }
+  ],
+  "notPorted": [
+    {
+      "component": "minidon/lists/ (models.py, service.py)",
+      "op": "REMOVED",
+      "summary": "Dead and unreachable; its tables are never created. Not ported: the baseline gate decided to remove it and schedule its deletion from the Python repository as a follow-up (CF-002, closes OQ-020 and OQ-021). No external behaviour is lost."
+    }
+  ]
+}

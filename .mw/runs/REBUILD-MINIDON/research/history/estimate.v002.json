@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "unit": "person-days",
+  "note": "DEMO CONTENT, DERIVED by research-agent on 2026-11-12, revised the same day after research review 001 (F-14: the arithmetic now follows from the basis, and the RISK-003 widening is applied). No frozen delivery baseline exists (.mw/metrics/ is empty) and no delivery history exists (GAP-006 waived), so both ranges are judgement from the size measures below, not calibrated. Person-days count human effort (review, decisions, gates, pairing); agent compute time is not counted. This file belongs to the RESEARCH_ESTIMATE branch, which is still open; research-agent owns it.",
+  "agentic": {
+    "low": 16,
+    "high": 34
+  },
+  "traditional": {
+    "low": 34,
+    "high": 79
+  },
+  "basis": [
+    "Size, STATED in research/inputs/baseline-metrics.md: 2,123 Python source lines, 6 capabilities, 81 business rules (80 live after the retirement of L1-posting/BR-009), 54 test functions; and from the code at e1fbd3a: 40 HTTP endpoints, 5 enum types, 1 SQLite database",
+    "Behaviour is already specified: the confirmed baseline has a rules-trace per capability, and all 7 conflicts and 21 open questions were settled by a human at the baseline gate, so discovery effort is not in either range",
+    "Existing test coverage, DERIVED (RISK-004): about 50 of 81 rule sections cite a Python test, so about 31 parity tests are written from the rules-trace alone",
+    "Traditional (DERIVED), step by step: Rust code 3,000 to 5,000 lines (for about 2,000 lines of Python) at 100 to 150 reviewed lines a day = 20 to 50 days; parity harness 5 to 8 days; data-compatibility work 4 to 8 days; about 31 new parity tests at 0.1 to 0.25 days each = 3 to 8 days. Subtotal 32 to 74 days. Plus the RISK-003 widening of 2 to 5 days = 34 to 79 person-days",
+    "Agentic (DERIVED), step by step: agents draft the specs, parity tests and Rust code per capability from the rules-trace; human effort goes to the gates (research, PRD, plan, PR reviews), the Rust platform ADR (DEP-003), the data-compatibility review (ASM-002) and fixing parity failures that need judgement. 6 capability stories at 2 to 4 human days = 12 to 24; the platform story (app wiring, errors, config, data layer) 1 to 2; the parity-harness story 1 to 2; fixed overhead 0 to 1. Subtotal 14 to 29 days. Plus the RISK-003 widening of 2 to 5 days = 16 to 34 person-days",
+    "Six capabilities can be built in waves along the baseline's dependency order (Accounts first, then Following, then Posting, Timelines, Notifications, Moderation), which bounds the high end for both approaches",
+    "change-sizing (DERIVED): this is not a same-day change; at major classification it should be split into at least one story per capability plus a platform story and a parity-harness story"
+  ],
+  "widenedBy": [
+    "GAP-006",
+    "GAP-004"
+  ],
+  "widening": {
+    "GAP-006": "No delivery history and no frozen .mw/metrics/baseline.json: no calibration, so both ranges are wide (high is about 2x low)",
+    "GAP-004": "No incident history: unknown edge cases in existing data could add data-compatibility work (DEP-005); not added to the numbers, it pushes toward the high end",
+    "RISK-003": "Framework-level behaviour (validation error bodies, JSON formats, docs routes) is not specified; deciding and matching it adds 2 to 5 days, APPLIED to both ranges above",
+    "RISK-010": "Text-processing parity (regex dialect, code-point lengths, Unicode case folding) is inside the per-capability and harness days; a regex engine without lookbehind would push toward the high end",
+    "DEP-003": "Rust stack not chosen yet; an unfamiliar framework or driver would push both ranges toward the high end"
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "note": "Drafted by research-agent on 2026-11-12 and revised the same day after research review 001. Every entry is DERIVED unless marked STATED. Rules are cited as capability/BR id (for example L1-accounts/BR-006), because BR ids restart in each capability. Baseline decisions cite the human gate record (.mw/runs/BASELINE-2026-10-30/baseline-review-report.json). Owners come from research/inputs/decision-makers.md, which is a DEMO ASSUMPTION naming kurtis in every role.",
+  "entries": [
+    {
+      "id": "ASM-001",
+      "type": "assumption",
+      "title": "The 80 live baseline rules describe all externally observable behaviour of minidon",
+      "description": "Parity is defined as 'every live baseline rule has a passing parity test'. That is only equal to feature parity if the rules cover every observable behaviour. The baseline maps 71.0% of code to capabilities; the unmapped 29% includes shared infrastructure with observable effects (minidon/main.py DomainError handler, minidon/deps.py auth dependencies, FastAPI/Pydantic request validation, the /openapi.json, /docs and /redoc routes, the 404 and 405 bodies). Behaviour there is not captured as a business rule. Tested by the differential check in falsifiedIf.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L0-minidon", "MET-001", "RISK-003"]
+    },
+    {
+      "id": "ASM-002",
+      "type": "assumption",
+      "title": "A Rust build can read and write the existing SQLite data byte-compatibly without a migration",
+      "description": "The ticket requires same data, no migration. Python stores data through SQLAlchemy on SQLite (minidon/db.py, default sqlite:///./minidon.db). Observed by the reviewer's probe of the Python reference on a fresh database (research-review-001 F-09): enum columns (Role, Visibility, NotificationKind, ReportCategory, ReportState) store the enum member NAME, for example accounts.role = 'ADMIN' and statuses.visibility = 'PRIVATE', while the API returns the value ('admin', 'private'); the DDL sizes enum columns to the longest name (role VARCHAR(9)); datetimes are stored as naive UTC text 'YYYY-MM-DD HH:MM:SS.ffffff' and serialised by the API as naive ISO 'YYYY-MM-DDTHH:MM:SS.ffffff' with no zone. Password hashes are '<salt hex>$<digest hex>' and access tokens (secrets.token_urlsafe(32), 43 characters, column String(64)) are the primary key. The assumption is that every one of these can be reproduced exactly in Rust.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["MET-004", "RISK-002", "GRD-001"]
+    },
+    {
+      "id": "ASM-003",
+      "type": "assumption",
+      "title": "Parity can be proven black-box at the HTTP boundary, with the Python build as the oracle",
+      "description": "The Python repository stays unchanged and serves as the reference (ticket.md). The assumption is that both builds can be run against copies of the same database with controlled data timestamps, so each parity test can assert the same status code and response body for the same request. The existing Python tests are in-process (dependency_overrides, monkeypatched utcnow), so they are a guide, not the harness (MET-003).",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["DEP-001", "RISK-008", "NFR-001", "MET-003"]
+    },
+    {
+      "id": "ASM-004",
+      "type": "assumption",
+      "title": "The baseline gate decisions stand for the length of the rebuild",
+      "description": "The 7 conflict resolutions and 21 open-question answers recorded by kurtis at the baseline gate (2026-11-09 and 2026-11-10, .mw/runs/BASELINE-2026-10-30/baseline-review-report.json) define what 'current behaviour' means: copy the code, keep the known weaknesses, record the follow-ups. The answers are a human statement (STATED); the assumption that nobody reverses one before 2027-03-31 is DERIVED. If one is reversed, the parity target for the affected rules changes.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["RISK-001"]
+    },
+    {
+      "id": "ASM-005",
+      "type": "assumption",
+      "title": "The baseline-gate domain sign-off confirms the 64 DERIVED or mixed rules",
+      "description": "Answers the ticket's open question 'Which baseline rules are DERIVED and still unconfirmed by a human'. Per the rules-trace indexes (research/inputs/baseline-metrics.md), 64 of the 81 rules are DERIVED or STATED/DERIVED and 17 are purely STATED: L1-accounts 12 of 14 DERIVED or mixed, L1-following 11 of 15, L1-posting 16 of 20, L1-timelines 6 of 8, L1-notifications 7 of 9, L1-moderation 12 of 15. The purely STATED 17 are L1-accounts/BR-001, BR-009; L1-following/BR-001, BR-002, BR-010, BR-011; L1-posting/BR-001, BR-004, BR-007, BR-009 (retired); L1-timelines/BR-001, BR-005; L1-notifications/BR-001, BR-005; L1-moderation/BR-001, BR-005, BR-009. Decision (STATED, research/inputs/human-decisions.md ## 4): the L0-minidon domain sign-off at the baseline gate on 2026-11-10 is treated as human confirmation of the DERIVED rules, so none is unconfirmed. Parity tests check what the Python code does, so this does not change the test approach. Caveat (DERIVED): the sign-off was a single domain-level approval by one DEMO reviewer, not a rule-by-rule review.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L0-minidon", "MET-001", "RISK-007"]
+    },
+    {
+      "id": "CON-001",
+      "type": "contradiction",
+      "title": "baseline.json was not updated after the baseline gate",
+      "description": "The baseline was confirmed by a human: .mw/runs/BASELINE-2026-10-30/run.json is in state BASELINE_CONFIRMED and its ledger records a human gate.approve on 2026-11-10T17:07:04Z, with all seven conflicts resolved and all 21 open questions answered (baseline-review-report.json). baseline.json now carries those gate answers, but still has status 'draft', confirmedBy.actor null and conflicts CF-001 to CF-007 at status 'open'. The rules-trace also still labels L1-posting/BR-010 DERIVED and CF-001 'Unresolved', although the gate made BR-010 STATED. This is baseline housekeeping (human-decisions.md ## 2): it does not change any decision. This pack treats the gate record as the authority. Research does not edit .mw/context/; the baseline owner should.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": [".mw/context/baseline.json", ".mw/runs/BASELINE-2026-10-30/baseline-review-report.json", "CF-001", "CF-002", "CF-003", "CF-004", "CF-005", "CF-006", "CF-007"]
+    },
+    {
+      "id": "CON-002",
+      "type": "contradiction",
+      "status": "retracted",
+      "title": "RETRACTED: rule count 81 versus 82 was a counting error, not a contradiction",
+      "description": "Withdrawn on 2026-11-12 (research review 001 F-01; research/inputs/human-decisions.md ## 1). The earlier entry claimed capabilities/notifications/rules-trace.md has 10 rules. It has 9 (BR-001 to BR-009); the BR-010 at line 102 refers to L1-following/BR-004 and BR-010. baseline.json (L1-notifications ruleCount 9, total 81) was right. The id is kept so earlier references resolve.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-notifications", "MET-001"]
+    },
+    {
+      "id": "CON-003",
+      "type": "contradiction",
+      "title": "Status edit window: README and the 2026-10-01 decision say 30 minutes, code says 60",
+      "description": "CF-001. Resolved by kurtis at the baseline gate on 2026-11-09: 60 minutes is correct, L1-posting/BR-009 (30 minutes) is retired and L1-posting/BR-010 (60 minutes) stands as STATED. Rust enforces 60 minutes. Correcting the README, the decision record and the malformed ADR-001 is a gate follow-up, out of scope here.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-posting/BR-009", "L1-posting/BR-010", "CF-001", "OQ-007"]
+    },
+    {
+      "id": "CON-004",
+      "type": "contradiction",
+      "title": "Boosting: README says any visible status, code allows only public and unlisted",
+      "description": "CF-007. Resolved by kurtis at the baseline gate on 2026-11-09: the code is correct, so statuses with visibility private (followers only) and direct stay un-boostable in Rust (L1-posting/BR-016). Updating README.md:28 is a gate follow-up.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-posting/BR-016", "CF-007", "OQ-008"]
+    },
+    {
+      "id": "RISK-001",
+      "type": "risk",
+      "title": "A baseline gate decision is reversed during the rebuild",
+      "description": "The gate answers are human decisions, but they were all made by one DEMO reviewer (RISK-007). If a real BA, Tech Lead or Security reviewer reverses one, a parity rule becomes a behaviour change, which is out of scope for this ticket and would need its own ticket or a scope change at the research gate.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-004", "RISK-007"]
+    },
+    {
+      "id": "RISK-002",
+      "type": "risk",
+      "title": "Silent data incompatibility in stored formats",
+      "description": "Known formats (observed in the reviewer's probe, research-review-001 F-09): enum columns store the member NAME in upper case ('ADMIN', 'PRIVATE'), not the StrEnum value the API returns; datetimes are naive UTC text 'YYYY-MM-DD HH:MM:SS.ffffff'; enum columns are VARCHAR sized to the longest name. Other failure points: boolean and NULL handling, integer id sequences, and the PBKDF2 hash string format. A mismatch may not fail loudly: Rust could misread rows or write rows that Python later misreads. Mitigation: round-trip tests in both directions on a copy of a Python-created database (NFR-002), and matching DDL if Rust ever creates the schema (NFR-011).",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-002", "MET-004", "NFR-002", "NFR-011"]
+    },
+    {
+      "id": "RISK-003",
+      "type": "risk",
+      "title": "Framework behaviour that is observable but not a business rule",
+      "description": "FastAPI and Pydantic decide request validation errors (a 422 body {\"detail\": [...]}, different from the DomainError 422 body {\"error\": msg}), JSON serialisation (naive ISO datetimes, nulls, field order), default status codes, trailing-slash redirects, unknown routes ({\"detail\": \"Not Found\"}), 405 handling and the /openapi.json, /docs and /redoc routes. None of this is in the 80 live rules, but API clients can depend on it. If it is not specified, Rust will differ. Mitigation: a differential test over all 40 endpoints, plus a design decision on which framework behaviours are part of the contract (ADR candidate 3).",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-001", "NFR-003"]
+    },
+    {
+      "id": "RISK-004",
+      "type": "risk",
+      "title": "About 31 of 81 rules have no existing Python test",
+      "description": "Rough measure (DERIVED, grep of ### BR- sections in .mw/context/capabilities/*/rules-trace.md for a tests/test_*.py reference, 2026-11-12): about 50 of the 81 rule sections cite an existing Python test (L1-accounts 5 of 14, L1-following 9 of 15, L1-posting 13 of 20, L1-timelines 7 of 8, L1-notifications 5 of 9, L1-moderation 11 of 15). So about 31 parity tests have to be written from the rules-trace alone and checked against the Python build first, which adds work and the chance that a test encodes a misread rule. A citation is not proof that the test asserts the rule; planning should confirm per rule.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["MET-001", "MET-003"]
+    },
+    {
+      "id": "RISK-005",
+      "type": "risk",
+      "title": "The reason for moving to Rust is unstated, and performance is not measured",
+      "description": "The ticket says 'Move minidon from Python to Rust' but gives no business reason, and performance parity is not required. The human decisions of 2026-11-12 (research/inputs/human-decisions.md ## 5) record the reason as still open, for the PO to supply. If the real motive is performance, cost or safety, nothing in this pack measures it, and there is no Python latency or throughput baseline to compare with later. Recommendation: the PO states the reason at the research gate, or adds a performance metric and has the Python version measured first. This pack does not guess a reason.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["GAP-003", "NFR-007", "research/inputs/human-decisions.md"]
+    },
+    {
+      "id": "RISK-006",
+      "type": "risk",
+      "title": "Known security weaknesses are carried forward on purpose",
+      "description": "Parity keeps PBKDF2-HMAC-SHA256 at 100,000 iterations (below the OWASP figure of 600,000 or more), an 8-character minimum password, access tokens stored in clear text as the database key, first-registrant-becomes-Admin (L1-accounts/BR-006) and staff deletes with no audit trail (L1-posting/BR-013). The baseline gate accepted these and named follow-ups for each (OQ-001, OQ-002, OQ-003, OQ-009); human-decisions.md ## 3 puts them out of scope for this lift and shift. They must be raised as follow-up tickets so they are not forgotten. See security.md.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-accounts/BR-006", "L1-posting/BR-013", "OQ-001", "OQ-002", "OQ-003", "OQ-009"]
+    },
+    {
+      "id": "RISK-007",
+      "type": "risk",
+      "title": "One person holds every decision and review role",
+      "description": "decision-makers.md is a DEMO ASSUMPTION naming kurtis as PO, BA, Tech Lead, Security reviewer and gate approver; the baseline gate answers and human-decisions.md come from the same person. Agents keep I-14 among themselves, but there is no independent human review of the domain, architecture and security lanes. Replace with real people before relying on the pack.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["research/inputs/decision-makers.md"]
+    },
+    {
+      "id": "RISK-008",
+      "type": "risk",
+      "title": "Time-dependent rules are hard to compare across two builds",
+      "description": "The 60-minute edit window, the 30-posts-per-rolling-hour rate limit, the 30-day token TTL and created_at ordering all read the wall clock (minidon/db.py utcnow). Parity tests need the same controllable time in both builds, or they will flake. The Python build has no clock injection point outside its in-process tests and must not be changed, so black-box tests set data timestamps in the shared database file instead of the clock.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-posting", "L1-accounts", "ASM-003", "NFR-005"]
+    },
+    {
+      "id": "RISK-009",
+      "type": "risk",
+      "title": "Concurrency behaviour may differ under an async Rust runtime",
+      "description": "Python opens SQLite with check_same_thread False and one session per request. A Rust build with a connection pool and concurrent writers may hit 'database is locked' errors the Python build does not, and the COUNT(*)-based first-registrant-becomes-Admin check (L1-accounts/BR-006) has a race that may play out differently. Parity tests are sequential, so they will not catch this.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-accounts/BR-006", "NFR-008"]
+    },
+    {
+      "id": "RISK-010",
+      "type": "risk",
+      "title": "Python and Rust text semantics differ even when the logic is translated faithfully",
+      "description": "Regex dialect: MENTION_PATTERN and HASHTAG_PATTERN (minidon/statuses/service.py:19-20) use negative lookbehind ((?<![\\w@]), (?<![\\w#])) and \\b; the standard Rust regex crate has no lookaround, and Python's \\w and \\b are Unicode-aware. These patterns decide mentions, hashtags, mention notifications and who can see direct and private statuses (service.py:46-51), so a mismatch is also a disclosure risk (security.md row 4). String length: Python len() counts code points; limits use it at statuses/service.py:229 (500, including the spoiler text), accounts/service.py:45, 122, 126 and moderation/service.py:28; Rust str::len() counts bytes. Case and whitespace: Python's Unicode str.lower() (usernames, emails, tags) and str.strip() (content, email) differ from Rust's ASCII-only helpers. Token shape: secrets.token_urlsafe(32) gives 43 URL-safe characters in a String(64) column. Mitigation: NFR-010 and GRD-009, with non-ASCII inputs as a required parity-test class.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-posting/BR-006", "L1-posting/BR-001", "NFR-010", "GRD-009"]
+    },
+    {
+      "id": "DEP-001",
+      "type": "dependency",
+      "title": "Python minidon at e1fbd3a as the reference oracle",
+      "description": "/Users/kurtis/tw/test-mw/minidon, branch master, commit e1fbd3a9 (HEAD on 2026-11-12, clean working tree). Read-only for this run (I-29). Parity tests run against it to confirm the expected results.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["ASM-003"]
+    },
+    {
+      "id": "DEP-002",
+      "type": "dependency",
+      "title": "minidon-rust repository",
+      "description": "/Users/kurtis/tw/test-mw/minidon-rust exists and is empty (branch master, no commits on 2026-11-12). Build work lands here in later activities, never from research.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["MET-001", "MET-002"]
+    },
+    {
+      "id": "DEP-003",
+      "type": "dependency",
+      "title": "Rust target platform and runtime decision",
+      "description": "Open question in the ticket: Rust toolchain version, web framework, SQLite driver, async runtime, regex engine (RISK-010), deployment target. Owned by the Tech Lead and decided in design (ADR). Blocks code planning, not research.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["ticket.md", "RISK-010"]
+    },
+    {
+      "id": "DEP-004",
+      "type": "dependency",
+      "title": "Cross-capability decisions from the baseline gate that the Rust build must honour",
+      "description": "Decided by kurtis at the baseline gate (baseline-review-report.json, 2026-11-09), so no longer deferred to design: L1-accounts owns get_by_username as a stable identity-resolution API whose changes need review by consuming capabilities (CF-004, closes OQ-018); Moderation calls Posting's soft delete directly and the boost cascade is intended (CF-006, closes OQ-017); social/queries.py stays a plain import owned by L1-following, not a formal contract (CF-003, closes OQ-005). Design decides only how these look in Rust. Lists is removed (CF-002, closes OQ-020 and OQ-021). Password hashing (OQ-003) is a follow-up outside this rebuild.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["CF-002", "CF-003", "CF-004", "CF-006", "OQ-003", "OQ-005", "OQ-017", "OQ-018"]
+    },
+    {
+      "id": "DEP-005",
+      "type": "dependency",
+      "title": "A representative existing dataset for compatibility testing",
+      "description": "'Same data' needs a real or realistic SQLite database created by the Python build. No dataset is named in the inputs. Without one, compatibility tests use a database the tests build through the Python API, which may miss legacy rows.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-002", "MET-004"]
+    }
+  ]
+}

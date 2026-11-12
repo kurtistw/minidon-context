@@ -2,35 +2,36 @@
   "version": "1.0",
   "id": "OUT-001",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 12,
+  "researchVersion": 18,
   "supersedes": 1,
+  "revisionNote": "Revised by research-agent on 2026-11-12 after research review 001 (research/reviews/research-review-001.md). Parity denominator corrected from 82 to 80 (81 rules counted as (capability, BR id) pairs, minus the retired L1-posting/BR-009), per research/inputs/baseline-metrics.md and research/inputs/human-decisions.md. Baseline decisions now cite the human gate record .mw/runs/BASELINE-2026-10-30/baseline-review-report.json. MET-006 dropped: all 21 baseline open questions were answered at the baseline gate on 2026-11-10, so it had nothing left to measure.",
   "pinned": {
     "baselineVersion": "BASELINE-2026-10-30"
   },
   "classification": "major",
   "status": "draft",
   "outcome": {
-    "statement": "A Rust build of minidon (repository minidon-rust) that passes a parity test for every one of the 82 baseline rules and runs against existing minidon data without migration, ready for a separate cutover ticket.",
-    "problem": "minidon runs on Python (FastAPI and SQLAlchemy on SQLite, 2,123 source lines, 6 capabilities, 82 business rules, 40 HTTP endpoints). The team wants it on Rust. There is no Rust build yet: minidon-rust has no commits, so 0 of 82 rules are proven there. A rewrite risks silent behaviour changes and data incompatibility, because the behaviour is only partly documented (21 open questions at baseline, 7 doc-versus-code conflicts) and rule-level test coverage in Python is unmeasured.",
+    "statement": "A Rust build of minidon (repository minidon-rust) that passes a parity test for every one of the 80 live baseline rules (81 rules minus the retired L1-posting/BR-009) and runs against existing minidon data without migration, ready for a separate cutover ticket.",
+    "problem": "minidon runs on Python (FastAPI and SQLAlchemy on SQLite, 2,123 source lines, 6 capabilities, 81 business rules of which 80 are live, 40 HTTP endpoints). The team wants it on Rust. There is no Rust build yet: minidon-rust has no commits, so 0 of 80 rules are proven there. A rewrite risks silent behaviour changes and data incompatibility: 64 of the 81 rules were inferred from the code (DERIVED or mixed) rather than documented, the baseline needed 21 open questions and 7 doc-versus-code conflicts settled by a human at the baseline gate, Python and Rust differ in text-processing semantics (regex, length, case), and only about 50 of 81 rules cite an existing Python test.",
     "affected": [
       "minidon API clients (no change intended)",
       "minidon maintainers and the delivery team",
       "operators who run minidon against existing data"
     ],
     "why": {
-      "summary": "The ticket asks to move minidon from Python to Rust as a lift and shift with feature parity on the same data, built from the confirmed baseline rather than translated line by line. The ticket states no business reason beyond the platform move, and performance parity is not requested (see RISK-005). The value of this run is therefore proven parity, not a user-facing change.",
+      "summary": "The ticket asks to move minidon from Python to Rust as a lift and shift with feature parity on the same data, built from the confirmed baseline rather than translated line by line. The business reason for moving to Rust is not stated: the human decisions of 2026-11-12 record it as still open, for the PO to supply, and it stays a recorded risk (RISK-005). Performance parity is not requested. The value of this run is therefore proven parity, not a user-facing change.",
       "source": {
         "type": "ticket",
-        "reference": ".mw/runs/REBUILD-MINIDON/ticket.md",
-        "location": "## Why, ## Scope"
+        "reference": ".mw/runs/REBUILD-MINIDON/ticket.md; .mw/runs/REBUILD-MINIDON/research/inputs/human-decisions.md",
+        "location": "ticket ## Why, ## Scope; human-decisions ## 5. Still open"
       },
       "confidence": "STATED"
     }
   },
   "valueHypothesis": {
     "for": "minidon maintainers, the delivery team and current API clients",
-    "if": "every baseline capability is rebuilt in Rust from specs derived from BASELINE-2026-10-30, each rule gets a black-box parity test that passes against the Python reference first, and the Rust build uses the existing SQLite schema and storage formats",
-    "then": "all 82 baseline rules pass their parity test against the Rust build, all 6 capabilities are complete, and the Rust build reads and writes existing data with 0 migrations, so cutover can be planned as a separate ticket without re-discovering behaviour",
+    "if": "every baseline capability is rebuilt in Rust from specs derived from BASELINE-2026-10-30, each live rule gets a black-box parity test that passes against the Python reference first, and the Rust build uses the existing SQLite schema and storage formats",
+    "then": "all 80 live baseline rules pass their parity test against the Rust build, all 6 capabilities are complete, and the Rust build reads and writes existing data with 0 migrations, so cutover can be planned as a separate ticket without re-discovering behaviour",
     "because": [
       "ASM-001",
       "ASM-002",
@@ -42,18 +43,17 @@
       "MET-002",
       "MET-003",
       "MET-004",
-      "MET-005",
-      "MET-006"
+      "MET-005"
     ],
     "confidence": "DERIVED",
-    "falsifiedIf": "By 2027-03-31: fewer than 82 of 82 baseline rules pass their parity test against the Rust build (MET-001), or running the Rust build on a Python-created database needs any schema or data migration (MET-004), or a differential run of the same request sequence against both builds on copies of the same database shows a difference in status code or response body on any of the 40 endpoints that no baseline rule or agreed normalisation explains (which would show ASM-001 is wrong: the 82 rules are not the whole behaviour)."
+    "falsifiedIf": "By 2027-03-31: fewer than 80 of the 80 live baseline rules (81 (capability, BR id) pairs minus the retired L1-posting/BR-009) pass their parity test against the Rust build (MET-001), or running the Rust build on a Python-created database needs any schema or data migration (MET-004), or a differential run of the same request sequence (including non-ASCII text inputs) against both builds on copies of the same database shows a difference in status code or response body on any of the 40 endpoints that no baseline rule or agreed normalisation explains (which would show ASM-001 is wrong: the 80 live rules are not the whole behaviour)."
   },
   "metrics": [
     {
       "id": "MET-001",
-      "name": "Baseline rules with a passing parity test against the Rust build",
+      "name": "Live baseline rules with a passing parity test against the Rust build",
       "role": "outcome",
-      "unit": "rules (of 82)",
+      "unit": "rules (of 80)",
       "direction": "increase",
       "baseline": {
         "value": 0,
@@ -62,17 +62,17 @@
           "type": "code",
           "reference": "/Users/kurtis/tw/test-mw/minidon-rust",
           "location": "branch master, no commits",
-          "extractionMethod": "git log on 2026-11-12: the repository is empty, so no rule can pass. Denominator 82 from research/inputs/baseline-metrics.md"
+          "extractionMethod": "git log on 2026-11-12: the repository is empty, so no rule can pass. Denominator 80 from research/inputs/baseline-metrics.md: 81 (capability, BR id) pairs across the six rules-trace files (accounts 14, following 15, posting 20, timelines 8, notifications 9, moderation 15), minus L1-posting/BR-009, retired at the baseline gate (CF-001)"
         },
         "confidence": "DERIVED"
       },
       "target": {
-        "value": 82,
-        "minAcceptable": 82,
+        "value": 80,
+        "minAcceptable": 80,
         "by": "2027-03-31"
       },
       "measurement": {
-        "method": "Count of distinct BR ids across .mw/context/capabilities/*/rules-trace.md whose parity test passes against both the Python reference and the Rust build in CI. A rule counts only if its test first passes against Python e1fbd3a.",
+        "method": "Count of (capability, BR id) pairs, for example L1-accounts/BR-006, taken from the Rules Index and ### BR- sections of .mw/context/capabilities/*/rules-trace.md, excluding rules retired at the baseline gate (today only L1-posting/BR-009), whose parity test passes against both the Python reference and the Rust build in CI. A rule counts only if its test first passes against Python e1fbd3a. Bare BR ids are never counted, because ids restart in each capability.",
         "verb": "tests.read",
         "cadence": "every CI run on minidon-rust; reported weekly",
         "owner": "kurtis"
@@ -80,7 +80,7 @@
     },
     {
       "id": "MET-002",
-      "name": "Capabilities with every baseline rule passing parity in Rust",
+      "name": "Capabilities with every live baseline rule passing parity in Rust",
       "role": "leading",
       "unit": "capabilities (of 6)",
       "direction": "increase",
@@ -101,7 +101,7 @@
         "by": "2027-03-31"
       },
       "measurement": {
-        "method": "Number of L1 capabilities (accounts, following, posting, timelines, notifications, moderation) for which every BR id in that capability's rules-trace.md passes its parity test",
+        "method": "Number of L1 capabilities for which every live rule passes its parity test: L1-accounts 14 of 14, L1-following 15 of 15, L1-posting 19 of 19 (BR-009 retired), L1-timelines 8 of 8, L1-notifications 9 of 9, L1-moderation 15 of 15",
         "verb": "tests.read",
         "cadence": "weekly",
         "owner": "kurtis"
@@ -109,7 +109,7 @@
     },
     {
       "id": "MET-003",
-      "name": "Existing Python test functions with a passing Rust-side equivalent",
+      "name": "Existing Python test functions whose behaviour is covered by a passing black-box parity test",
       "role": "leading",
       "unit": "test functions (of 54)",
       "direction": "increase",
@@ -130,7 +130,7 @@
         "by": "2027-03-31"
       },
       "measurement": {
-        "method": "For each of the 54 def test_ functions in minidon/tests (6 files), a mapped parity test exists in minidon-rust and passes. Mapping kept in the traceability matrix from planning.",
+        "method": "For each of the 54 def test_ functions in minidon/tests (6 files), a black-box parity test in minidon-rust covers the same behaviour and passes against both builds. The Python tests run in-process (tests/conftest.py overrides get_session with an in-memory database; tests/test_statuses.py:62-66 monkeypatches utcnow), which a black-box harness cannot do. So the equivalent is not a one-to-one translation: clock-dependent tests are re-expressed with controlled data timestamps in a shared database file (RISK-008, NFR-005). Any test that cannot be expressed black-box is listed in the traceability matrix with the reason and does not count. Mapping kept in the traceability matrix from planning.",
         "verb": "tests.read",
         "cadence": "weekly",
         "owner": "kurtis"
@@ -167,9 +167,9 @@
     },
     {
       "id": "MET-005",
-      "name": "Commits to the Python minidon repository made by this run",
+      "name": "Changes to the Python minidon repository since the baseline commit",
       "role": "guardrail",
-      "unit": "commits",
+      "unit": "commits plus uncommitted changes",
       "direction": "decrease",
       "baseline": {
         "value": 0,
@@ -178,7 +178,7 @@
           "type": "code",
           "reference": "/Users/kurtis/tw/test-mw/minidon",
           "location": "HEAD e1fbd3a",
-          "extractionMethod": "git log on 2026-11-12: HEAD is still the baseline commit e1fbd3a"
+          "extractionMethod": "git log and git status on 2026-11-12: HEAD is still the baseline commit e1fbd3a and the working tree is clean"
         },
         "confidence": "DERIVED"
       },
@@ -188,36 +188,8 @@
         "by": "2027-03-31"
       },
       "measurement": {
-        "method": "git rev-list e1fbd3a..HEAD --count on the minidon repository, filtered to commits referencing REBUILD-MINIDON",
+        "method": "git rev-list --all --count ^e1fbd3a on the minidon repository (every commit on any branch or tag that is not in the baseline commit, whatever its message), plus the number of entries in git status --porcelain (uncommitted or untracked changes). No filter on ticket references.",
         "verb": "repo.read",
-        "cadence": "at each gate",
-        "owner": "kurtis"
-      }
-    },
-    {
-      "id": "MET-006",
-      "name": "Baseline open questions without a recorded decision",
-      "role": "leading",
-      "unit": "open questions",
-      "direction": "decrease",
-      "baseline": {
-        "value": 21,
-        "measuredAt": "2026-11-11",
-        "source": {
-          "type": "document",
-          "reference": ".mw/runs/REBUILD-MINIDON/research/inputs/baseline-metrics.md",
-          "location": "Baseline open questions"
-        },
-        "confidence": "STATED"
-      },
-      "target": {
-        "value": 0,
-        "minAcceptable": 0,
-        "by": "2027-01-15"
-      },
-      "measurement": {
-        "method": "Count of openQuestions in .mw/context/baseline.json whose status is neither 'resolved' nor closed by an ADR. On 2026-11-12, 16 are resolved and 5 are deferred to design (OQ-003, OQ-005, OQ-017, OQ-018, OQ-020), all with DEMO answers pending human review. Target met when the 5 deferred ones have an ADR or a follow-up ticket.",
-        "verb": "context.read",
         "cadence": "at each gate",
         "owner": "kurtis"
       }
@@ -226,23 +198,31 @@
   "scope": {
     "in": [
       "Reimplement all 6 baseline capabilities (L1-accounts, L1-following, L1-posting, L1-timelines, L1-notifications, L1-moderation) in Rust in the new repository minidon-rust",
-      "The same external behaviour for all 82 baseline rules and the 40 HTTP endpoints: same request, same status code and response body",
-      "The shared platform behaviour with observable effects: app wiring, DomainError to HTTP status mapping, authentication dependencies, configuration (MINIDON_DATABASE_URL, MINIDON_DOMAIN and the Settings defaults)",
+      "The same external behaviour for all 80 live baseline rules and the 40 HTTP endpoints: same request, same status code and response body",
+      "The shared platform behaviour with observable effects: app wiring, DomainError to HTTP status mapping (400, 401, 403, 404, 409, 422, 429), the two 422 body shapes, authentication dependencies, configuration (MINIDON_DATABASE_URL, MINIDON_DOMAIN and the Settings defaults)",
+      "Text-processing parity with Python: mention and hashtag regex, length limits counted in code points, Unicode case folding and trimming (NFR-010)",
       "Reading and writing the existing SQLite schema and storage formats, including existing PBKDF2 password hashes and access tokens, with no migration",
-      "A parity test suite that runs every test against the Python reference and the Rust build"
+      "A parity test suite that runs every test against the Python reference and the Rust build",
+      "The cross-capability decisions from the baseline gate: L1-accounts owns get_by_username as a stable identity API (CF-004); Moderation calls Posting's soft delete directly and the boost cascade is intended (CF-006); the social queries module stays a plain import owned by L1-following (CF-003)"
     ],
     "out": [
       "Cutover, parallel running and retirement of the Python version (separate ticket)",
       "Any change to the Python minidon repository",
-      "Porting the orphaned Lists code (minidon/lists/), per OQ-021",
-      "Raising the PBKDF2 iteration count or rehash on login (OQ-003 follow-up)",
-      "Correcting the README and the 2026-10-01 decision record about the edit window (OQ-007 follow-up)"
+      "Porting the dead Lists code (minidon/lists/); the gate decided to delete it as a follow-up (CF-002, OQ-020, OQ-021)",
+      "Gate follow-up: secure admin seeding by env or CLI, replacing first-registrant-becomes-Admin (OQ-001, instance takeover risk)",
+      "Gate follow-up: raise the minimum password length from 8 to 12 (OQ-002)",
+      "Gate follow-up: raise password hashing to OWASP level (600,000 PBKDF2-SHA256) or argon2id, with rehash on login (OQ-003)",
+      "Gate follow-up: an audit trail for staff deletes (OQ-009)",
+      "Gate follow-up: a test guard for new notification kinds (OQ-012)",
+      "Gate follow-up: README updates (OQ-010, OQ-015, CF-007) and repair or supersession of ADR-001 and the 2026-10-01 decision record to 60 minutes (CF-001)",
+      "Gate follow-up: document the get_by_username identity contract (CF-004) and the boost cascade in L1-moderation/BR-015 (CF-006)",
+      "Gate follow-up: delete the dead minidon/lists/ code in the Python repository (CF-002)"
     ],
     "nonGoals": [
       "New features or behaviour changes, including fixes for known weaknesses",
       "Performance improvement or performance parity (not requested; nothing is measured)",
       "A line-by-line translation of the Python code",
-      "Renaming domain terms (Relationship stays, OQ-006)"
+      "Renaming domain terms: the gate adopted Relationship as the official business term (OQ-006), which the Rust build uses as is"
     ]
   },
   "capabilities": [
@@ -265,9 +245,9 @@
     {
       "id": "GRD-002",
       "kind": "quality",
-      "rule": "Every baseline rule has a parity test, and each parity test must pass against the Python reference before it counts for the Rust build",
+      "rule": "Every live baseline rule has a parity test, and each parity test must pass against the Python reference before it counts for the Rust build. Rules retired at the baseline gate (L1-posting/BR-009) get no parity test",
       "confidence": "DERIVED",
-      "source": { "type": "ticket", "reference": ".mw/runs/REBUILD-MINIDON/ticket.md", "location": "## Acceptance", "extractionMethod": "The ticket states the parity test; the Python-first rule is inferred from 'serves as the reference'" },
+      "source": { "type": "ticket", "reference": ".mw/runs/REBUILD-MINIDON/ticket.md", "location": "## Acceptance", "extractionMethod": "The ticket states the parity test; the Python-first rule is inferred from 'serves as the reference'; the retirement of BR-009 is STATED in the baseline gate record CF-001" },
       "steeringCandidate": true
     },
     {
@@ -281,17 +261,17 @@
     {
       "id": "GRD-004",
       "kind": "security",
-      "rule": "Existing PBKDF2-HMAC-SHA256 hashes ('<salt hex>$<digest hex>', 100,000 iterations) and existing access tokens keep working; password comparison stays constant time; hashing parameters do not change in this rebuild",
+      "rule": "Existing PBKDF2-HMAC-SHA256 hashes ('<salt hex>$<digest hex>', 100,000 iterations) and existing access tokens keep working; password comparison stays constant time; hashing parameters do not change in this rebuild (raising them is a gate follow-up, out of scope)",
       "confidence": "STATED",
-      "source": { "type": "document", "reference": ".mw/context/baseline.json", "location": "openQuestions OQ-003 (DEMO answer)" },
+      "source": { "type": "document", "reference": ".mw/runs/BASELINE-2026-10-30/baseline-review-report.json; research/inputs/human-decisions.md", "location": "OQ-003 gate answer (kurtis, 2026-11-10: known gap, raise as follow-up); human-decisions ## 3 (follow-ups out of scope). Hash format and iteration count read from minidon/accounts/service.py:21-35 at e1fbd3a" },
       "steeringCandidate": true
     },
     {
       "id": "GRD-005",
       "kind": "quality",
-      "rule": "Where documentation and code disagree, the Rust build copies the code (edit window 60 minutes, boost only public and unlisted)",
+      "rule": "Where documentation and code disagree, the Rust build copies the code: edit window 60 minutes (L1-posting/BR-010; BR-009 retired), boost only public and unlisted (L1-posting/BR-016)",
       "confidence": "STATED",
-      "source": { "type": "document", "reference": ".mw/context/baseline.json", "location": "openQuestions OQ-007, OQ-008 (DEMO answers)" },
+      "source": { "type": "document", "reference": ".mw/runs/BASELINE-2026-10-30/baseline-review-report.json", "location": "conflictsResolution CF-001 and CF-007 (kurtis, 2026-11-09)" },
       "steeringCandidate": true
     },
     {
@@ -305,9 +285,9 @@
     {
       "id": "GRD-007",
       "kind": "operability",
-      "rule": "The Rust build reads the same configuration as Python (MINIDON_DATABASE_URL defaulting to sqlite:///./minidon.db, MINIDON_DOMAIN defaulting to minidon.local) with the same Settings defaults",
+      "rule": "The Rust build reads the same configuration as Python (MINIDON_DATABASE_URL defaulting to sqlite:///./minidon.db, MINIDON_DOMAIN defaulting to minidon.local) with the same Settings defaults, and its development entry point listens on 127.0.0.1:8000 like python -m minidon",
       "confidence": "DERIVED",
-      "source": { "type": "code", "reference": "/Users/kurtis/tw/test-mw/minidon/minidon/config.py", "extractionMethod": "read at e1fbd3a" },
+      "source": { "type": "code", "reference": "/Users/kurtis/tw/test-mw/minidon/minidon/config.py; /Users/kurtis/tw/test-mw/minidon/minidon/__main__.py", "extractionMethod": "read at e1fbd3a" },
       "steeringCandidate": true
     },
     {
@@ -316,6 +296,14 @@
       "rule": "Time-dependent rules are tested with a controlled clock or controlled data timestamps, never with real waits",
       "confidence": "DERIVED",
       "source": { "type": "inferred", "reference": "research/risks.json", "location": "RISK-008" },
+      "steeringCandidate": true
+    },
+    {
+      "id": "GRD-009",
+      "kind": "quality",
+      "rule": "Text handling matches Python exactly, including non-ASCII input: the mention and hashtag patterns (with their lookbehinds and Unicode \\w and \\b), length limits counted in code points, Unicode lower-casing and whitespace trimming. Unicode inputs are a required class in the parity suite",
+      "confidence": "DERIVED",
+      "source": { "type": "code", "reference": "/Users/kurtis/tw/test-mw/minidon/minidon/statuses/service.py", "location": "lines 19-20, 229; accounts/service.py:45, 122, 126; moderation/service.py:28", "extractionMethod": "read at e1fbd3a; see RISK-010" },
       "steeringCandidate": true
     }
   ],
@@ -327,18 +315,22 @@
   },
   "links": {
     "risks": [
-      "ASM-001", "ASM-002", "ASM-003", "ASM-004",
+      "ASM-001", "ASM-002", "ASM-003", "ASM-004", "ASM-005",
       "CON-001", "CON-002", "CON-003", "CON-004",
-      "RISK-001", "RISK-002", "RISK-003", "RISK-004", "RISK-005", "RISK-006", "RISK-007", "RISK-008", "RISK-009",
+      "RISK-001", "RISK-002", "RISK-003", "RISK-004", "RISK-005", "RISK-006", "RISK-007", "RISK-008", "RISK-009", "RISK-010",
       "DEP-001", "DEP-002", "DEP-003", "DEP-004", "DEP-005"
     ],
     "gaps": [
-      "GAP-003", "GAP-004", "GAP-005", "GAP-006", "GAP-007"
+      "GAP-003", "GAP-004", "GAP-005", "GAP-006", "GAP-007", "GAP-008", "GAP-009"
     ],
     "estimate": "estimate.json",
     "flows": [
       "flows/journeys.md",
       "flows/value-stream.md"
+    ],
+    "decisions": [
+      ".mw/runs/BASELINE-2026-10-30/baseline-review-report.json",
+      "research/inputs/human-decisions.md"
     ]
   }
 }

@@ -1,0 +1,100 @@
+{
+  "version": "1.0",
+  "note": "DERIVED by research-agent on 2026-11-12, revised the same day after research review 001 (denominator 80, error codes 409 and 429, text-processing parity, schema bootstrap). The qa-planning-agent lane may extend it; no lane review has happened yet. Sources are named per requirement.",
+  "requirements": [
+    {
+      "id": "NFR-001",
+      "text": "For each of the 80 live baseline rules (81 (capability, BR id) pairs minus the retired L1-posting/BR-009), the same HTTP request against the Python build at e1fbd3a and the Rust build, each on its own copy of the same database, returns the same status code and the same response body after agreed normalisation (generated ids, timestamps, token values)",
+      "proves": ["MET-001", "MET-002", "MET-003"],
+      "how": "Black-box parity suite in minidon-rust that starts either build as a process and runs the same test cases against it; a test counts only after it passes against Python",
+      "confidence": "STATED",
+      "source": "ticket.md ## Acceptance (parity test per rule); denominator from research/inputs/human-decisions.md ## 1; the dual-target harness is DERIVED"
+    },
+    {
+      "id": "NFR-002",
+      "text": "The Rust build starts on a SQLite database created and populated by the Python build and serves it with no migration; the Python build reads data written by the Rust build with the same results",
+      "proves": ["MET-004"],
+      "how": "Round-trip compatibility tests in CI: Python writes, Rust reads and writes, Python reads; includes enum columns (stored as upper-case member names such as 'ADMIN', 'PRIVATE'), naive UTC datetimes ('YYYY-MM-DD HH:MM:SS.ffffff'), password hashes and tokens",
+      "confidence": "STATED",
+      "source": "ticket.md ## Scope (same data) and ## Acceptance (no migration); the reverse direction and the format details are DERIVED (research-review-001 F-09 probe)"
+    },
+    {
+      "id": "NFR-003",
+      "text": "Error and edge responses match Python: the DomainError mapping (400, 401, 403, 404, 409, 422, 429) with body {\"error\": msg}; request validation failures, which FastAPI returns as 422 with a different body {\"detail\": [...]}; unknown routes ({\"detail\": \"Not Found\"}) and wrong methods (405). Which framework-level details (for example the exact validation body, and whether /openapi.json, /docs and /redoc are contract) are part of the contract is decided in design (ADR candidate 3) and then tested",
+      "how": "Differential run of a recorded request sequence covering all 40 endpoints against both builds, plus targeted parity tests, including 409 cases (username taken, email registered, already boosted, report already closed) and the 429 posting rate limit",
+      "confidence": "DERIVED",
+      "source": "RISK-003; minidon/errors.py:28-33, minidon/main.py:18-20, accounts/service.py:48,50, statuses/service.py:168,244, moderation/service.py:62 at e1fbd3a"
+    },
+    {
+      "id": "NFR-004",
+      "text": "Existing credentials keep working: accounts created by Python sign in on Rust, and access tokens issued by Python authenticate on Rust until they expire",
+      "proves": ["MET-004"],
+      "how": "Compatibility tests using accounts and tokens created through the Python API",
+      "confidence": "STATED",
+      "source": "ticket.md ## Scope (same data); baseline gate answer OQ-003 (hashing unchanged here, upgrade is a follow-up) in .mw/runs/BASELINE-2026-10-30/baseline-review-report.json"
+    },
+    {
+      "id": "NFR-005",
+      "text": "Time-dependent rules (60-minute edit window, 30 posts per rolling hour, 30-day token TTL, ordering by created_at) are tested at and around each boundary without real waiting, and the suite is deterministic (no flaky reruns)",
+      "how": "Controlled clock in Rust, controlled data timestamps in the shared database file for the Python side (the Python code may not change); suite run 10 times in CI with no difference",
+      "confidence": "DERIVED",
+      "source": "RISK-008"
+    },
+    {
+      "id": "NFR-006",
+      "text": "Rust build quality: cargo fmt clean, cargo clippy with warnings denied, cargo test green, cargo audit and cargo deny clean, Cargo.lock committed",
+      "how": "CI checks on every pull request to minidon-rust",
+      "confidence": "DERIVED",
+      "source": "security.md item 9; engineering standard"
+    },
+    {
+      "id": "NFR-007",
+      "text": "Performance: no requirement. Performance parity is not requested and the Python build has no latency or throughput measurement",
+      "how": "Not tested in this run. If the PO adds a requirement, measure the Python build first (research/inputs/baseline-metrics.md, Notes)",
+      "confidence": "STATED",
+      "source": "ticket.md ## Open questions; research/inputs/baseline-metrics.md"
+    },
+    {
+      "id": "NFR-008",
+      "text": "Under concurrent requests the Rust build does not fail where the Python build succeeds (for example SQLite 'database is locked' errors under parallel writes)",
+      "how": "A small concurrent-write smoke test against both builds; differences recorded as risks, not as parity failures",
+      "confidence": "DERIVED",
+      "source": "RISK-009"
+    },
+    {
+      "id": "NFR-009",
+      "text": "Same configuration surface: MINIDON_DATABASE_URL (default sqlite:///./minidon.db), MINIDON_DOMAIN (default minidon.local), the Settings defaults (500-character status, 60-minute edit window, 30 posts per hour, 30-day token TTL), and a development entry point on 127.0.0.1:8000 (hard-coded in minidon/__main__.py:10)",
+      "how": "Configuration parity test that starts the Rust build with and without each variable",
+      "confidence": "DERIVED",
+      "source": "minidon/config.py and minidon/__main__.py at e1fbd3a; GRD-007"
+    },
+    {
+      "id": "NFR-010",
+      "text": "Text-processing parity: mention and hashtag extraction, length limits, case folding and trimming give the same result as Python for every input, including non-ASCII input. Specifically: the mention and hashtag patterns behave like Python re with its lookbehinds and Unicode \\w and \\b; length limits (status plus spoiler 500, display name 30, bio 500, password minimum 8, report comment 1000) count Unicode code points, not bytes; usernames, emails and tags are lower-cased with Python's Unicode str.lower(); content and email are trimmed with Python's str.strip() whitespace set",
+      "proves": ["MET-001"],
+      "how": "Unicode inputs (accented letters, non-Latin scripts, emoji, combining marks, non-ASCII whitespace, @ and # next to word characters) are a required class in the parity suite for every rule that reads text; any regex engine choice is checked against this class",
+      "confidence": "DERIVED",
+      "source": "RISK-010; minidon/statuses/service.py:19-20, 70, 120, 229, 252; accounts/service.py:39-40, 45, 122, 126; moderation/service.py:28; timelines/service.py:85 at e1fbd3a"
+    },
+    {
+      "id": "NFR-011",
+      "text": "If the Rust build ever creates the schema on an empty database, the result matches what SQLAlchemy create_all produces for the Python build (table and column names, types, VARCHAR lengths, NOT NULL, unique constraints and indexes), so a fresh Rust-created database is readable by Python and the other way round",
+      "proves": ["MET-004"],
+      "how": "Schema comparison test: create an empty database with each build and compare sqlite_master; or decide in design that Rust never creates the schema and test that it refuses to",
+      "confidence": "DERIVED",
+      "source": "minidon/__main__.py:9 and minidon/db.py:30-33 at e1fbd3a (Python creates its schema at startup); research-review-001 F-11"
+    }
+  ],
+  "proves": {
+    "MET-001": "parity suite result in minidon-rust CI, live rules passing against both builds",
+    "MET-002": "parity suite result grouped by capability",
+    "MET-003": "traceability matrix from planning: Python test function to black-box parity test",
+    "MET-004": "compatibility suite (NFR-002, NFR-004, NFR-011)",
+    "MET-005": "git rev-list --all and git status on the minidon repository at each gate"
+  },
+  "unprovable": [
+    "That the 80 live rules are all of minidon's behaviour (ASM-001): the differential run of NFR-003 only samples it, it cannot prove completeness",
+    "Performance and resource use: no baseline exists and none is required (NFR-007)",
+    "Behaviour on real legacy data, until a representative dataset is supplied (DEP-005)"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "note": "DEMO CONTENT. DEMO ASSUMPTION copied from research/inputs/decision-makers.md: kurtis holds every lane. Replace with real, separate people before relying on this roster (see RISK-007): at least a distinct PO, BA, Tech Lead and Security reviewer, and named approvers for the plan and release gates, which decision-makers.md does not cover. Security review is folded into the integration lane here only because the roster has one person; a real team should name a separate security reviewer. Lane-to-role mapping is DERIVED by research-agent. Revised on 2026-11-12 after research review 001 to match the corrected scope.",
+  "reviewers": [
+    {
+      "lane": "domain",
+      "person": "kurtis",
+      "scope": "BA / Product: the 80 live baseline rules (81 minus the retired L1-posting/BR-009), the 64 DERIVED or mixed rules treated as confirmed by the baseline-gate domain sign-off (ASM-005), and the gate follow-ups carried out of scope"
+    },
+    {
+      "lane": "architecture",
+      "person": "kurtis",
+      "scope": "Tech Lead: Rust platform and runtime (DEP-003), data compatibility (ASM-002), text-processing parity (RISK-010, NFR-010), and the Rust shape of the gate decisions CF-003, CF-004, CF-006 (ADR candidate 5)"
+    },
+    {
+      "lane": "strategy",
+      "person": "kurtis",
+      "scope": "Product Owner: the outcome, scope, the still-unstated reason for Rust (RISK-005) and the research gate"
+    },
+    {
+      "lane": "development",
+      "person": "kurtis",
+      "scope": "Tech Lead: estimate (DEMO), parity harness design, Rust build quality (NFR-006)"
+    },
+    {
+      "lane": "design",
+      "person": "kurtis",
+      "scope": "API contract only: minidon has no screens (GAP-007 waived). Reviews the HTTP contract normalisation and framework behaviours in NFR-003 and ADR candidate 3"
+    },
+    {
+      "lane": "qa",
+      "person": "kurtis",
+      "scope": "Parity and compatibility test strategy (NFR-001, NFR-002, NFR-005, NFR-010, NFR-011); MET-001 to MET-005 measurement"
+    },
+    {
+      "lane": "integration",
+      "person": "kurtis",
+      "scope": "Security reviewer (DEMO: folded into this lane) and data owner: existing SQLite data and formats (DEP-005), password hashes and tokens (OQ-003, GRD-004), the security follow-ups (OQ-001, OQ-002, OQ-003, OQ-009), the Python reference (DEP-001)"
+    }
+  ]
+}
