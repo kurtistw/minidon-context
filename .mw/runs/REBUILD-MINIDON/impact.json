@@ -1,0 +1,121 @@
+{
+  "$schema": "../../../.mw/templates/schemas/impact.schema.json",
+  "version": "1.0.0",
+  "ticketId": "REBUILD-MINIDON",
+  "timestamp": "2026-11-13T00:00:00Z",
+  "capability": {
+    "id": "L1-accounts",
+    "name": "Accounts",
+    "level": "L1",
+    "baselineVersion": "1.0.0 (BASELINE-2026-10-30)"
+  },
+  "classification": {
+    "type": "major",
+    "signals": [
+      {
+        "signal": "epic-split",
+        "value": "DERIVED: REBUILD-MINIDON spans all six L1 capabilities; this story is slice 1 (L1-accounts), the others follow",
+        "weight": "high"
+      },
+      {
+        "signal": "behaviour-change",
+        "value": "STATED: none, lift and shift with feature parity (ticket.md: feature parity, no behaviour change)",
+        "weight": "low"
+      },
+      {
+        "signal": "new-repository",
+        "value": "STATED: Rust code lives in a new repository, minidon-rust (ticket.md Scope)",
+        "weight": "high"
+      }
+    ],
+    "overrideReason": "Matches run.json classification major."
+  },
+  "scope": {
+    "repositories": [
+      {
+        "name": "minidon",
+        "branch": "master",
+        "components": [
+          "minidon/accounts"
+        ],
+        "estimatedFiles": 0
+      },
+      {
+        "name": "minidon-rust",
+        "components": [
+          "accounts (new, ADDED)"
+        ],
+        "estimatedFiles": 0
+      }
+    ],
+    "capabilities": {
+      "primary": "L1-accounts",
+      "secondary": []
+    },
+    "contracts": {
+      "modified": [],
+      "new": [
+        "L1-accounts get_by_username identity-resolution API, Rust shape decided at design (gate decision CF-004 in the baseline gate record)"
+      ],
+      "deprecated": []
+    },
+    "dependencies": {
+      "internal": [
+        "DERIVED follow-on order, each depends on identity from L1-accounts: 1 L1-following, 2 L1-posting, 3 L1-timelines, 4 L1-notifications, 5 L1-moderation. Rationale from the baseline gate record: social queries owned by following (CF-003), moderation calls posting soft delete (CF-006); exact order to be confirmed at PLAN_DRAFT"
+      ],
+      "external": {
+        "new": [],
+        "upgraded": [],
+        "removed": []
+      }
+    }
+  },
+  "integrationPoints": [
+    {
+      "type": "database",
+      "name": "existing minidon SQLite data, read and written by the Rust build without migration",
+      "direction": "bidirectional",
+      "affectedBy": "STATED: ticket.md Scope, Same data"
+    },
+    {
+      "type": "api",
+      "name": "accounts HTTP routes: registration, sign-in, profile",
+      "direction": "inbound",
+      "affectedBy": "DERIVED: same external behaviour required"
+    }
+  ],
+  "requiresArchDecision": true,
+  "archDecisionReason": "DERIVED: the Rust target needs architecture decisions (regex engine, data compatibility, web framework); research is expected to record ADR candidates",
+  "metadata": {
+    "agent": "planning-agent",
+    "agentVersion": "1.0.0",
+    "runId": "REBUILD-MINIDON"
+  },
+  "affectedRules": {
+    "provenance": "DERIVED by planning-agent from .mw/context/capabilities/accounts/rules-trace.md; each rule keeps its own STATED/DERIVED label there",
+    "capability": "L1-accounts",
+    "ruleCount": 14,
+    "rules": [
+      "L1-accounts/BR-001",
+      "L1-accounts/BR-002",
+      "L1-accounts/BR-003",
+      "L1-accounts/BR-004",
+      "L1-accounts/BR-005",
+      "L1-accounts/BR-006",
+      "L1-accounts/BR-007",
+      "L1-accounts/BR-008",
+      "L1-accounts/BR-009",
+      "L1-accounts/BR-010",
+      "L1-accounts/BR-011",
+      "L1-accounts/BR-012",
+      "L1-accounts/BR-013",
+      "L1-accounts/BR-014"
+    ],
+    "note": "All 14 are live; none retired (retired rule is L1-posting/BR-009, outside this story)"
+  },
+  "sources": [
+    "STATED: .mw/runs/REBUILD-MINIDON/ticket.md",
+    "DERIVED: .mw/context/baseline.json",
+    "STATED: .mw/runs/BASELINE-2026-10-30/baseline-review-report.json"
+  ]
+}
