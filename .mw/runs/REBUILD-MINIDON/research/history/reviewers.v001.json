@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "note": "DEMO ASSUMPTION copied from research/inputs/decision-makers.md: kurtis holds every lane. Replace with real, separate people before relying on this roster (see RISK-007). Lane-to-role mapping is DERIVED by research-agent.",
+  "reviewers": [
+    {
+      "lane": "domain",
+      "person": "kurtis",
+      "scope": "BA / Product: the 82 baseline rules and the DEMO answers to OQ-001 to OQ-021 (copy current behaviour)"
+    },
+    {
+      "lane": "architecture",
+      "person": "kurtis",
+      "scope": "Tech Lead: Rust platform and runtime (DEP-003), data compatibility (ASM-002), deferred ADRs OQ-005, OQ-017, OQ-018"
+    },
+    {
+      "lane": "strategy",
+      "person": "kurtis",
+      "scope": "Product Owner: the outcome, scope, the unstated reason for Rust (RISK-005) and the research gate"
+    },
+    {
+      "lane": "development",
+      "person": "kurtis",
+      "scope": "Tech Lead: estimate, parity harness design, Rust build quality (NFR-006)"
+    },
+    {
+      "lane": "design",
+      "person": "kurtis",
+      "scope": "API contract only: minidon has no screens (GAP-007 waived). Reviews the HTTP contract normalisation in NFR-003"
+    },
+    {
+      "lane": "qa",
+      "person": "kurtis",
+      "scope": "Parity and compatibility test strategy (NFR-001, NFR-002, NFR-005); MET-001 to MET-004 measurement"
+    },
+    {
+      "lane": "integration",
+      "person": "kurtis",
+      "scope": "Security reviewer and data owner: existing SQLite data and formats (DEP-005), password hashes and tokens (OQ-003, GRD-004), the Python reference (DEP-001)"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "version": "1.0",
+  "note": "DERIVED by research-agent on 2026-11-12 (the qa-planning-agent lane may extend it). Sources are named per requirement.",
+  "requirements": [
+    {
+      "id": "NFR-001",
+      "text": "For each of the 82 baseline rules, the same HTTP request against the Python build at e1fbd3a and the Rust build, each on its own copy of the same database, returns the same status code and the same response body after agreed normalisation (generated ids, timestamps, token values)",
+      "proves": ["MET-001", "MET-002", "MET-003"],
+      "how": "Black-box parity suite in minidon-rust that starts either build as a process and runs the same test cases against it; a test counts only after it passes against Python",
+      "confidence": "STATED",
+      "source": "ticket.md ## Acceptance (parity test per rule); the dual-target harness is DERIVED"
+    },
+    {
+      "id": "NFR-002",
+      "text": "The Rust build starts on a SQLite database created and populated by the Python build and serves it with no migration; the Python build reads data written by the Rust build with the same results",
+      "proves": ["MET-004"],
+      "how": "Round-trip compatibility tests in CI: Python writes, Rust reads and writes, Python reads; includes enum columns, naive UTC datetimes, password hashes and tokens",
+      "confidence": "STATED",
+      "source": "ticket.md ## Scope (same data) and ## Acceptance (no migration); the reverse direction is DERIVED"
+    },
+    {
+      "id": "NFR-003",
+      "text": "Error and edge responses match Python: DomainError mapping (400, 401, 403, 404, 422), request validation failures, unknown routes and wrong methods; which framework-level details (for example the exact 422 body) are part of the contract is decided in design and then tested",
+      "how": "Differential run of a recorded request sequence covering all 40 endpoints against both builds, plus targeted parity tests",
+      "confidence": "DERIVED",
+      "source": "RISK-003, minidon/errors.py at e1fbd3a"
+    },
+    {
+      "id": "NFR-004",
+      "text": "Existing credentials keep working: accounts created by Python sign in on Rust, and access tokens issued by Python authenticate on Rust until they expire",
+      "proves": ["MET-004"],
+      "how": "Compatibility tests using accounts and tokens created through the Python API",
+      "confidence": "STATED",
+      "source": "DEMO answer OQ-003 in .mw/context/baseline.json"
+    },
+    {
+      "id": "NFR-005",
+      "text": "Time-dependent rules (60-minute edit window, 30 posts per rolling hour, 30-day token TTL, ordering by created_at) are tested at and around each boundary without real waiting, and the suite is deterministic (no flaky reruns)",
+      "how": "Controlled clock in Rust, controlled data timestamps for the Python side (the Python code may not change); suite run 10 times in CI with no difference",
+      "confidence": "DERIVED",
+      "source": "RISK-008"
+    },
+    {
+      "id": "NFR-006",
+      "text": "Rust build quality: cargo fmt clean, cargo clippy with warnings denied, cargo test green, cargo audit and cargo deny clean, Cargo.lock committed",
+      "how": "CI checks on every pull request to minidon-rust",
+      "confidence": "DERIVED",
+      "source": "security.md item 9; engineering standard"
+    },
+    {
+      "id": "NFR-007",
+      "text": "Performance: no requirement. Performance parity is not requested and the Python build has no latency or throughput measurement",
+      "how": "Not tested in this run. If the PO adds a requirement, measure the Python build first (research/inputs/baseline-metrics.md, Notes)",
+      "confidence": "STATED",
+      "source": "ticket.md ## Open questions; research/inputs/baseline-metrics.md"
+    },
+    {
+      "id": "NFR-008",
+      "text": "Under concurrent requests the Rust build does not fail where the Python build succeeds (for example SQLite 'database is locked' errors under parallel writes)",
+      "how": "A small concurrent-write smoke test against both builds; differences recorded as risks, not as parity failures",
+      "confidence": "DERIVED",
+      "source": "RISK-009"
+    },
+    {
+      "id": "NFR-009",
+      "text": "Same configuration surface: MINIDON_DATABASE_URL (default sqlite:///./minidon.db), MINIDON_DOMAIN (default minidon.local) and the Settings defaults (500-character status, 60-minute edit window, 30 posts per hour, 30-day token TTL)",
+      "how": "Configuration parity test that starts the Rust build with and without each variable",
+      "confidence": "DERIVED",
+      "source": "minidon/config.py at e1fbd3a; GRD-007"
+    }
+  ],
+  "proves": {
+    "MET-001": "parity suite result in minidon-rust CI, rules passing against both builds",
+    "MET-002": "parity suite result grouped by capability",
+    "MET-003": "traceability matrix from planning: Python test function to parity test",
+    "MET-004": "compatibility suite (NFR-002, NFR-004)",
+    "MET-005": "git rev-list on the minidon repository at each gate",
+    "MET-006": "openQuestions status in .mw/context/baseline.json and the ADRs in adr/"
+  },
+  "unprovable": [
+    "That the 82 rules are all of minidon's behaviour (ASM-001): the differential run of NFR-003 only samples it, it cannot prove completeness",
+    "Performance and resource use: no baseline exists and none is required (NFR-007)",
+    "Behaviour on real legacy data, until a representative dataset is supplied (DEP-005)"
+  ]
+}

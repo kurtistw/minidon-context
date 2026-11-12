@@ -1,0 +1,205 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "note": "Drafted by research-agent on 2026-11-12. Every entry is DERIVED unless marked STATED. Owners come from research/inputs/decision-makers.md, which is a DEMO ASSUMPTION naming kurtis in every role.",
+  "entries": [
+    {
+      "id": "ASM-001",
+      "type": "assumption",
+      "title": "The 82 baseline rules describe all externally observable behaviour of minidon",
+      "description": "Parity is defined as 'every baseline rule has a passing parity test'. That is only equal to feature parity if the rules cover every observable behaviour. The baseline maps 71.0% of code to capabilities; the unmapped 29% includes shared infrastructure with observable effects (minidon/main.py DomainError handler, minidon/deps.py auth dependencies, FastAPI/Pydantic request validation). Behaviour there is not captured as a business rule. Tested by the differential check in falsifiedIf.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L0-minidon", "MET-001", "RISK-003"]
+    },
+    {
+      "id": "ASM-002",
+      "type": "assumption",
+      "title": "A Rust build can read and write the existing SQLite data byte-compatibly without a migration",
+      "description": "The ticket requires same data, no migration. Python stores data through SQLAlchemy on SQLite (minidon/db.py, default sqlite:///./minidon.db): naive UTC datetimes in SQLAlchemy's text format, StrEnum columns (Role, Visibility, NotificationKind, ReportCategory, ReportState) stored as SQLAlchemy Enum values, password hashes as '<salt hex>$<digest hex>', and access tokens as the primary key. The assumption is that every one of these can be reproduced exactly in Rust.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["MET-004", "RISK-002", "GRD-001"]
+    },
+    {
+      "id": "ASM-003",
+      "type": "assumption",
+      "title": "Parity can be proven black-box at the HTTP boundary, with the Python build as the oracle",
+      "description": "The Python repository stays unchanged and serves as the reference (ticket.md). The assumption is that both builds can be run against copies of the same database with a controllable clock, so each parity test can assert the same status code and response body for the same request.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["DEP-001", "RISK-008", "NFR-001"]
+    },
+    {
+      "id": "ASM-004",
+      "type": "assumption",
+      "title": "The open-question answers in baseline.json hold: copy current behaviour exactly",
+      "description": "All 21 answers in .mw/context/baseline.json are marked 'DEMO ANSWER, proposed by Claude, pending human review'. OQ-003, OQ-005, OQ-017, OQ-018 and OQ-020 are deferred to design. If a human reverses any answer, the parity target for the affected rules changes.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["RISK-001", "MET-006"]
+    },
+    {
+      "id": "CON-001",
+      "type": "contradiction",
+      "title": "The baseline is described as confirmed, but baseline.json says draft with open conflicts",
+      "description": "The ticket and the research brief call BASELINE-2026-10-30 the confirmed baseline. .mw/context/baseline.json has status 'draft', confirmedBy.actor null, and all seven conflicts (CF-001 to CF-007) still have status 'open', although the related open questions (OQ-007, OQ-021, OQ-005, OQ-018, OQ-019, OQ-017, OQ-008) carry answers. The research pack treats the answers as current and flags that the baseline record itself has not been updated to confirmed.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": [".mw/context/baseline.json", "CF-001", "CF-002", "CF-003", "CF-004", "CF-005", "CF-006", "CF-007"]
+    },
+    {
+      "id": "CON-002",
+      "type": "contradiction",
+      "title": "Rule count: baseline.json index says 81, the rules-trace files say 82",
+      "description": "baseline.json capabilities.index gives L1-notifications ruleCount 9 (total 14+15+20+8+9+15 = 81). capabilities/notifications/rules-trace.md has 10 distinct BR ids, and research/inputs/baseline-metrics.md counts 82. This pack uses 82 (the rules-trace files) as the parity denominator, because the trace files are the rules a parity test is written against.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-notifications", "MET-001"]
+    },
+    {
+      "id": "CON-003",
+      "type": "contradiction",
+      "title": "Status edit window: README and the 2026-10-01 decision say 30 minutes, code says 60",
+      "description": "CF-001. The OQ-007 demo answer makes the code the source of truth, so Rust enforces 60 minutes. The README and the decision record stay wrong until a follow-up corrects them.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-posting", "CF-001", "OQ-007"]
+    },
+    {
+      "id": "CON-004",
+      "type": "contradiction",
+      "title": "Boosting: README says any visible status, code allows only public and unlisted",
+      "description": "CF-007. The OQ-008 demo answer keeps the code behaviour, so followers-only and direct statuses stay un-boostable in Rust.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["L1-posting", "CF-007", "OQ-008"]
+    },
+    {
+      "id": "RISK-001",
+      "type": "risk",
+      "title": "Demo answers are reversed at human review",
+      "description": "Every open-question answer is a demo proposal pending human review (ASM-004). A reversal turns a parity rule into a behaviour change, which is out of scope for this ticket and would need its own ticket or a scope change at the research gate.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-004"]
+    },
+    {
+      "id": "RISK-002",
+      "type": "risk",
+      "title": "Silent data incompatibility in stored formats",
+      "description": "Most likely failure points: SQLAlchemy's text format for naive datetimes (microseconds, separator), how SQLAlchemy persists Python Enum columns (it stores the enum member name by default, which can differ from the StrEnum value), boolean and NULL handling, integer id sequences, and the PBKDF2 hash string format. A mismatch may not fail loudly: Rust could misread rows or write rows that Python later misreads. Mitigation: round-trip tests in both directions on a copy of a Python-created database (NFR-002).",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-002", "MET-004", "NFR-002"]
+    },
+    {
+      "id": "RISK-003",
+      "type": "risk",
+      "title": "Framework behaviour that is observable but not a business rule",
+      "description": "FastAPI and Pydantic decide request validation errors (422 body shape), JSON serialisation (datetime format, nulls, field order), default status codes, trailing-slash redirects and 405 handling. None of this is in the 82 rules, but API clients can depend on it. If it is not specified, Rust will differ. Mitigation: a differential test over all 40 endpoints, plus a design decision on which framework behaviours are part of the contract.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-001", "NFR-003"]
+    },
+    {
+      "id": "RISK-004",
+      "type": "risk",
+      "title": "Rule-to-test coverage in Python is unmeasured",
+      "description": "baseline-metrics.md records 'Rules with an automated test: not measured'. There are 54 Python test functions for 82 rules, so some rules have no existing test. Those parity tests have to be written from the rules-trace and checked against the Python build first, which adds work and the chance that a test encodes a misread rule.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["MET-001", "MET-003"]
+    },
+    {
+      "id": "RISK-005",
+      "type": "risk",
+      "title": "The reason for moving to Rust is unstated, and performance is not measured",
+      "description": "The ticket says 'Move minidon from Python to Rust' but gives no business reason, and performance parity is not required. If the real motive is performance, cost or safety, nothing in this pack measures it, and there is no Python latency or throughput baseline to compare with later. Recommendation: the PO states the reason at the research gate, or adds a performance metric and has the Python version measured first.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["GAP-003", "NFR-007"]
+    },
+    {
+      "id": "RISK-006",
+      "type": "risk",
+      "title": "Known security weaknesses are carried forward on purpose",
+      "description": "Parity keeps PBKDF2-HMAC-SHA256 at 100,000 iterations (below the OWASP figure of 600,000 or more, OQ-003 deferred), access tokens stored in clear text as the database key, and first-registrant-becomes-Admin (BR-006, OQ-001). These are accepted for the lift and shift and must be raised as follow-up tickets so they are not forgotten. See security.md.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-accounts", "OQ-001", "OQ-003"]
+    },
+    {
+      "id": "RISK-007",
+      "type": "risk",
+      "title": "One person holds every decision and review role",
+      "description": "decision-makers.md is a demo assumption naming kurtis as PO, BA, Tech Lead, Security reviewer and gate approver. Agents keep I-14 among themselves, but there is no independent human review of the domain, architecture and security lanes. Replace with real people before relying on the pack.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["research/inputs/decision-makers.md"]
+    },
+    {
+      "id": "RISK-008",
+      "type": "risk",
+      "title": "Time-dependent rules are hard to compare across two builds",
+      "description": "The 60-minute edit window, the 30-posts-per-rolling-hour rate limit, the 30-day token TTL and created_at ordering all read the wall clock (minidon/db.py utcnow). Parity tests need the same controllable clock in both builds, or they will flake. The Python build has no clock injection point today and must not be changed, so tests may need to set data timestamps instead of the clock.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-posting", "L1-accounts", "ASM-003", "NFR-005"]
+    },
+    {
+      "id": "RISK-009",
+      "type": "risk",
+      "title": "Concurrency behaviour may differ under an async Rust runtime",
+      "description": "Python opens SQLite with check_same_thread False and one session per request. A Rust build with a connection pool and concurrent writers may hit 'database is locked' errors the Python build does not, and the COUNT(*)-based first-registrant-becomes-Admin check (BR-006) has a race that may play out differently. Parity tests are sequential, so they will not catch this.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["L1-accounts", "NFR-008"]
+    },
+    {
+      "id": "DEP-001",
+      "type": "dependency",
+      "title": "Python minidon at e1fbd3a as the reference oracle",
+      "description": "/Users/kurtis/tw/test-mw/minidon, branch master, commit e1fbd3a9 (HEAD on 2026-11-12). Read-only for this run (I-29). Parity tests run against it to confirm the expected results.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["ASM-003"]
+    },
+    {
+      "id": "DEP-002",
+      "type": "dependency",
+      "title": "minidon-rust repository",
+      "description": "/Users/kurtis/tw/test-mw/minidon-rust exists and is empty (branch master, no commits on 2026-11-12). Build work lands here in later activities, never from research.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["MET-001", "MET-002"]
+    },
+    {
+      "id": "DEP-003",
+      "type": "dependency",
+      "title": "Rust target platform and runtime decision",
+      "description": "Open question in the ticket: Rust toolchain version, web framework, SQLite driver, async runtime, deployment target. Owned by the Tech Lead and decided in design (ADR). Blocks code planning, not research.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["ticket.md"]
+    },
+    {
+      "id": "DEP-004",
+      "type": "dependency",
+      "title": "Design decisions deferred from the baseline",
+      "description": "OQ-005 (shared social queries module), OQ-017 (how Moderation deletes a status), OQ-018 (identity-resolution API) are internal-structure ADRs. OQ-003 (password hashing upgrade) and OQ-020 (Lists) are follow-ups outside this rebuild. None may change external behaviour.",
+      "confidence": "STATED",
+      "owner": "kurtis",
+      "refs": ["OQ-003", "OQ-005", "OQ-017", "OQ-018", "OQ-020"]
+    },
+    {
+      "id": "DEP-005",
+      "type": "dependency",
+      "title": "A representative existing dataset for compatibility testing",
+      "description": "'Same data' needs a real or realistic SQLite database created by the Python build. No dataset is named in the inputs. Without one, compatibility tests use a database the tests build through the Python API, which may miss legacy rows.",
+      "confidence": "DERIVED",
+      "owner": "kurtis",
+      "refs": ["ASM-002", "MET-004"]
+    }
+  ]
+}

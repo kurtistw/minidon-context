@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "run": "REBUILD-MINIDON",
-  "researchVersion": 12,
+  "researchVersion": 13,
   "entries": [
     {
       "path": "inputs/README.md",
@@ -218,6 +218,102 @@
       "sha256": "sha256:d0ba983f2359bda7a8cc870afde75629a3beca965198de4a5dc0e4e555224105",
       "ts": "2026-11-12T03:47:15.298Z",
       "actor": "kurtis.angell@thoughtworks.com"
+    },
+    {
+      "path": "estimate.json",
+      "version": 1,
+      "archive": "history/estimate.v001.json",
+      "sha256": "sha256:e0f02e2fbc92d5a97ed58e0dc4e5746f20e34747fe9c5b368a92289049ae0b3b",
+      "ts": "2026-11-12T16:17:52.263Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "flows/journeys.md",
+      "version": 1,
+      "archive": "history/flows__journeys.v001.md",
+      "sha256": "sha256:04c614b859d845d54de91dad9004c18eb355cc62cf113d8f21058ffde2f227d4",
+      "ts": "2026-11-12T16:17:52.263Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "flows/value-stream.md",
+      "version": 1,
+      "archive": "history/flows__value-stream.v001.md",
+      "sha256": "sha256:7160d865ba275dbd4cceabec9ff1dd5574a50682ea446b35156586944d2605fd",
+      "ts": "2026-11-12T16:17:52.263Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "outcome-brief.md",
+      "version": 1,
+      "archive": "history/outcome-brief.v001.md",
+      "sha256": "sha256:478736d161184a0bc5af9bbd29cd0c54003afcab2ecaa00826140eba06fdeea6",
+      "ts": "2026-11-12T16:17:52.264Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "outcome.json",
+      "version": 2,
+      "archive": "history/outcome.v002.json",
+      "sha256": "sha256:f552605e6d0eac22f75a3aa69bd04324facf0b8ed61fabbd38d41644e16ea73e",
+      "ts": "2026-11-12T16:17:52.264Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "reviewers.json",
+      "version": 1,
+      "archive": "history/reviewers.v001.json",
+      "sha256": "sha256:47103bcc127f7682282bb6e1f59761f7423949be24d7ac529854f381a8b2a74e",
+      "ts": "2026-11-12T16:17:52.264Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "risks.json",
+      "version": 1,
+      "archive": "history/risks.v001.json",
+      "sha256": "sha256:09633daeff4f6ee7b5fd540673488b800b27b5d1a094040768185e1d4424089b",
+      "ts": "2026-11-12T16:17:52.264Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "security.md",
+      "version": 1,
+      "archive": "history/security.v001.md",
+      "sha256": "sha256:cb552eed7a7b8598f3d423dc4f7601ca4c90a779edf6231a2d4b40b752f97c42",
+      "ts": "2026-11-12T16:17:52.264Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "target-state/adr-candidates.md",
+      "version": 1,
+      "archive": "history/target-state__adr-candidates.v001.md",
+      "sha256": "sha256:f0d9deed4842f303cf2128488b44a8a8206e0d0bd29977b6409c4d3f62b543ba",
+      "ts": "2026-11-12T16:17:52.265Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "target-state/capability-deltas.json",
+      "version": 1,
+      "archive": "history/target-state__capability-deltas.v001.json",
+      "sha256": "sha256:97708881e8c01b7a2e376a4b2c82ff7c30fc3ef031899eb7fb3248c9b562019a",
+      "ts": "2026-11-12T16:17:52.265Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "target-state/nfr.json",
+      "version": 1,
+      "archive": "history/target-state__nfr.v001.json",
+      "sha256": "sha256:585c751b9cfeba13e23bce46b6d059573160392dac4666850ac30018eed5c174",
+      "ts": "2026-11-12T16:17:52.265Z",
+      "actor": "research-agent"
+    },
+    {
+      "path": "target-state/principles.md",
+      "version": 1,
+      "archive": "history/target-state__principles.v001.md",
+      "sha256": "sha256:e894c039881d543c99a5d2bf6f4f3b6b74fa0d5169ff2d39e8ec0c5b0cb3cd01",
+      "ts": "2026-11-12T16:17:52.265Z",
+      "actor": "research-agent"
     }
   ]
 }

@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "note": "DERIVED by research-agent on 2026-11-12. ADDED means 'implemented anew in minidon-rust'. External behaviour of every capability is UNCHANGED: each delta is a new implementation of the same 82 baseline rules, not a behaviour change. Rule counts are from .mw/context/capabilities/*/rules-trace.md.",
+  "deltas": [
+    {
+      "capability": "L1-accounts",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (14 rules): registration, first-registrant-becomes-Admin, PBKDF2 verification of existing hashes, 30-day tokens, profile limits. Identity resolution (get_by_username) shape is an ADR (OQ-018).",
+      "rules": 14,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-following",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (15 rules): follow, unfollow, follow requests, block (deletes follows both ways), mute, relationship. The shared social queries module is an ADR (OQ-005).",
+      "rules": 15,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-posting",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (20 rules): compose, 60-minute edit window, soft delete with cascading boost removal, replies, boost only public and unlisted, favourite, 30 original posts per rolling hour.",
+      "rules": 20,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-timelines",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (8 rules): home, public, tag and account timelines with 20 default and 40 maximum page size.",
+      "rules": 8,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-notifications",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (10 rules in rules-trace; baseline.json index says 9, see CON-002): suppression for self, blocks and mutes; 40 default and 80 maximum list size; unread count and read marking.",
+      "rules": 10,
+      "behaviourChange": "none"
+    },
+    {
+      "capability": "L1-moderation",
+      "op": "ADDED",
+      "summary": "Reimplemented in Rust with identical behaviour (15 rules): reports with 1000-character comments, resolve actions, suspension (revokes all tokens, hides account and statuses), staff hierarchy, role changes. How it deletes a status is an ADR (OQ-017).",
+      "rules": 15,
+      "behaviourChange": "none"
+    }
+  ],
+  "platform": [
+    {
+      "component": "Shared infrastructure (minidon/main.py, __main__.py, models.py, config.py, db.py, deps.py, errors.py)",
+      "op": "ADDED",
+      "summary": "Not owned by a capability (Platform/Core in baseline.json coverage.unmappedPaths) but observable: app wiring of the six routers, DomainError to HTTP status mapping (400, 401, 403, 404, 422), auth dependencies, configuration and SQLite access. Rebuilt in Rust with the same behaviour."
+    }
+  ],
+  "notPorted": [
+    {
+      "component": "minidon/lists/ (models.py, service.py)",
+      "op": "REMOVED",
+      "summary": "Orphaned and unreachable (CF-002); its tables are never created. Not ported, per DEMO answer OQ-021. No external behaviour is lost."
+    }
+  ]
+}

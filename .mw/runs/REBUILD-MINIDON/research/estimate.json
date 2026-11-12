@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "unit": "person-days",
+  "note": "DEMO CONTENT, DERIVED by research-agent on 2026-11-12. No frozen delivery baseline exists (.mw/metrics/ is empty) and no delivery history exists (GAP-006 waived), so both ranges are judgement from the size measures below, not calibrated. Person-days count human effort (review, decisions, gates, pairing); agent compute time is not counted.",
+  "agentic": {
+    "low": 12,
+    "high": 25
+  },
+  "traditional": {
+    "low": 35,
+    "high": 60
+  },
+  "basis": [
+    "Size, STATED in research/inputs/baseline-metrics.md: 2,123 Python source lines, 6 capabilities, 82 business rules, 54 test functions; and from the code at e1fbd3a: 40 HTTP endpoints, 5 enum types, 1 SQLite database",
+    "Behaviour is already specified: the confirmed baseline has a rules-trace per capability and all 21 open questions answered or deferred, so discovery effort is not in either range",
+    "Traditional (DERIVED): a Rust engineer rewriting a FastAPI and SQLAlchemy service typically produces 3,000 to 5,000 lines of Rust for 2,000 lines of Python; at roughly 100 to 150 reviewed lines a day plus a parity harness (5 to 8 days), data-compatibility work (4 to 8 days) and new parity tests for rules that no existing Python test covers (count unmeasured, RISK-004) gives 35 to 60 person-days",
+    "Agentic (DERIVED): agents draft the specs, parity tests and Rust code per capability from the rules-trace; human effort goes to the gates (research, PRD, plan, PR reviews), the Rust platform ADR (DEP-003), the data-compatibility review (ASM-002) and fixing parity failures that need judgement. Estimated at 2 to 4 human days per capability (6 capabilities) plus 0 to 1 day of fixed overhead",
+    "Six capabilities can be built in waves along the baseline's dependency order (Accounts first, then Following, then Posting, Timelines, Notifications, Moderation), which bounds the high end for both approaches",
+    "change-sizing (DERIVED): this is not a same-day change; at major classification it should be split into at least one story per capability plus a platform story (app wiring, errors, config, data layer) and a parity-harness story"
+  ],
+  "widenedBy": [
+    "GAP-006",
+    "GAP-004"
+  ],
+  "widening": {
+    "GAP-006": "No delivery history and no frozen .mw/metrics/baseline.json: no calibration, so both ranges are wide (high is about 2x low)",
+    "GAP-004": "No incident history: unknown edge cases in existing data could add data-compatibility work (DEP-005)",
+    "RISK-003": "Framework-level behaviour (validation error bodies, JSON formats) is not specified; deciding and matching it could add 2 to 5 days to either range",
+    "DEP-003": "Rust stack not chosen yet; an unfamiliar framework or driver would push both ranges toward the high end"
+  }
+}
