@@ -16,13 +16,14 @@ export const RUN_ID = 'REBUILD-MINIDON';
 export const intro = {
   title: 'A legacy rebuild, run through Millwright',
   story: [
-    'We took a small Python app, minidon, and rebuilt its first slice in Rust.',
-    'Agents did the work. A named person approved every important step.',
+    'Millwright is a set of rules and commands that lets AI agents do a big code change one checked step at a time, stopping for a person at every key decision.',
+    'We took a small Python app, minidon, and started rebuilding it in Rust. The first of six parts, Accounts, is done.',
+    'Agents did the work. One named person, Kurtis, who ran the rebuild, approved every important step.',
   ],
   cast: [
-    { name: 'minidon', role: 'The legacy system', text: 'A small Mastodon-style app in Python. Read only, never changed.' },
+    { name: 'minidon', role: 'The legacy system', text: 'A small Twitter-like social app written in Python. Used as the reference and never changed.' },
     { name: 'minidon-context', role: 'The Millwright workspace', text: 'Where every map, plan, review and decision is written down, one commit per step.' },
-    { name: 'minidon-rust', role: 'The new system', text: 'The Rust rebuild. Story 1 (Accounts) is built here.' },
+    { name: 'minidon-rust', role: 'The new system', text: 'The Rust rebuild. Part 1 of 6 (Accounts) is built here.' },
   ],
   ideas: [
     { title: 'Runs and states', text: 'A run is one unit of work. It moves through fixed states, and the CLI refuses illegal moves.' },
@@ -32,16 +33,43 @@ export const intro = {
   ],
 };
 
+// launch is the slash command Kurtis typed in Claude Code to start a stage's agents; later agent
+// steps of the same stage name it too.
+export const scopes = {
+  whole: { label: 'Whole rebuild', tip: 'Scope: the whole rebuild|The map, the ticket and the research cover all six parts of minidon (80 rules).' },
+  story: { label: 'Story 1 of 6: Accounts', tip: 'Scope: story 1 of 6, Accounts|From planning on, this run plans and builds part 1 only: Accounts, 14 rules. The other five parts repeat these stages.' },
+};
+
 export const chapters = [
-  { id: 'setup', title: 'Set up', blurb: 'Install Millwright into a workspace next to the legacy code.', steps: ['01'] },
-  { id: 'discover', title: 'Discover', blurb: 'Agents map the legacy system; a human signs off the map.', steps: ['02', '03'] },
-  { id: 'ticket', title: 'Open the work', blurb: 'Write the ticket and open a run for it.', steps: ['04', '05'] },
-  { id: 'inputs', title: 'Research inputs', blurb: 'Check what we know against what research needs.', steps: ['06', '07', '08', '09'] },
-  { id: 'scope', title: 'Scope the story', blurb: 'Pin the work to one capability and start research.', steps: ['10', '11', '12', '13'] },
-  { id: 'research', title: 'Research pack', blurb: 'Draft, review, fix and approve the research.', steps: ['14', '15', '16', '17', '18', '19', '20', '21', '22'] },
-  { id: 'plan', title: 'Plan and spec', blurb: 'Turn research into a plan, a spec and design decisions.', steps: ['23', '24', '25', '26', '27', '28'] },
-  { id: 'build', title: 'Build', blurb: 'Plan the code, review the plan, build test-first.', steps: ['29', '30', '31', '32', '33', '34'] },
-  { id: 'review', title: 'Review and stop', blurb: 'Independent review, the last human gate, and where the run ends.', steps: ['35', '36', '37'] },
+  { id: 'setup', act: 'Understand the old app', short: 'Set up', title: 'Set up', blurb: 'Install Millwright into a workspace next to the legacy code.', steps: ['01'], scope: 'whole' },
+  { id: 'discover', act: 'Understand the old app', short: 'Discover', title: 'Discover', blurb: 'Agents map the legacy system; a human signs off the map.', steps: ['02', '03'], scope: 'whole' },
+  { id: 'ticket', act: 'Research the change', short: 'Open the work', title: 'Open the work', blurb: 'Write the ticket and open a run for it.', steps: ['04', '05'], scope: 'whole' },
+  { id: 'inputs', act: 'Research the change', short: 'Inputs', title: 'Research inputs', blurb: 'Check what we know against what research needs.', steps: ['06', '07', '08', '09'], scope: 'whole' },
+  { id: 'scope', act: 'Research the change', short: 'Scope', title: 'Scope the story', blurb: 'Split the rebuild into six parts and pick part 1.', steps: ['10'], scope: 'whole' },
+  { id: 'research', act: 'Research the change', short: 'Research pack', title: 'Research pack', blurb: 'Draft, review, fix and approve the research.', steps: ['11', '12', '13', '14', '15', '16', '17', '18'], scope: 'whole',
+    // The research loop, drawn on every step of this stage: agents draft and review, a person corrects, twice.
+    loop: {
+      title: 'The research loop: agents draft and review, Kurtis corrects',
+      nodes: [['11', 'Draft'], ['12', 'Review: 19 found'], ['13', 'Correct inputs'], ['14', 'Redraft'], ['15', 'Review again'], ['16', 'Decide findings'], ['18', 'Approve']],
+      again: { from: 4, to: 1, label: '↺ repeats until no critical problems are left · 2 rounds in this run' },
+      rounds: [0, 3],
+      foot: 'If Kurtis rejects at the gate, the pack goes back to the research agent and the loop runs again.',
+    } },
+  { id: 'plan', act: 'Plan and build', short: 'Plan and spec', title: 'Plan and spec', blurb: 'Turn research into a plan, a spec and design decisions.', steps: ['19', '20', '21', '22', '23', '24'], scope: 'story' },
+  { id: 'build', act: 'Plan and build', short: 'Build', title: 'Build', blurb: 'Plan the code, review the plan, build test-first.', steps: ['25', '26', '27', '28', '29'], scope: 'story',
+    loop: {
+      title: 'The build loop: an agent plans the code, another reviews it, Kurtis decides',
+      nodes: [['25', 'Code plan'], ['26', 'Review: 24 found'], ['27', 'Answer questions'], ['28', 'Approve'], ['29', 'Build, test first']],
+      again: { from: 3, to: 0, label: '↺ if Kurtis rejects, the plan goes back to the code-plan agent · approved first time in this run' },
+      foot: 'Approved with the review\'s findings tracked, not ignored: the build logs record how each of the 9 major findings was handled during the build.',
+    } },
+  { id: 'review', act: 'Plan and build', short: 'Review and PR', title: 'Review and PR', blurb: 'Independent review, the last human gate, and the pull request.', steps: ['30', '31', '32', '33'], scope: 'story',
+    loop: {
+      title: 'The review loop: agents test and review, Kurtis decides',
+      nodes: [['30', 'Test and review: 1 major'], ['31', 'Decide the finding'], ['32', 'Approve'], ['33', 'Write the PR']],
+      again: { from: 2, to: 0, label: '↺ if Kurtis rejects, the code goes back to the coding agent · approved first time in this run' },
+      foot: 'The agent writes the pull request but cannot merge it. Merging is the next human decision.',
+    } },
 ];
 
 // The states a run passes through, in order, grouped by Millwright activity. Gate states are
@@ -74,13 +102,13 @@ export const tracks = {
 };
 
 export const gateNames = {
-  BASELINE_REVIEW: 'Baseline gate',
-  RESEARCH_REVIEW: 'Research gate',
-  PRD_REVIEW: 'PRD gate',
-  READY_FOR_DEV: 'Ready for dev',
-  GATE_A: 'Gate A (plan)',
-  GATE_B: 'Gate B (code)',
-  GATE_C: 'Gate C (release)',
+  BASELINE_REVIEW: 'Map approval',
+  RESEARCH_REVIEW: 'Research approval',
+  PRD_REVIEW: 'Plan approval',
+  READY_FOR_DEV: 'Spec approval',
+  GATE_A: 'Code plan approval',
+  GATE_B: 'Code approval',
+  GATE_C: 'Release approval',
 };
 
 const DEMO = 'Demo assumption: one person (Kurtis) held every role. Several answers were drafted by an agent in his name, as plausible guesses a real PO, BA or Tech Lead would confirm.';
@@ -88,38 +116,42 @@ const DEMO = 'Demo assumption: one person (Kurtis) held every role. Several answ
 export const steps = {
   '01': {
     title: 'Install Millwright into a workspace',
+    reads: 'The Millwright templates',
     story: ['Millwright is installed into a new, empty workspace that sits next to the legacy code.', 'It adds agents, commands and templates. It does not touch the legacy code.'],
     who: ['human'],
     numbers: [['78', 'files added'], ['22', 'agents'], ['0', 'legacy files changed']],
     milestone: 'Workspace set up',
     artifacts: ['millwright.config.yaml', 'CLAUDE.md', '.mw/docs/transcript-2026-10-01-moderation.md', '.mw/notes/decisions/ADR-001-edit-window.md'],
     commands: ['millwright init --name minidon', 'millwright sync'],
-    note: 'Two documents were added here as discovery inputs: a meeting transcript and a decision record. Both were captured with a broken shell heredoc. The transcript even contains the "what a good run should find" answer key. The discovery agents noticed the broken record (see conflict CF-001), but a clean rerun should fix these files first.',
+    note: 'Two documents were added here as discovery inputs: a meeting transcript and a decision record. In this run both were captured with a broken shell heredoc, and the transcript also held the facilitator answer key. They are shown here as they were. Both have since been repaired, and the answer key moved to walkthrough/answer-key.md, outside what agents read.',
   },
   '02': {
     title: 'Agents map the legacy system',
-    story: ['Five agents read the Python code and the documents, and build a map: domains, capabilities and business rules.', 'Every rule says where it came from, and anything that disagrees becomes a conflict for a human.'],
+    focus: { path: '.mw/context/conflicts.md', find: 'CF-001: Status edit window' },
+    reads: 'The Python code and its documents (minidon@e1fbd3a)',
+    story: ['Five agents read the Python code and its documents. They build a map of what the system does: its areas, its features and its rules.', 'Each rule says where it came from. Where two sources disagree, the agents flag it for a person to decide.'],
     who: ['ingestion-agent', 'graph-agent', 'domain-agent', 'ba-agent', 'baseline-review-agent'],
     numbers: [['6', 'capabilities'], ['81', 'business rules'], ['7', 'conflicts'], ['21', 'open questions']],
     milestone: 'Legacy system mapped',
     artifacts: ['.mw/context/domain-map.md', '.mw/context/conflicts.md', '.mw/context/capabilities/accounts/capability.md', '.mw/context/capabilities/accounts/rules-trace.md', '.mw/context/review-findings.md', '.mw/context/ingest-report.json'],
+    launch: '/mw-context build',
     commands: ['millwright context build --yes'],
-    note: 'All three planted traps were found: the 30 versus 60 minute edit window (CF-001), the half-built lists feature (CF-002, unmapped code), and rules that exist only in code (labelled DERIVED).',
+    note: 'Two of the three planted disagreements came out as conflicts: the 30 versus 60 minute edit window (CF-001) and the half-built lists feature (CF-002). The third did not. The transcript says moderators can suspend anyone, but the code forbids suspending other staff. That rule surfaced only as open question OQ-016, from the code, and the transcript was never cited.',
   },
   '03': {
     title: 'A human approves the map',
     story: ['A person works through all seven conflicts and the open questions, then signs off the map.', 'From here on, this approved map is what "current behaviour" means.'],
     who: ['human'],
-    numbers: [['7 of 7', 'conflicts resolved'], ['21', 'questions answered'], ['1', 'domain signed off']],
-    milestone: 'Baseline approved',
+    numbers: [['7 of 7', 'conflicts resolved'], ['21', 'questions answered'], ['6 of 6', 'areas approved']],
+    milestone: 'Map approved',
     artifacts: ['.mw/runs/BASELINE-2026-10-30/baseline-review-report.json', '.mw/context/baseline-review-report.md'],
     gate: {
       decided: [
-        'CF-001: 60 minutes is correct. The README and the decision record are wrong; the 30-minute rule (Posting BR-009) is retired.',
-        'CF-002: the half-built lists feature is dead code. It is left out and scheduled for deletion.',
-        'CF-004: "find a user by username" becomes a stable identity API owned by Accounts.',
-        'CF-007: the code is right. Only public and unlisted posts can be boosted.',
-        'Domain L0-minidon signed off: all 6 capabilities approved.',
+        'CF-001: the edit window is 60 minutes, as in the code. The README is wrong.',
+        'CF-002: the half-built lists feature is dead code. It is left out.',
+        'CF-004: "find a user by username" becomes an Accounts API.',
+        'CF-007: only public and unlisted posts can be boosted.',
+        'All 6 capabilities of the map approved.',
       ],
       source: '.mw/runs/BASELINE-2026-10-30/baseline-review-report.json',
     },
@@ -127,7 +159,8 @@ export const steps = {
   },
   '04': {
     title: 'Write the ticket',
-    story: ['A person writes the ticket: rebuild minidon in Rust, same behaviour, same data, no new features.'],
+    reads: 'The approved map',
+    story: ['A person writes one ticket for the whole rebuild: rebuild minidon in Rust, keep the same behaviour and the same data, add nothing new.', 'It is epic-sized, so at step 10 it is split into six parts, one per area of the map.'],
     who: ['human'],
     milestone: 'Ticket written',
     artifacts: ['.mw/tickets/REBUILD-MINIDON.md', 'millwright.config.yaml'],
@@ -135,6 +168,7 @@ export const steps = {
   },
   '05': {
     title: 'Open a run for the ticket',
+    reads: 'The ticket',
     story: ['Millwright opens a run for the ticket. From now on every move of this work is recorded.'],
     who: ['human'],
     milestone: 'Run opened',
@@ -142,6 +176,7 @@ export const steps = {
   },
   '06': {
     title: 'Set up research',
+    reads: 'The ticket and the research template',
     story: ['Millwright creates an empty research folder with the questions research must answer.'],
     who: ['human'],
     artifacts: ['@run/research/outcome.json', '@run/research/inputs/README.md'],
@@ -149,20 +184,24 @@ export const steps = {
   },
   '07': {
     title: 'Check what we already know',
-    story: ['Millwright checks the inputs against the approved map and lists the gaps.', 'It found 2 of 11 inputs and 30 gaps, 2 of them blocking.'],
+    reads: 'The approved map and the research folder',
+    story: ['Millwright checks the inputs against the approved map and lists the gaps.', 'It finds 30 gaps, 2 of them blocking.'],
     who: ['human'],
-    numbers: [['2 of 11', 'inputs found'], ['30', 'gaps'], ['2', 'blocking']],
+    numbers: [['30', 'gaps'], ['2', 'blocking']],
     artifacts: ['@run/research/gaps.md', '@run/research/inputs.json'],
   },
   '08': {
     title: 'Fill the gaps',
-    story: ['A person supplies the missing inputs: who decides, and today\'s baseline numbers.', '23 of the 30 gaps are now closed.'],
+    reads: 'The list of gaps',
+    story: ['A person supplies the missing inputs: who decides, and today\'s baseline numbers.', '23 of the 30 gaps are now closed. The two files close one gap each; the approved map already answered the other 21.'],
     who: ['human'],
+    commands: ['# write research/inputs/decision-makers.md and research/inputs/baseline-metrics.md'],
     numbers: [['23 of 30', 'gaps closed']],
     artifacts: ['@run/research/gaps.md', '@run/research/inputs/decision-makers.md', '@run/research/inputs/baseline-metrics.md'],
   },
   '09': {
     title: 'Waive what does not apply',
+    reads: 'The 7 gaps still open',
     story: ['The last 7 gaps are optional for a lift and shift, so a person waives them, each with a written reason.'],
     who: ['human'],
     numbers: [['0', 'open gaps'], ['7', 'waived with a reason']],
@@ -170,87 +209,77 @@ export const steps = {
     artifacts: ['@run/research/gaps.md'],
   },
   '10': {
-    title: 'Context is ready',
-    story: ['The kernel checks the run against the map and lets it move on.'],
+    title: 'Split the rebuild, pick part 1',
+    reads: 'The approved map',
+    story: ['The rebuild is too big for one piece of work, so the planning agent splits it into six parts, one per area of the map. This run builds part 1, Accounts: sign-up, sign-in and profiles (14 rules).', 'The split comes first because it tells the agents which part of the code to read closely. Research still judges the whole rebuild; planning and building then focus on Accounts.'],
     who: ['planning-agent'],
-    artifacts: ['@run/run.json'],
-  },
-  '11': {
-    title: 'Pin the story to one capability',
-    story: ['The whole rebuild is too big for one story, so it is split. Story 1 is Accounts: sign-up, sign-in and profiles.', 'One story, one capability, 14 rules.'],
-    who: ['planning-agent'],
+    launch: '/mw-plan REBUILD-MINIDON',
     numbers: [['1 of 6', 'capabilities'], ['14', 'rules in scope']],
-    milestone: 'Story 1 scoped to Accounts',
+    milestone: 'Part 1 scoped to Accounts',
     artifacts: ['@run/impact.json'],
   },
-  '12': {
-    title: 'Research starts',
-    story: ['The run moves into research.'],
-    who: ['planning-agent'],
-    artifacts: ['@run/run.json'],
-  },
-  '13': {
-    title: 'Research draft opens',
-    story: ['The research agent takes over and starts drafting.'],
-    who: ['research-agent'],
-    artifacts: ['@run/run.json'],
-  },
-  '14': {
+  '11': {
     title: 'Research agent drafts the pack',
-    story: ['An agent writes the research pack: the outcome, risks, an estimate, security notes, the target state and user flows.'],
+    focus: { path: '@run/research/outcome-brief.md', find: '## The outcome' },
+    reads: 'The approved map, the ticket and the inputs',
+    story: ['An agent writes the research pack. It covers the goal, the risks, a time estimate, security, and how people use the app.', 'The same /mw-research command also starts the design and user-flow agents, which check security and how people use the app alongside it.'],
     who: ['research-agent'],
-    numbers: [['7', 'parts in the pack'], ['12-25', 'person-days, agentic (estimate)']],
+    launch: '/mw-research REBUILD-MINIDON',
+    numbers: [['7', 'parts in the pack']],
     artifacts: ['@run/research/outcome-brief.md', '@run/research/risks.json', '@run/research/estimate.json', '@run/research/security.md', '@run/research/target-state/principles.md', '@run/research/flows/journeys.md', '@run/research/flows/value-stream.md'],
   },
-  '15': {
-    title: 'Pack is complete',
-    story: ['The pack has every required part, so the run moves to review.'],
-    who: ['research-agent'],
-    artifacts: ['@run/run.json'],
-  },
-  '16': {
+  '12': {
     title: 'An independent agent reviews the research',
-    story: ['A different agent checks the pack and finds 19 problems, 2 of them critical.', 'The headline number was wrong: 82 rules, when the map has 81 and one is retired.'],
+    focus: { path: '@run/research/reviews/research-review-001.md', find: 'F-01 (Critical)' },
+    reads: 'The research pack and the map',
+    story: ['A different agent checks the pack and finds 19 problems, 2 of them critical.', 'It caught a wrong count: the brief said 82 rules. The target is 80, the 81 rules in the map minus one retired.'],
     who: ['research-reviewer-agent'],
     numbers: [['19', 'findings'], ['2', 'critical']],
     artifacts: ['@run/research/reviews/research-review-001.md'],
   },
-  '17': {
+  '13': {
     title: 'A human corrects the inputs',
-    story: ['A person fixes the inputs the review flagged: 81 rules, and the baseline gate record is the authority.'],
+    reads: 'The review findings',
+    story: ['A person fixes what the review flagged. The decisions made when the map was approved are the final word.'],
     who: ['human'],
+    commands: ['# edit research/inputs/human-decisions.md and research/inputs/baseline-metrics.md'],
     artifacts: ['@run/research/inputs/human-decisions.md', '@run/research/inputs/baseline-metrics.md'],
     note: DEMO,
   },
-  '18': {
+  '14': {
     title: 'Research agent redrafts',
-    story: ['The research agent rewrites the pack from the corrected inputs. The target is now 80 of 80 live rules.'],
+    reads: 'The corrected inputs and the review',
+    story: ['The research agent rewrites the pack from the corrected inputs.'],
     who: ['research-agent'],
-    numbers: [['80', 'rules to match'], ['16-34', 'person-days, agentic (estimate)']],
     artifacts: ['@run/research/outcome-brief.md', '@run/research/estimate.json', '@run/research/risks.json'],
   },
-  '19': {
+  '15': {
     title: 'Second review',
+    focus: { path: '@run/research/reviews/research-review-002.md', find: 'alice' },
+    reads: 'The new pack and the running Python app',
     story: ['The reviewer checks again: 16 of 19 fixed, no critical issues left.', 'It also probes the Python app and finds a surprise: "alice" followed by a newline is a separate, valid username.'],
     who: ['research-reviewer-agent'],
     numbers: [['16 of 19', 'fixed'], ['0', 'critical']],
     artifacts: ['@run/research/reviews/research-review-002.md'],
   },
-  '20': {
+  '16': {
     title: 'Security and flow findings decided',
-    story: ['Security and user-flow reviews are folded into the design.', 'A person decides to copy the newline quirk on purpose, because this is a lift and shift. Fixing it comes later.'],
+    reads: 'The security and flow reviews',
+    story: ['The design and user-flow agents finish their security and flow reviews, and a person accepts their findings into the design.', 'He also decides to copy the newline quirk on purpose, because this is a lift and shift. Fixing it comes later.'],
     who: ['human'],
     artifacts: ['@run/research/inputs/human-decisions.md', '@run/research/lanes/security-lane-review.md', '@run/research/lanes/flows-lane-review.md'],
     note: DEMO,
   },
-  '21': {
+  '17': {
     title: 'Research waits for a human',
+    reads: 'The reviewed research pack',
     story: ['The run stops at the research gate. Only a person can let it through.'],
     who: ['research-reviewer-agent'],
     artifacts: ['@run/research/outcome-brief.md'],
   },
-  '22': {
+  '18': {
     title: 'Research approved',
+    focus: { path: '@run/research/inputs/human-decisions.md', find: 'parity denominator is' },
     story: ['A person approves the research. Planning can start.'],
     who: ['human'],
     milestone: 'Research approved',
@@ -267,26 +296,30 @@ export const steps = {
       demo: true,
     },
   },
-  '23': {
+  '19': {
     title: 'Plan on one page',
+    launch: '/mw-plan REBUILD-MINIDON',
+    focus: { path: '@run/plan-onepager.md', find: 'Whole epic at a glance' },
+    reads: 'The approved research',
     story: ['The planning agent writes a one-page plan for story 1 and lists 10 open points, each with an owner.'],
     who: ['planning-agent'],
     numbers: [['10', 'open points'], ['6', 'stories in the epic']],
     artifacts: ['@run/plan-onepager.md', '@run/open-points.md', '@run/assumptions.md'],
   },
-  '24': {
+  '20': {
     title: 'Open points answered',
+    reads: 'The 10 open points',
     story: ['A person answers all 10 open points: why Rust, which stack, build order, test data.'],
     who: ['human'],
     numbers: [['10 of 10', 'answered']],
     artifacts: ['@run/open-points.md'],
     note: DEMO,
   },
-  '25': {
+  '21': {
     title: 'Plan approved',
     story: ['A person approves the plan. The agents can now write the spec.'],
     who: ['human'],
-    milestone: 'Plan (PRD) approved',
+    milestone: 'Plan approved',
     artifacts: ['@run/plan-onepager.md', '@run/open-points.md'],
     gate: {
       decided: [
@@ -300,21 +333,24 @@ export const steps = {
       demo: true,
     },
   },
-  '26': {
+  '22': {
     title: 'Spec, tests and design, in parallel',
+    reads: 'The approved plan and the rules in the map',
     story: ['Three agents work side by side: one writes the spec, one plans the tests, one writes the design decisions.', 'Every requirement traces back to a rule in the map.'],
     who: ['spec-agent', 'qa-planning-agent', 'design-agent'],
+    launch: '/mw-spec REBUILD-MINIDON',
     numbers: [['19', 'requirements'], ['14', 'rules traced'], ['2', 'design records']],
     artifacts: ['@run/spec/spec.md', '@run/test-plan.md', '@run/scenarios.md', '@run/adr/adr-001.md', '@run/adr/adr-002.md', '@run/traceability.json'],
   },
-  '27': {
+  '23': {
     title: 'Design questions answered',
-    story: ['A person answers the design questions, and every known difference from Python is written into the test plan.'],
+    reads: 'The design questions',
+    story: ['A person answers the design questions. Every place where Rust will act differently from Python goes into the test plan.'],
     who: ['human'],
     artifacts: ['@run/adr/adr-001.md', '@run/test-plan.md'],
     note: DEMO,
   },
-  '28': {
+  '24': {
     title: 'Ready for development',
     story: ['A person approves the spec and design. Code planning starts.'],
     who: ['human'],
@@ -332,31 +368,37 @@ export const steps = {
       demo: true,
     },
   },
-  '29': {
+  '25': {
     title: 'Plan the code, file by file',
-    story: ['An agent plans every file to write in the Rust repo, and confirms nothing will change in the Python repo.'],
+    reads: 'The approved spec, tests and design',
+    story: ['An agent plans every file it will write in the Rust repo. It also confirms the Python repo will not change.'],
     who: ['code-plan-agent'],
+    launch: '/mw-code-plan REBUILD-MINIDON',
     artifacts: ['@run/repos/minidon-rust/plan.md', '@run/repos/minidon/plan.md'],
   },
-  '30': {
+  '26': {
     title: 'Another agent reviews the plan',
-    story: ['A separate agent reviews the plan: 9 major and 15 minor issues, such as wrong facts about Python and a bad build order.'],
+    focus: { path: '@run/reviews/plan-review-001.md', find: 'Major findings' },
+    reads: 'The code plan and the Python code',
+    story: ['A second agent checks the plan. It finds 9 major and 15 minor problems, such as wrong facts about Python and steps in the wrong order.'],
     who: ['plan-reviewer-agent'],
+    launch: '/mw REBUILD-MINIDON',
     numbers: [['9', 'major'], ['15', 'minor'], ['0', 'critical']],
     artifacts: ['@run/reviews/plan-review-001.md'],
   },
-  '31': {
+  '27': {
     title: 'Plan questions answered',
-    story: ['A person answers the two questions only a human can: error shapes for bad text, and which extra libraries are allowed.'],
+    reads: 'Two questions from the plan review',
+    story: ['A person answers two questions only a human can. What error should bad text get? Which extra code libraries may we use?'],
     who: ['human'],
     artifacts: ['@run/adr/adr-001.md'],
     note: DEMO,
   },
-  '32': {
-    title: 'Gate A: build can start',
+  '28': {
+    title: 'Code plan approved',
     story: ['A person approves the plan with its known findings. The build starts.'],
     who: ['human'],
-    milestone: 'Gate A passed',
+    milestone: 'Code plan approved',
     artifacts: ['@run/reviews/plan-review-001.md', '@run/adr/adr-001.md'],
     gate: {
       decided: [
@@ -368,44 +410,47 @@ export const steps = {
       demo: true,
     },
   },
-  '33': {
-    title: 'One command builds the environment',
-    story: ['A person decides the Rust toolchain comes from Nix, so anyone gets the same setup with one command.'],
-    who: ['human'],
-    artifacts: ['@run/adr/adr-001.md', 'rust:flake.nix'],
-    note: 'This one was a direct instruction from Kurtis, not a drafted answer.',
-  },
-  '34': {
+  '29': {
     title: 'Build Accounts in Rust, test first',
-    story: ['The coding agent builds Accounts in Rust in 28 small commits, always writing the test first.', 'Every behaviour is checked against the running Python app, and both builds share one database.'],
+    reads: 'The approved code plan and spec',
+    story: ['The coding agent builds Accounts in Rust in 28 small steps. It writes each test before the code it tests, and all 292 tests pass.', 'Every behaviour is checked against the running Python app, so both versions give the same answers.'],
     who: ['coding-agent'],
-    numbers: [['28', 'commits'], ['292', 'tests'], ['576', 'Python vs Rust comparisons']],
+    launch: '/mw-build REBUILD-MINIDON',
+    numbers: [['475', 'of 576 comparisons match Python exactly'], ['75', 'differ as agreed beforehand'], ['26', 'new: the agent stopped and Kurtis decided']],
+    writes: 'Rust code and tests',
     milestone: 'Accounts built in Rust',
     artifacts: ['@run/build/wave-0-1.md', '@run/build/wave-2-3.md', '@run/build/wave-4-5.md', '@run/build/wave-6.md', 'rust:src/accounts/validate.rs', 'rust:CRATES.md'],
     commands: ['nix develop -c cargo test', 'COMPAT_PYTHON_ONLY=1 nix develop -c cargo test --test compat_accounts'],
     rust: true,
   },
-  '35': {
+  '30': {
     title: 'Test and independent review',
+    focus: { path: '@run/reviews/review-report-001.md', find: 'M-01.' },
+    reads: 'The Rust code on story-1-accounts',
     story: ['Coverage is measured at 97.9 percent. A reviewer that did not write the code approves it, with 1 major and 11 minor findings.'],
     who: ['testing-agent', 'review-agent'],
+    launch: '/mw REBUILD-MINIDON',
+    // The coding agent's "tests landed" move was committed here, but it ends step 29's work.
+    ledgerTo: { TESTS_LANDED: '29' },
     numbers: [['97.9%', 'line coverage'], ['1', 'major'], ['11', 'minor']],
     artifacts: ['@run/reviews/review-report-001.md', '@run/coverage-delta.json'],
     commands: ['nix develop -c cargo llvm-cov --summary-only', 'nix develop -c cargo clippy --all-targets -- -D warnings'],
     rust: true,
   },
-  '36': {
+  '31': {
     title: 'The major finding is decided',
+    focus: { path: '@run/adr/adr-001.md', find: 'Review finding M-01' },
+    reads: 'The major review finding',
     story: ['The review caught a wrong security claim: a way to guess which usernames exist is still open.', 'A person accepts it, because Python has the same leak, and corrects the record.'],
     who: ['human'],
     artifacts: ['@run/adr/adr-001.md', '@run/reviews/review-report-001.md'],
     note: DEMO,
   },
-  '37': {
-    title: 'Gate B: code approved',
-    story: ['A person approves the reviewed code. The run moves to PR_RAISED.', 'This is where the run stops today.'],
+  '32': {
+    title: 'Code approved',
+    story: ['A person approves the reviewed code. The run moves to PR_RAISED.', 'Next, an agent writes the pull request.'],
     who: ['human'],
-    milestone: 'Gate B passed',
+    milestone: 'Code approved',
     artifacts: ['@run/reviews/review-report-001.md', '@run/run.json'],
     gate: {
       decided: [
@@ -418,25 +463,101 @@ export const steps = {
     },
     rust: true,
   },
+  '33': {
+    title: 'The pull request is written',
+    focus: { path: '@run/repos/minidon-rust/pr.json', find: 'oversized' },
+    reads: 'The reviewed code and the review report',
+    story: ['Delivered: Accounts, part 1 of 6, rebuilt in Rust. All 292 tests pass, and every one of the 576 comparisons with the Python app matches or was agreed by a person.', 'An agent writes the pull request description. It is not opened yet: a person opens the PR, reviews it and merges it. 5 more parts and the release are still to come.'],
+    after: [
+      ['Approved', 'Kurtis merges the PR on GitHub, then records it with /mw-gate approve. The run moves to MERGED and the release steps start.'],
+      ['Changes asked for', 'The fixes go back to the coding agent on the same branch, then round the review loop again: test, independent review, Kurtis decides.'],
+    ],
+    aside: 'The pull request is oversized: 67 files against a limit of 20, because part 1 also carries the platform and the test harness every later part needs. The agent says so itself and asks for a review commit by commit.',
+    who: ['pr-agent'],
+    launch: '/mw-pr REBUILD-MINIDON',
+    numbers: [['28', 'commits'], ['67', 'files'], ['13,645', 'lines added']],
+    milestone: 'PR description written',
+    artifacts: ['@run/repos/minidon-rust/pr.json', '@run/repos/minidon/pr.json'],
+    note: 'This is a PR record in the workspace, not yet a PR on GitHub: its url is empty. It also flags itself as oversized against I-11 (limit 20 files and 500 lines), because story 1 carries the platform and the parity harness. The minidon-rust history was rebased onto an empty main after the review, so the build logs and the review report name the old SHAs (head cbc42e0). The reviewed code is the same: cbc42e0 and the new head f90cf00 have identical trees. The Python repo gets a no-change record (I-29).',
+    rust: true,
+  },
 };
 
 export const outro = {
   title: 'Where the run ends',
-  story: ['The run stops at PR_RAISED. Story 1 of 6 is built and approved, but no pull request exists yet.'],
+  story: ['The work stops with its pull request written (Millwright calls this state PR_RAISED). Part 1 of 6 is built, reviewed and approved.', 'The next decision belongs to a person: review the pull request and merge it.'],
   notReached: [
-    'A real pull request, and a human merge (MERGED). Agents may raise PRs but never merge them.',
-    'Release: spec fold-back, acceptance tests, UAT, Gate C and monitoring.',
+    'The pull request opened on GitHub, and a person merging it. Agents write pull requests but are never allowed to merge them.',
+    'Release: acceptance tests, user testing, the release approval and monitoring.',
     'Stories 2 to 6: Following, Posting, Timelines, Notifications and Moderation.',
     'The cutover from Python to Rust, which is a separate ticket.',
   ],
   caveats: [
     'One person held every role, and many gate answers were drafted by an agent in his name. A real team splits these between PO, BA, Tech Lead and a security reviewer.',
-    'Some records were never tidied: the baseline review report still says PENDING, and the two discovery documents are malformed.',
+    'Discovery missed one planted conflict (suspending staff, transcript versus code). Some records were never tidied: the baseline review report still says PENDING. The two malformed discovery inputs have been repaired since the run.',
+    'The pull request is far over Millwright\'s size limit (67 files against a limit of 20). It is built to be reviewed one commit at a time.',
     'Follow-ups are recorded, not done: admin seeding, a longer minimum password, stronger hashing, sign-in throttling, the username leak and the trailing-newline username.',
   ],
   next: [
-    'Push minidon-rust to a remote and raise the pull request for story 1.',
-    'A human reviews and merges it, then the release steps run.',
+    'Open the pull request on GitHub from story-1-accounts into main, with the description in pr.json.',
+    'A human reviews and merges it. That is the decision the run is waiting for.',
+    'Then the release steps run, ending at the release approval, the last human gate.',
     'Open story 2 (Following) as its own run against the same frozen map.',
   ],
+};
+
+// Plain-language help for first-time viewers.
+export const glossary = [
+  { term: 'Run', words: [], def: 'One piece of work, followed from start to finish. Every step it takes is saved as files in git.' },
+  { term: 'Map', words: ['map', 'baseline'], def: 'The approved description of what the old system does: its areas, features and rules. Also called the baseline. All later work is checked against it.' },
+  { term: 'Area (capability)', words: ['capability', 'capabilities'], def: 'One part of the system, such as Accounts. The map has six. Each part of the rebuild covers exactly one.' },
+  { term: 'Gate', words: ['gate', 'gates'], def: 'A checkpoint where a named person must approve before the work can continue. Agents cannot pass a gate.' },
+  { term: 'Rule checker (kernel)', words: ['kernel', 'rule checker'], def: 'The part of Millwright that refuses any step that breaks its rules, for example an agent trying to approve a gate.' },
+  { term: 'Ledger', words: ['ledger'], def: 'An append-only log of every step the run took, who took it and when.' },
+  { term: 'STATED / DERIVED', words: ['STATED', 'DERIVED'], def: 'STATED means a person or a document said it. DERIVED means an agent worked it out from the code, so a person should check it.' },
+  { term: 'Plan and spec', words: ['spec', 'PRD'], def: 'The plan (PRD) is one page on what and why. The spec is the detailed list of requirements the code must meet.' },
+  { term: 'Parity', words: ['parity'], def: 'The Rust version must behave exactly like the Python one. Parity tests send the same request to both and compare the answers.' },
+  { term: 'Pull request (PR)', words: ['pull request', 'PR'], def: 'A proposed change to the code. A person reviews it and decides whether to merge it.' },
+];
+
+export const gatePlain = {
+  BASELINE_REVIEW: { name: 'Map', q: 'Map approval: is the map of the old system right?' },
+  RESEARCH_REVIEW: { name: 'Research', q: 'Research approval: do we understand the problem and the risks?' },
+  PRD_REVIEW: { name: 'Plan', q: 'Plan approval (PRD): is this the right plan?' },
+  READY_FOR_DEV: { name: 'Spec', q: 'Spec approval (Ready for dev): is the spec ready to build?' },
+  GATE_A: { name: 'Code plan', q: 'Code plan approval: is the file-by-file code plan sound?' },
+  GATE_B: { name: 'Code', q: 'Code approval: is the built and reviewed code good enough for a pull request?' },
+  MERGE: { name: 'Merge', q: 'Not a formal gate, but only a person may do it: review the pull request and merge it.' },
+  GATE_C: { name: 'Release', q: 'Release approval: after user testing, can it go live?' },
+};
+
+export const stateWords = {
+  CREATED: 'Run created', INGEST: 'Agents are reading the code', GRAPH: 'Agents are charting how the code connects',
+  DOMAIN_MAP: 'Agents are grouping the code into areas', BRD_DRAFT: 'Agents are writing down the business rules',
+  BASELINE_PREP: 'Agents are preparing the map for review', BASELINE_REVIEW: 'Waiting for a person to approve the map',
+  BASELINE_CONFIRMED: 'Map approved and locked as the reference', PULLED: 'Ticket pulled in; research inputs being gathered',
+  CONTEXT_READY: 'Work pinned to one area of the map', RESEARCH_INTAKE: 'Research is starting',
+  RESEARCH_DRAFT: 'Agents are writing the research', RESEARCH_ESTIMATE: 'Agents are writing the research',
+  RESEARCH_SECURITY: 'Agents are writing the research', RESEARCH_FLOWS: 'Agents are writing the research',
+  RESEARCH_READY: 'Research written; being reviewed', RESEARCH_REVIEW: 'Waiting for a person to approve the research',
+  PLAN_DRAFT: 'An agent is writing the plan', PRD_REVIEW: 'Waiting for a person to approve the plan',
+  SPEC_DRAFT: 'Agents are writing the spec, tests and design', QA_TEST_AUTHOR: 'Agents are writing the spec, tests and design',
+  ARCH_DECISION: 'Agents are writing the spec, tests and design', READY_FOR_DEV_PENDING: 'Spec written; being checked',
+  READY_FOR_DEV: 'Waiting for a person to approve the spec', REPO_PLAN: 'An agent is planning the code, file by file',
+  PLAN_REVIEW: 'A second agent is reviewing the code plan', GATE_A: 'Waiting for a person to approve the code plan',
+  BUILD: 'An agent is building the code', TESTS_LANDED: 'Code built; tests being measured',
+  CHANGE_REVIEW: 'A second agent is reviewing the code', GATE_B: 'Waiting for a person to approve the code',
+  PR_RAISED: 'Code approved. A pull request is written, then a person must merge it', MERGED: 'Merged by a person',
+  SPEC_FOLDBACK: 'Updating the spec', ACCEPTANCE_AUTOMATION: 'Writing acceptance tests', UAT_DEPLOYED: 'Out for user testing',
+  GATE_C: 'Waiting for a person to approve the release', RELEASED: 'Released', MONITORING: 'Being monitored', CLOSED: 'Closed',
+};
+
+export const agentRoles = {
+  'ingestion-agent': 'reads every file', 'graph-agent': 'charts how the code connects', 'domain-agent': 'groups the code into areas',
+  'ba-agent': 'writes down the business rules', 'baseline-review-agent': 'checks the map before a person sees it',
+  'planning-agent': 'scopes and plans the work', 'research-agent': 'writes the research', 'research-reviewer-agent': 'checks the research independently',
+  'spec-agent': 'writes the spec', 'qa-planning-agent': 'plans the tests', 'design-agent': 'records design decisions',
+  'code-plan-agent': 'plans each code file', 'plan-reviewer-agent': 'checks the code plan independently', 'coding-agent': 'writes the code and tests',
+  'testing-agent': 'measures the tests', 'review-agent': 'reviews the code independently', 'pr-agent': 'writes the pull request',
+  'ux-context-agent': 'maps how people use the app', orchestrator: 'starts the run',
 };

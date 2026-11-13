@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Builds walkthrough/index.html, a self-contained replay of the Millwright run in this repo.
 //
-//   node walkthrough/build.mjs [--ref master] [--rust ../minidon-rust]
+//   node walkthrough/build.mjs [--ref main] [--rust ../minidon-rust]
 //
-// It reads the numbered commits on the first-parent history of --ref (default: master, so
-// backup branches are ignored), the stage-NN tags, the files and ledgers each commit changed,
+// It reads the numbered commits on the first-parent history of --ref (default: main, or master
+// in older clones, so backup branches are ignored), the stage-NN tags, the files and ledgers each commit changed,
 // and the minidon-rust history for the build stages. The narrative comes from stages.mjs.
 // No npm install is needed: Node 18+ and git are enough.
 
@@ -47,7 +47,8 @@ const rustDir = path.resolve(opt('rust', configRepos.find((r) => r.name === 'min
 const hasRust = existsSync(path.join(rustDir, '.git'));
 if (!hasRust) warn(`minidon-rust not found at ${rustDir}; code stages will have no Rust commits`);
 
-const ref = opt('ref', git(repo, ['rev-parse', '--verify', '--quiet', 'master'], { allowFail: true }) ? 'master' : 'HEAD');
+const hasBranch = (b) => git(repo, ['rev-parse', '--verify', '--quiet', `refs/heads/${b}`], { allowFail: true });
+const ref = opt('ref', hasBranch('main') ? 'main' : hasBranch('master') ? 'master' : 'HEAD');
 
 // ---------------------------------------------------------------- commits
 
@@ -141,7 +142,14 @@ function expandPath(p) {
   return p;
 }
 
-const rustHead = hasRust ? git(rustDir, ['rev-parse', 'HEAD']).trim() : null;
+// The PR record the pr-agent wrote says which Rust branch is reviewed and what it merges into.
+const prRecordPath = `.mw/runs/${N.RUN_ID}/repos/minidon-rust/pr.json`;
+const prRaw = git(repo, ['show', `${ref}:${prRecordPath}`], { allowFail: true });
+const prRecord = prRaw ? JSON.parse(prRaw) : null;
+const rustBranchOk = (b) => hasRust && b && git(rustDir, ['rev-parse', '--verify', '--quiet', `refs/heads/${b}`], { allowFail: true });
+const rustHeadRef = rustBranchOk(prRecord?.pullRequest?.head) ? prRecord.pullRequest.head : 'HEAD';
+const rustBaseRef = rustBranchOk(prRecord?.pullRequest?.base) ? prRecord.pullRequest.base : null;
+const rustHead = hasRust ? git(rustDir, ['rev-parse', rustHeadRef]).trim() : null;
 
 function readArtifact(p, sha) {
   const isRust = p.startsWith('rust:');
@@ -224,7 +232,7 @@ function baselineReviewCommands(report) {
 
 function rustCommits() {
   if (!hasRust) return [];
-  const lines = git(rustDir, ['log', '--reverse', `--format=%H${SEP}%h${SEP}%s${SEP}%aI`, 'HEAD']).trim().split('\n');
+  const lines = git(rustDir, ['log', '--reverse', `--format=%H${SEP}%h${SEP}%s${SEP}%aI`, rustBaseRef ? `${rustBaseRef}..${rustHeadRef}` : rustHeadRef]).trim().split('\n');
   return lines.map((line) => {
     const [sha, short, subject, date] = line.split(SEP);
     return { sha, short, subject, date, files: changedFiles(rustDir, sha).map((x) => x.file) };
@@ -251,6 +259,17 @@ function rustWaves(commits, sha) {
   const rest = commits.filter((c) => !assigned.has(c.short)).map((c) => c.short);
   if (rest.length) waves.push({ name: 'other', title: 'Not named in a build log', commits: rest });
   return waves;
+}
+
+// ---------------------------------------------------------------- file trees
+
+// Every path that exists at any step, once; each step lists indexes into it. The walkthrough's
+// own files are left out, because they are not part of the run.
+const allPaths = [];
+const pathIndex = new Map();
+function treeAt(dir, sha) {
+  return git(dir, ['ls-tree', '-r', '--name-only', sha]).trim().split('\n').filter((p) => p && !p.startsWith('walkthrough/'))
+    .map((p) => { if (!pathIndex.has(p)) { pathIndex.set(p, allPaths.length); allPaths.push(p); } return pathIndex.get(p); });
 }
 
 // ---------------------------------------------------------------- assemble
@@ -282,7 +301,7 @@ for (const c of log) {
     commands.push(...baselineReviewCommands(report));
   }
   for (const e of ledger) {
-    commands.push({ cmd: commandsFor(e, runs), source: 'ledger', seq: e.seq, run: e.run, ts: e.ts, actor: e.actor?.id, actorType: e.actor?.type, from: e.from, to: e.to, trigger: e.trigger, checks: e.context?.checks ?? [], reason: e.reason });
+    commands.push({ cmd: commandsFor(e, runs), source: 'ledger', seq: e.seq, run: e.run, ts: e.ts, actor: e.actor?.id, actorType: e.actor?.type, from: e.from, to: e.to, trigger: e.trigger, checks: e.context?.checks ?? [], reason: e.reason, digest: e.digest });
   }
   if (num === '02' && commands.some((x) => x.cmd === 'millwright context build --yes' && x.source === 'ledger')) {
     const i = commands.findIndex((x) => x.cmd === 'millwright context build --yes' && x.source === 'notes');
@@ -314,34 +333,75 @@ for (const c of log) {
     numbers: n.numbers ?? [],
     milestone: n.milestone ?? null,
     note: n.note ?? null,
+    aside: n.aside ?? null,
+    reads: n.reads ?? null,
+    writes: n.writes ?? null,
     commit: { sha: c.sha, short: c.short, date: c.date, author: c.author, tags: tagsBySha[c.sha] ?? [] },
+    launch: n.launch ?? null,
+    after: n.after ?? null,
     chores: pendingChores,
     track, runState,
     runs: Object.fromEntries(Object.entries(runs).map(([id, r]) => [id, r.state])),
     gate: gateEntry ? { state: gateEntry.from, name: N.gateNames[gateEntry.from] ?? gateEntry.from, to: gateEntry.to, by: gateEntry.actor?.id, ts: gateEntry.ts, checks: gateEntry.context?.checks ?? [], ...n.gate, source: n.gate?.source ? expandPath(n.gate.source) : null } : null,
     commands, files,
+    tree: treeAt(repo, c.sha),
     artifacts: (n.artifacts ?? files.filter((f) => /\.(md|json)$/.test(f.path) && !f.skipped && f.status !== 'D').map((f) => f.path).slice(0, 6))
       .map((p) => readArtifact(p, c.sha)).filter(Boolean),
   };
-  for (const a of stage.artifacts) a.changed = a.repo === 'minidon-context' ? files.find((f) => f.path === a.path)?.status ?? null : null;
   if (n.rust && hasRust) {
-    stage.rust = num === '34'
+    stage.rust = num === '29'
       ? { head: rustHead.slice(0, 7), commits: allRust, waves: rustWaves(allRust, c.sha) }
       : { head: rustHead.slice(0, 7), commits: [], waves: [] };
+  }
+  // A file counts as written by this step when this step's commit (or, for minidon-rust, one of
+  // this step's Rust commits) changed it. Everything else the step shows is something it read.
+  const rustTouched = new Set((stage.rust?.commits ?? []).flatMap((rc) => rc.files.map((f) => f.path)));
+  for (const a of stage.artifacts) {
+    a.changed = a.repo === 'minidon-context' ? files.find((f) => f.path === a.path)?.status ?? null : rustTouched.has(a.path) ? 'A' : null;
+  }
+  // The passage this step is about: which file, and the line it starts on (for Open in VS Code).
+  if (n.focus) {
+    const rel = n.focus.path.startsWith('rust:') ? n.focus.path.slice(5) : expandPath(n.focus.path);
+    const r = n.focus.path.startsWith('rust:') ? 'minidon-rust' : 'minidon-context';
+    const text = git(r === 'minidon-rust' ? rustDir : repo, ['show', `${r === 'minidon-rust' ? rustHead : c.sha}:${rel}`], { allowFail: true }) ?? '';
+    const line = text.split('\n').findIndex((l) => l.includes(n.focus.find)) + 1;
+    if (!line) warn(`step ${num}: "${n.focus.find}" not found in ${rel}`);
+    if (!stage.artifacts.some((a) => a.path === rel)) warn(`step ${num}: focus file ${rel} is not one of its artifacts`);
+    stage.focus = { repo: r, path: rel, find: n.focus.find, line: line || 1 };
   }
   pendingChores = [];
   stages.push(stage);
 }
 
+// ---------------------------------------------------------------- late ledger moves
+
+// A ledger move committed with a later step (ledgerTo) goes back to the step whose work it ends.
+const byNum = Object.fromEntries(stages.map((s) => [s.num, s]));
+for (const s of stages) {
+  for (const [to, target] of Object.entries(N.steps[s.num]?.ledgerTo ?? {})) {
+    byNum[target].commands.push(...s.commands.filter((x) => x.to === to));
+    s.commands = s.commands.filter((x) => x.to !== to);
+  }
+}
+const idOf = (num) => byNum[num]?.id;
+
 // ---------------------------------------------------------------- facts for the last page
 
 const headRuns = runsAt(git(repo, ['rev-parse', ref]).trim());
 const facts = {
-  contextRemote: (git(repo, ['remote']) ?? '').trim() || null,
+  contextRemote: (git(repo, ['remote', 'get-url', 'origin'], { allowFail: true }) ?? '').trim() || null,
   finalState: headRuns[N.RUN_ID]?.state ?? null,
+  pr: prRecord ? {
+    title: prRecord.pullRequest?.title, url: prRecord.pullRequest?.url ?? null, state: prRecord.pullRequest?.state,
+    base: prRecord.pullRequest?.base, head: prRecord.pullRequest?.head, range: prRecord.commitRange?.range,
+    commits: prRecord.commitRange?.commits, files: prRecord.diffSummary?.filesChanged, insertions: prRecord.diffSummary?.insertions,
+    merged: prRecord.merged === true, opened: prRecord.hostedPr?.opened === true,
+  } : null,
   rust: hasRust ? {
     path: rustDir,
-    branch: git(rustDir, ['rev-parse', '--abbrev-ref', 'HEAD']).trim(),
+    branch: rustHeadRef === 'HEAD' ? git(rustDir, ['rev-parse', '--abbrev-ref', 'HEAD']).trim() : rustHeadRef,
+    base: rustBaseRef,
+    remoteUrl: (git(rustDir, ['remote', 'get-url', 'origin'], { allowFail: true }) ?? '').trim() || null,
     branches: git(rustDir, ['branch', '--format=%(refname:short)']).trim().split('\n'),
     remote: git(rustDir, ['remote']).trim() || null,
     commits: allRust.length,
@@ -351,10 +411,16 @@ const facts = {
 
 const data = {
   generated: new Date().toISOString(),
-  repo: { path: repo, ref, head: git(repo, ['rev-parse', '--short', ref]).trim() },
+  repo: { path: repo, ref, branch: ref === 'HEAD' ? git(repo, ['rev-parse', '--abbrev-ref', 'HEAD']).trim() : ref, head: git(repo, ['rev-parse', '--short', ref]).trim() },
   rustRepo: hasRust ? { path: rustDir, head: rustHead.slice(0, 7) } : null,
-  intro: N.intro, outro: N.outro, chapters: N.chapters.map(({ steps, ...c }) => c), tracks: N.tracks, gateNames: N.gateNames,
-  stages, facts, warnings,
+  intro: N.intro, outro: N.outro, glossary: N.glossary, gatePlain: N.gatePlain, stateWords: N.stateWords, agentRoles: N.agentRoles, chapters: N.chapters.map(({ steps, loop, ...c }) => ({ ...c, loop: loop && { ...loop, nodes: loop.nodes.map(([num, label]) => ({ id: idOf(num), label })) } })), scopes: N.scopes, tracks: N.tracks, gateNames: N.gateNames,
+  stages, facts, warnings, paths: allPaths,
+  rustTree: hasRust ? {
+    paths: git(rustDir, ['ls-tree', '-r', '--name-only', rustHead]).trim().split('\n').filter(Boolean),
+    content: Object.fromEntries(git(rustDir, ['ls-tree', '-r', '--name-only', rustHead]).trim().split('\n').filter((f) => f && !/(\.lock|\.png|\.ico)$/.test(f))
+      .map((f) => [f, git(rustDir, ['show', `${rustHead}:${f}`], { allowFail: true })]).filter(([, t]) => t != null && t.length < 120000)),
+    status: Object.fromEntries((rustBaseRef ? git(rustDir, ['diff', '--no-renames', '--name-status', rustBaseRef, rustHead]) : '').trim().split('\n').filter(Boolean).map((l) => l.split('\t').reverse())),
+  } : null,
 };
 
 // ---------------------------------------------------------------- write
