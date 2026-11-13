@@ -1,6 +1,6 @@
 # Gap Register: REBUILD-MINIDON
 
-Research version 16. Generated from `gaps.json`; edit that, not this.
+Research version 26. Generated from `gaps.json`; edit that, not this.
 
 No open gaps.
 

@@ -15,19 +15,19 @@
   },
   "research": true,
   "createdAt": "2026-11-11T23:15:50.958Z",
-  "updatedAt": "2026-11-12T17:34:16.155Z",
+  "updatedAt": "2026-11-13T15:00:59.913Z",
   "branches": [
     {
       "state": "RESEARCH_ESTIMATE",
-      "complete": false
+      "complete": true
     },
     {
       "state": "RESEARCH_SECURITY",
-      "complete": false
+      "complete": true
     },
     {
       "state": "RESEARCH_FLOWS",
-      "complete": false
+      "complete": true
     }
   ]
 }

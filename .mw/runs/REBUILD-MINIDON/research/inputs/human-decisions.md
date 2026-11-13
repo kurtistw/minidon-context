@@ -43,7 +43,41 @@ cascade is intended (CF-006); `social/queries.py` stays a plain import owned by 
   confirmation of the DERIVED rules. Parity tests check what the Python code does, so this does not
   change the test approach.
 
-## 5. Still open
+## 5. Username with a trailing newline (review 002, N-01)
+
+- Finding: Python's username pattern `^[a-z0-9_]{1,30}$` lets `"alice\n"` register as a separate
+  account from `"alice"`, because `$` also matches before a final newline
+  (`minidon/accounts/service.py:17`). This breaks the STATED rule `L1-accounts/BR-001` in spirit and
+  allows look-alike accounts.
+- Decision (DEMO, made on 2026-11-13 by kurtis): **copy the behaviour for parity.** The Rust build
+  accepts a username with one trailing newline, as Python does. This is a lift and shift, and the
+  same reasoning applies as for the other known weaknesses in section 3.
+- Required: a parity test with a username that has a trailing newline, and an explicit note in the
+  Rust implementation that this is deliberate (a pattern ending in an optional newline before end
+  of input).
+- Follow-up (out of scope here): reject usernames with a trailing newline in both builds, as a
+  defect fix after cutover.
+- Design input: the regex engine choice (ADR candidate 1) must be able to express this.
+
+## 6. Lane review findings: accepted and carried into design
+
+Decision (DEMO, made on 2026-11-13 by kurtis, to keep the walkthrough short): the three research
+branches are closed WITHOUT a further revision of the pack. This does not mean the findings are
+fixed. They are accepted as open and carried into design and planning.
+
+- Security lane (`lanes/security-lane-review.md`): 5 major, 6 minor. Carried into design as inputs,
+  including the trailing-newline username risk (decision in section 5), the unlisted Python
+  authentication weaknesses (no sign-in throttling, username enumeration, no body size limit), the
+  Python 500 cases, the controls for building agents (the parity harness must not write inside the
+  reference repo), and threats from the Rust stack.
+- Flows lane (`lanes/flows-lane-review.md`): 3 major, 6 minor. Carried into planning, including
+  journeys for the 15 endpoints not yet exercised, and reconciling the value-stream durations with
+  `estimate.json`, which stays the authority.
+- Estimate branch: no separate lane review was done; the estimate remains DEMO content.
+- Before the build starts, the design and planning stages must work through these findings.
+  A real team would revise the pack and have the lanes re-check it before closing the branches.
+
+## 7. Still open
 
 - **The business reason for moving to Rust is not stated.** The PO needs to supply it. Until then it
   stays a recorded risk (RISK-005).
