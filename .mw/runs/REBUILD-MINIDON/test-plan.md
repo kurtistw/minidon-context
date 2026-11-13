@@ -76,6 +76,14 @@ I-09, DERIVED. Each item below cannot be proven by any test layer.
 8. Concurrency behaviour (NFR-008) is a smoke test outside this story's per-rule acceptance.
 9. Accepted weaknesses (no sign-in throttling, username enumeration, no body size limit, 500 cases in Python) are not tested as defects. Where Python returns 500, behaviour is recorded and the parity decision goes to design (OP-08).
 
+## 6b. Known differences from Python (STATED, human decision 2026-11-13, adr-001 section 5)
+
+The parity suite expects these differences, and must not report them as failures. Each needs one test that pins the Rust behaviour.
+
+- A lone-surrogate password or an out-of-range id returns a 4xx in Rust. Python returns a 500.
+- A request body above 1 MiB returns 413 in Rust. Python accepts it.
+- Validation error messages in a 422 keep the status code and top-level shape, but not the exact message text.
+
 ## 7. Non-functional coverage for this story (DERIVED)
 
 | NFR | Coverage in story 1 |
