@@ -1,0 +1,46 @@
+{
+  "run": "REBUILD-MINIDON",
+  "story": 1,
+  "capability": "L1-accounts",
+  "repo": "minidon",
+  "kind": "no-change-record",
+  "pullRequest": {
+    "title": "REBUILD-MINIDON story 1 of 6: no change in minidon (Python reference, read-only), no PR needed",
+    "url": null,
+    "state": "not-needed"
+  },
+  "hostedPr": {
+    "opened": false,
+    "reason": "No change to propose. The repo is a read-only reference (I-29). Working tree clean, branch master, last commit e1fbd3a."
+  },
+  "commitRange": null,
+  "diffSummary": {
+    "filesChanged": 0,
+    "insertions": 0,
+    "deletions": 0
+  },
+  "description": {
+    "specLink": ".mw/runs/REBUILD-MINIDON/spec/spec.md",
+    "reviewReportLink": ".mw/runs/REBUILD-MINIDON/reviews/review-report-001.md",
+    "body": "No change in minidon (the read-only Python reference, I-29). No PR is needed or raised for this repository. This record exists so the run has one PR record per repo (I-16) and so it is clear the Python repo was left alone. Measured: working tree clean on branch master, no commits made by this run. The rebuild lives in minidon-rust: see repos/minidon-rust/pr.json."
+  },
+  "linkedArtifacts": {
+    "ticket": ".mw/runs/REBUILD-MINIDON/ticket.md",
+    "onePager": ".mw/runs/REBUILD-MINIDON/plan-onepager.md",
+    "spec": ".mw/runs/REBUILD-MINIDON/spec/spec.md",
+    "adrs": [
+      ".mw/runs/REBUILD-MINIDON/adr/adr-001.md",
+      ".mw/runs/REBUILD-MINIDON/adr/adr-002.md"
+    ],
+    "testPlan": ".mw/runs/REBUILD-MINIDON/test-plan.md",
+    "reviewReports": [
+      ".mw/runs/REBUILD-MINIDON/reviews/review-report-001.md"
+    ],
+    "planReviews": [
+      ".mw/runs/REBUILD-MINIDON/reviews/plan-review-001.md"
+    ],
+    "coverage": ".mw/runs/REBUILD-MINIDON/coverage-delta.json",
+    "repoPlan": ".mw/runs/REBUILD-MINIDON/repos/minidon/plan.md"
+  },
+  "merged": false
+}

@@ -1,0 +1,124 @@
+{
+  "run": "REBUILD-MINIDON",
+  "story": 1,
+  "capability": "L1-accounts",
+  "repo": "minidon-rust",
+  "kind": "local-pr-record",
+  "pullRequest": {
+    "title": "REBUILD-MINIDON story 1 of 6: Accounts (L1-accounts) in Rust, with platform and parity harness",
+    "url": null,
+    "state": "raised-locally-not-merged",
+    "base": "main",
+    "head": "story-1-accounts"
+  },
+  "hostedPr": {
+    "opened": false,
+    "reason": "Not opened by this agent. The brief said there was no git remote, but both repos have an `origin` (git@github.com-tw:kurtistw/minidon-rust.git). Local `main` is an empty initial commit (93de36e), while `origin/main` is already at cbc42e0, which has the same tree as `story-1-accounts` (git diff cbc42e0 story-1-accounts is empty) and equals local branch backup-before-base. So a hosted PR of story-1-accounts into origin/main would show no diff, and the remote base would have to be reset first. No remote was added and nothing was fetched, pushed or merged (I-15). A human decides how to publish the base and head.",
+    "remote": "origin git@github.com-tw:kurtistw/minidon-rust.git",
+    "originMain": "cbc42e0"
+  },
+  "commitRange": {
+    "base": "main",
+    "baseSha": "93de36e",
+    "head": "story-1-accounts",
+    "headSha": "f90cf00",
+    "range": "93de36e..f90cf00",
+    "commits": 28,
+    "firstCommit": "de5c211 Add project skeleton: Nix dev shell, pinned Rust 1.94, Cargo manifest and lock, deny policy, crate list",
+    "lastCommit": "f90cf00 Add concurrent two-build write test to the compat suite"
+  },
+  "diffSummary": {
+    "label": "STATED (measured with git diff --numstat main story-1-accounts)",
+    "filesChanged": 67,
+    "insertions": 13645,
+    "deletions": 0,
+    "src": {
+      "files": 21,
+      "insertions": 2214,
+      "deletions": 0
+    },
+    "tests": {
+      "files": 37,
+      "insertions": 9374,
+      "deletions": 0
+    },
+    "other": {
+      "files": 9,
+      "insertions": 2057,
+      "deletions": 0,
+      "note": "Cargo.toml, Cargo.lock (1749), flake.nix, flake.lock, deny.toml, rust-toolchain.toml, .cargo/audit.toml, CRATES.md, .gitignore"
+    },
+    "excludingLockFiles": {
+      "files": 65,
+      "insertions": 11814
+    },
+    "note": "The brief estimated 59 files and about 11,600 lines. Measured here: 67 files and 13,645 lines (11,814 without the two lock files). The measured figures are used."
+  },
+  "sizeVersusI11": {
+    "limitFiles": 20,
+    "limitLines": 500,
+    "oversized": true,
+    "reason": "Story 1 absorbed the platform and the parity harness work. Review commit by commit (28 commits)."
+  },
+  "description": {
+    "specLink": ".mw/runs/REBUILD-MINIDON/spec/spec.md",
+    "reviewReportLink": ".mw/runs/REBUILD-MINIDON/reviews/review-report-001.md",
+    "body": "Story 1 of 6 of the REBUILD-MINIDON epic: the Accounts capability (L1-accounts), rebuilt in Rust. It covers 14 business rules and 19 requirements (registration, sign-in, profile), plus the platform and parity harness that every later story needs.\n\nHOSTED PR STATUS: this is a local PR record. No hosted PR was opened. The agent raises the PR and never merges it (I-15). See hostedPr in pr.json for the repo facts.\n\nWhere to read, in order (paths are relative to the run folder .mw/runs/REBUILD-MINIDON/):\n- ticket.md - the ask\n- plan-onepager.md - the plan in plain words\n- spec/spec.md - the spec (REQ-001 to REQ-019)\n- adr/adr-001.md and adr/adr-002.md - decisions, threat model delta, and the human decisions in section 5 of adr-001\n- test-plan.md - the planned tests\n- repos/minidon-rust/plan.md - the per-file code plan\n- build/wave-0-1.md, build/wave-2-3.md, build/wave-4-5.md, build/wave-6.md - the build logs\n- reviews/plan-review-001.md - the plan review\n- reviews/review-report-001.md - the independent code review\n- coverage-delta.json - measured coverage on the changed code\n\nTests: 292 tests, 0 failed, across four layers: 97 unit, 139 integration, 44 parity, 12 compat.\n\nCoverage: 97.9 percent of changed lines (1269 of 1296). Seven lines in non-main code are untested and listed in coverage-delta.json.\n\nParity against the Python app: 576 comparisons. 475 match exactly, 57 are 422 bodies matched by status and detail shape, 14 are whitelisted by decisions 1, 2 and 6, and 4 are documentation routes that are out of contract. The remaining 26 were unresolved and are decided in adr-001 decision 10 (U-01 to U-04 accepted as known differences). Each is pinned in the parity suite.\n\nIndependent review (reviews/review-report-001.md): verdict approve with findings. 0 critical, 1 major, 11 minor. The major, M-01 (the lone-surrogate deviation does not close a username oracle on sign-in), is accepted and not fixed in this story: adr-001 decision 11, with the threat model row 4 corrected. The 11 minor findings are left for a clean-up pass and are not blockers.\n\nHuman decisions: adr-001 section 5 lists decisions 1 to 11 (deviations, body limit, 422 shape, security sign-off, crates, Nix build environment, policy exceptions, parity differences, M-01). They are recorded as DEMO ASSUMPTION answers in the name of the decision owner (kurtis), except decision 8, which was a direct instruction. In a real team a Tech Lead and a security reviewer would decide.\n\nSIZE WARNING: this PR is oversized. It changes 67 files with 13,645 insertions and no deletions (65 files and 11,814 lines without Cargo.lock and flake.lock), against the limit of 20 files and 500 lines in I-11. Story 1 absorbed the platform and parity harness work, so there is no smaller natural cut. Review it commit by commit: there are 28 commits, each built test first and each with one theme (skeleton, platform, accounts modules in dependency order, routes, parity harness, parity tests, compat tests).\n\nThe Python reference repo (minidon) is not changed (I-29)."
+  },
+  "linkedArtifacts": {
+    "ticket": ".mw/runs/REBUILD-MINIDON/ticket.md",
+    "onePager": ".mw/runs/REBUILD-MINIDON/plan-onepager.md",
+    "spec": ".mw/runs/REBUILD-MINIDON/spec/spec.md",
+    "adrs": [
+      ".mw/runs/REBUILD-MINIDON/adr/adr-001.md",
+      ".mw/runs/REBUILD-MINIDON/adr/adr-002.md"
+    ],
+    "testPlan": ".mw/runs/REBUILD-MINIDON/test-plan.md",
+    "reviewReports": [
+      ".mw/runs/REBUILD-MINIDON/reviews/review-report-001.md"
+    ],
+    "planReviews": [
+      ".mw/runs/REBUILD-MINIDON/reviews/plan-review-001.md"
+    ],
+    "coverage": ".mw/runs/REBUILD-MINIDON/coverage-delta.json",
+    "repoPlan": ".mw/runs/REBUILD-MINIDON/repos/minidon-rust/plan.md",
+    "buildLogs": [
+      ".mw/runs/REBUILD-MINIDON/build/wave-0-1.md",
+      ".mw/runs/REBUILD-MINIDON/build/wave-2-3.md",
+      ".mw/runs/REBUILD-MINIDON/build/wave-4-5.md",
+      ".mw/runs/REBUILD-MINIDON/build/wave-6.md"
+    ]
+  },
+  "evidence": {
+    "tests": {
+      "total": 292,
+      "failed": 0,
+      "unit": 97,
+      "integration": 139,
+      "parity": 44,
+      "compat": 12
+    },
+    "coverage": {
+      "scope": "changed lines",
+      "changedLines": 1296,
+      "coveredLines": 1269,
+      "percent": 97.9
+    },
+    "parity": {
+      "comparisons": 576,
+      "exact": 475,
+      "detailShape": 57,
+      "whitelisted": 14,
+      "docsRoutes": 4,
+      "unresolvedNowDecided": 26
+    },
+    "review": {
+      "verdict": "approve with findings",
+      "critical": 0,
+      "major": 1,
+      "minor": 11,
+      "majorDecision": "M-01 accepted, adr-001 decision 11"
+    }
+  },
+  "merged": false
+}
