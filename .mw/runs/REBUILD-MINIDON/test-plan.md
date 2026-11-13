@@ -81,6 +81,7 @@ I-09, DERIVED. Each item below cannot be proven by any test layer.
 The parity suite expects these differences, and must not report them as failures. Each needs one test that pins the Rust behaviour.
 
 - A lone-surrogate password or an out-of-range id returns a 4xx in Rust. Python returns a 500.
+- An email, display name or bio with a lone surrogate returns a 4xx in Rust. Python returns a 500. A username with a lone surrogate is not a difference: both return 422 with an `{"error": ...}` body (adr-001 section 5, decision 6).
 - A request body above 1 MiB returns 413 in Rust. Python accepts it.
 - Validation error messages in a 422 keep the status code and top-level shape, but not the exact message text.
 
