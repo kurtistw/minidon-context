@@ -1,7 +1,7 @@
 {
   "id": "REBUILD-MINIDON",
   "type": "feature",
-  "state": "RESEARCH_READY",
+  "state": "RESEARCH_REVIEW",
   "classification": "major",
   "repos": [
     "minidon",
@@ -15,19 +15,5 @@
   },
   "research": true,
   "createdAt": "2026-11-11T23:15:50.958Z",
-  "updatedAt": "2026-11-13T15:00:59.913Z",
-  "branches": [
-    {
-      "state": "RESEARCH_ESTIMATE",
-      "complete": true
-    },
-    {
-      "state": "RESEARCH_SECURITY",
-      "complete": true
-    },
-    {
-      "state": "RESEARCH_FLOWS",
-      "complete": true
-    }
-  ]
+  "updatedAt": "2026-11-13T15:02:57.153Z"
 }
