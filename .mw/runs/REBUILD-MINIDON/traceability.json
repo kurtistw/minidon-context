@@ -1,0 +1,607 @@
+{
+  "version": "1.0",
+  "run": "REBUILD-MINIDON",
+  "story": 1,
+  "capability": "L1-accounts",
+  "author": "qa-planning-agent",
+  "label_key": "STATED = said by person/ticket/human decision; DERIVED = inferred by agent (I-05)",
+  "rules_in_scope": 14,
+  "rules_mapped": 14,
+  "rules": [
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-001",
+      "cite": "L1-accounts/BR-001",
+      "text": "Usernames 1-30 letters/digits/underscore, case-insensitive; one trailing newline accepted for parity",
+      "label": "STATED",
+      "scenarios": [
+        "SC-ACC-001",
+        "SC-ACC-002",
+        "SC-ACC-003",
+        "SC-ACC-004"
+      ],
+      "tests": [
+        {
+          "id": "UT-ACC-001",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-001",
+            "SC-ACC-002",
+            "SC-ACC-003",
+            "SC-ACC-004"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "PT-ACC-004a",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "alice\\n accepted 201"
+        },
+        {
+          "id": "PT-ACC-004b",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "alice then alice\\n are separate accounts"
+        },
+        {
+          "id": "PT-ACC-004c",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "GET alice%0A vs alice return different accounts"
+        },
+        {
+          "id": "PT-ACC-004d",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "alice\\n\\n rejected 422"
+        },
+        {
+          "id": "PT-ACC-004e",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "newline alone and mid-name rejected 422"
+        },
+        {
+          "id": "PT-ACC-004f",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "must_pass_on_python_first": true,
+          "note": "30 chars plus newline accepted; CRLF rejected"
+        },
+        {
+          "id": "PT-ACC-001",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-001",
+            "SC-ACC-002",
+            "SC-ACC-003"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "UT-ACC-004",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-004"
+          ],
+          "required": true,
+          "note": "pattern with optional final newline"
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-002",
+      "cite": "L1-accounts/BR-002",
+      "text": "Email must contain @",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-005",
+        "SC-ACC-006"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-002",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-005",
+            "SC-ACC-006"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "UT-ACC-002",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-005",
+            "SC-ACC-006"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-003",
+      "cite": "L1-accounts/BR-003",
+      "text": "Password at least 8 characters",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-007"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-003",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-007"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "UT-ACC-003",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-007"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-004",
+      "cite": "L1-accounts/BR-004",
+      "text": "Username unique case-insensitively incl. suspended",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-008",
+        "SC-ACC-009"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-004",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-008",
+            "SC-ACC-009"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-004",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-008",
+            "SC-ACC-009"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-005",
+      "cite": "L1-accounts/BR-005",
+      "text": "Email unique across all accounts",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-010"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-005",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-010"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-005",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-010"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-006",
+      "cite": "L1-accounts/BR-006",
+      "text": "First account is Admin",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-011",
+        "SC-ACC-012"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-006",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-011",
+            "SC-ACC-012"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-006",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-011",
+            "SC-ACC-012"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "CT-ACC-006",
+          "layer": "COMPAT",
+          "scenarios": [
+            "SC-ACC-011",
+            "SC-ACC-012"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-007",
+      "cite": "L1-accounts/BR-007",
+      "text": "PBKDF2-HMAC-SHA256 100k iterations, random salt; no PARITY because salt is random",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-013",
+        "SC-ACC-014",
+        "SC-ACC-015"
+      ],
+      "tests": [
+        {
+          "id": "UT-ACC-007",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-013",
+            "SC-ACC-014",
+            "SC-ACC-015"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "CT-ACC-007",
+          "layer": "COMPAT",
+          "scenarios": [
+            "SC-ACC-013",
+            "SC-ACC-014",
+            "SC-ACC-015"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-008",
+      "cite": "L1-accounts/BR-008",
+      "text": "Wrong credentials rejected without detail",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-016"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-008",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-016"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-008",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-016"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-009",
+      "cite": "L1-accounts/BR-009",
+      "text": "Suspended accounts cannot sign in",
+      "label": "STATED",
+      "scenarios": [
+        "SC-ACC-017"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-009",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-017"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-009",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-017"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-010",
+      "cite": "L1-accounts/BR-010",
+      "text": "Token expires after 30 days",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-018",
+        "SC-ACC-019"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-010",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-018",
+            "SC-ACC-019"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-010",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-018",
+            "SC-ACC-019"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "UT-ACC-010",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-018",
+            "SC-ACC-019"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-011",
+      "cite": "L1-accounts/BR-011",
+      "text": "Expired or suspended-account token is signed-out",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-020",
+        "SC-ACC-021"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-011",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-020",
+            "SC-ACC-021"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-011",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-020",
+            "SC-ACC-021"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-012",
+      "cite": "L1-accounts/BR-012",
+      "text": "Suspended accounts look not-found",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-022"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-012",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-022"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-012",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-022"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-013",
+      "cite": "L1-accounts/BR-013",
+      "text": "Display name 30, bio 500, code points",
+      "label": "DERIVED",
+      "scenarios": [
+        "SC-ACC-023",
+        "SC-ACC-024",
+        "SC-ACC-025",
+        "SC-ACC-026"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-013",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-023",
+            "SC-ACC-024",
+            "SC-ACC-025",
+            "SC-ACC-026"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "UT-ACC-013",
+          "layer": "UNIT",
+          "scenarios": [
+            "SC-ACC-023",
+            "SC-ACC-024",
+            "SC-ACC-025",
+            "SC-ACC-026"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-013",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-023",
+            "SC-ACC-024",
+            "SC-ACC-025",
+            "SC-ACC-026"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    },
+    {
+      "capability": "L1-accounts",
+      "rule_id": "BR-014",
+      "cite": "L1-accounts/BR-014",
+      "text": "Locked flag stored and exposed; follow-request mechanism proven in L1-following/BR-002",
+      "label": "STATED",
+      "scenarios": [
+        "SC-ACC-027"
+      ],
+      "tests": [
+        {
+          "id": "PT-ACC-014",
+          "layer": "PARITY",
+          "scenarios": [
+            "SC-ACC-027"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "IT-ACC-014",
+          "layer": "INT",
+          "scenarios": [
+            "SC-ACC-027"
+          ],
+          "must_pass_on_python_first": true
+        },
+        {
+          "id": "CT-ACC-014",
+          "layer": "COMPAT",
+          "scenarios": [
+            "SC-ACC-027"
+          ],
+          "must_pass_on_python_first": true
+        }
+      ]
+    }
+  ],
+  "scenario_count": 30,
+  "extra_scenarios": [
+    {
+      "id": "SC-ACC-028",
+      "layer": [
+        "PARITY"
+      ],
+      "label": "DERIVED",
+      "covers": "NFR-003 framework errors (OP-06)"
+    },
+    {
+      "id": "SC-ACC-029",
+      "layer": [
+        "PARITY",
+        "COMPAT"
+      ],
+      "label": "DERIVED",
+      "covers": "NFR-002/OP-05 response shape and stored formats"
+    },
+    {
+      "id": "SC-ACC-030",
+      "layer": [
+        "COMPAT"
+      ],
+      "label": "DERIVED",
+      "covers": "NFR-002/004, OP-09 synthetic dataset"
+    }
+  ],
+  "required_tests": [
+    {
+      "id": "PT-ACC-004a..f",
+      "rule": "L1-accounts/BR-001",
+      "label": "STATED",
+      "source": "research/inputs/human-decisions.md section 5"
+    }
+  ],
+  "review_checks": [
+    {
+      "id": "RC-001",
+      "rule": "L1-accounts/BR-001",
+      "check": "Rust source carries a comment that accepting one trailing newline is deliberate, citing the 2026-11-13 decision",
+      "label": "STATED"
+    }
+  ],
+  "decisions_applied": {
+    "OP-02": "performance not tested",
+    "OP-06": "error bodies, date format, 404/405 compared; docs routes not tested",
+    "OP-07": "dual-target harness, fixed clock, normalisation, non-ASCII, no writes to Python repo",
+    "OP-09": "synthetic dataset only"
+  },
+  "unprovable": [
+    "Completeness of the 14 rules as all Accounts behaviour (A-01/ASM-001)",
+    "Performance (NFR-007, OP-02)",
+    "Real legacy data (OP-09)",
+    "Follow-request behaviour driven by locked flag (proven in L1-following/BR-002, story 2)",
+    "Bit-identical password hashes across builds (random salt)",
+    "Real wall-clock 30-day token lifetime",
+    "Business reason for Rust (OP-01)"
+  ]
+}
