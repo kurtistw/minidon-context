@@ -1,7 +1,7 @@
 {
   "id": "REBUILD-MINIDON",
   "type": "feature",
-  "state": "PLAN_REVIEW",
+  "state": "GATE_A",
   "classification": "major",
   "repos": [
     "minidon",
@@ -15,5 +15,5 @@
   },
   "research": true,
   "createdAt": "2026-11-11T23:15:50.958Z",
-  "updatedAt": "2026-11-13T16:27:37.059Z"
+  "updatedAt": "2026-11-13T16:52:54.717Z"
 }
