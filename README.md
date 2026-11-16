@@ -13,8 +13,9 @@ commit: the file tree with new files in green and changed ones in yellow, any fi
 page, the commands that were run, and the diff.
 
 The page opens in a calm view: each step's story, who did it, the exact commands that
-ran (copyable) split by who ran them, including the slash command Kurtis typed in Claude Code
-to start each stage's agents, what it read and wrote, the next human gate, and one line with the real commit. The top bar groups the nine stages into three
+ran (copyable) split by who ran them, drawn as the app each one happened in: a Claude Code window for the slash command Kurtis typed to start each stage's agents,
+a VS Code window for files a person edited (no command; click one to open it), and a Terminal window for shell commands, with who ran them,
+repeated `millwright transition` calls as one line with the states the run moved through, what it read and wrote, the next human gate, and one line with the real commit. The top bar groups the nine stages into three
 acts, with a person icon for each human gate (filled once approved); the row under it shows the steps of the current stage. Every step carries a scope label: **Whole rebuild** up to the
 research approval, then **Story 1 of 6: Accounts**. Research pack, Build, and Review and PR steps draw their loop
 in two lanes, agents and Kurtis, with the current step lit and a dashed arc for the way back
@@ -22,9 +23,11 @@ in two lanes, agents and Kurtis, with the current step lit and a dashed arc for 
 back round the review loop with fixes. A human gate step shows three bands: the work done
 since the last gate (by agents and by Kurtis), the one question a person answers (with what they read and what they decided), and what Millwright checks. **Full detail**
 (top bar, or `R`) adds the file tree, the commit footer, the gate as it ran in the terminal with every check, and the Commands tab for developers. Each step that points at a document opens it at the passage that matters, with an Open repo in VS
-Code button: it opens the whole repository first, then the file at that passage.
+Code button: it opens the whole repository first, then the file at that passage. **Run states** (next to the scope label, or `M`)
+opens every state the run can be in, grouped by stage, with how many each stage has, the step that entered each one, and
+where the run is after this step. It stays hidden until you open it.
 
-Keys: arrows to step, `1`-`9` to jump to a stage, `G` (or the All steps button) to see every step and click one, `S` / `D` / `C` for the Story,
+Keys: arrows to step, `1`-`9` to jump to a stage, `G` (or the All steps button) to see every step and click one, `M` for the run states, `S` / `D` / `C` for the Story,
 Documents and Commands tabs, `R` for full detail, `T` for the theme, `F` for full screen, and `?` for how the page works and all keys.
 
 ## The three repositories

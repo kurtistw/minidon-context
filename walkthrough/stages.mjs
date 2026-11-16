@@ -164,7 +164,8 @@ export const steps = {
     who: ['human'],
     milestone: 'Ticket written',
     artifacts: ['.mw/tickets/REBUILD-MINIDON.md', 'millwright.config.yaml'],
-    commands: ['# edit .mw/tickets/REBUILD-MINIDON.md and add minidon-rust to project.repos'],
+    // Files Kurtis edited in his editor. No command: Millwright reads them at the next command.
+    edits: [['.mw/tickets/REBUILD-MINIDON.md', 'the ticket, written from scratch'], ['millwright.config.yaml', 'adds minidon-rust to project.repos']],
   },
   '05': {
     title: 'Open a run for the ticket',
@@ -195,7 +196,7 @@ export const steps = {
     reads: 'The list of gaps',
     story: ['A person supplies the missing inputs: who decides, and today\'s baseline numbers.', '23 of the 30 gaps are now closed. The two files close one gap each; the approved map already answered the other 21.'],
     who: ['human'],
-    commands: ['# write research/inputs/decision-makers.md and research/inputs/baseline-metrics.md'],
+    edits: [['@run/research/inputs/decision-makers.md', 'who decides each gate'], ['@run/research/inputs/baseline-metrics.md', 'today\'s numbers to beat']],
     numbers: [['23 of 30', 'gaps closed']],
     artifacts: ['@run/research/gaps.md', '@run/research/inputs/decision-makers.md', '@run/research/inputs/baseline-metrics.md'],
   },
@@ -242,7 +243,7 @@ export const steps = {
     reads: 'The review findings',
     story: ['A person fixes what the review flagged. The decisions made when the map was approved are the final word.'],
     who: ['human'],
-    commands: ['# edit research/inputs/human-decisions.md and research/inputs/baseline-metrics.md'],
+    edits: [['@run/research/inputs/human-decisions.md', 'the map approval decisions are the final word'], ['@run/research/inputs/baseline-metrics.md', 'numbers corrected to match the map']],
     artifacts: ['@run/research/inputs/human-decisions.md', '@run/research/inputs/baseline-metrics.md'],
     note: DEMO,
   },

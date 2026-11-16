@@ -359,6 +359,13 @@ for (const c of log) {
   for (const a of stage.artifacts) {
     a.changed = a.repo === 'minidon-context' ? files.find((f) => f.path === a.path)?.status ?? null : rustTouched.has(a.path) ? 'A' : null;
   }
+  // Files a person edited in an editor, with no command. Each must be changed by this commit.
+  stage.edits = (n.edits ?? []).map(([p, what]) => {
+    const path = expandPath(p);
+    const status = files.find((f) => f.path === path)?.status;
+    if (!status) warn(`step ${num} says it edited ${path}, but its commit does not change it`);
+    return { repo: 'minidon-context', path, what, status: status ?? null };
+  });
   // The passage this step is about: which file, and the line it starts on (for Open in VS Code).
   if (n.focus) {
     const rel = n.focus.path.startsWith('rust:') ? n.focus.path.slice(5) : expandPath(n.focus.path);

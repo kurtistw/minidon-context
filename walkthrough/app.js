@@ -14,6 +14,10 @@
 
   const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const icon = {
+    states: '<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="3" cy="8" r="1.6"/><circle cx="8" cy="8" r="1.6"/><path d="M13 6.2l1.8 1.8-1.8 1.8-1.8-1.8z" stroke-linejoin="round"/><path d="M4.6 8h1.8M9.6 8h1.6"/></svg>',
+    claude: '<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="M8 1.5l1 4.6 4.4-1.9-3.2 3.6 4.3 1.9-4.7.4 1 4.6L8 10.9 5.2 14.7l1-4.6-4.7-.4 4.3-1.9L2.6 4.2 7 6.1z"/></svg>',
+    term: '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M4.5 6l2 2-2 2M8.5 10.5h3"/></svg>',
+    pen: '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M10.5 2.5l3 3L6 13H3v-3z"/><path d="M9 4l3 3"/></svg>',
     person: '<svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5" r="3"/><path d="M2 15c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5z"/></svg>',
     agent: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="4.5" width="11" height="9" rx="2"/><path d="M8 1.5v3M5.5 9h.01M10.5 9h.01" stroke-linecap="round"/></svg>',
     check: '<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3.5 8.5l3 3 6-7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -28,9 +32,12 @@
   const isHuman = (w) => w === 'human' || w === 'kurtis' || /@/.test(w);
   const relPath = (a) => a.repo === 'minidon-rust' ? `file://${D.rustRepo.path}/${a.path}` : `../${a.path}`;
 
+  // Where the run is once this step is done: the last move the step shows, else the saved run
+  // state. They differ only where stages.mjs gives a ledger entry to an earlier step (TESTS_LANDED).
   function stateOf(s) {
     const t = D.tracks[s.track];
-    const st = s.runState?.state;
+    const last = [...s.commands].reverse().find((c) => c.source === 'ledger' && c.to && c.run === s.runState?.run);
+    const st = last?.to ?? s.runState?.state;
     return t.parallel?.[st] ?? st;
   }
 
@@ -562,7 +569,8 @@
   function scopePill(s) {
     const k = D.chapters[s.chapter]?.scope;
     const sc = D.scopes?.[k];
-    return sc ? `<span class="scope ${k}" data-tip="${esc(sc.tip)}"><i></i>${esc(sc.label)}</span>` : '';
+    const btn = `<button class="stbtn" data-act="states" title="Every state the run can be in, and where it is after this step">${icon.states}Run states</button>`;
+    return (sc ? `<span class="scope ${k}" data-tip="${esc(sc.tip)}"><i></i>${esc(sc.label)}</span>` : '') + btn;
   }
 
   // How many of the eight human gates are passed, in words, for the step bar.
@@ -656,19 +664,34 @@
   // the typed text, so those command lines are rebuilt in the CLAUDE.md form.
   // The slash command Kurtis typed in Claude Code to start this stage's agents. A later agent step
   // of the same stage names the step where it was typed, because nothing new was typed there.
+  const CC = () => `<span class="ccn">${icon.claude}Claude Code</span>`;
+  // Each action is drawn as the app it happened in: a title bar naming the app and who used it.
+  const win = (kind, ico, app, who, body) => `<div class="win ${kind}"><div class="wbar">${ico}<b>${app}</b><span class="who2">${who}</span></div>${body}</div>`;
   function launchRow(s) {
-    if (s.launch) return `<div class="rb"><div class="rbl"><b>Kurtis</b> typed in Claude Code${s.launch.startsWith('/mw ') ? '<span class="cch"> · /mw starts the right agent for the run\'s current state</span>' : ''}</div><div class="ran cc"><div class="cl"><code><span class="ln1">${esc(s.launch)}</span></code><button class="tcopy" data-copy="${esc(s.launch)}" title="Copy this command">copy</button></div></div></div>`;
+    if (s.launch) return `<div class="rb">${win('cc', icon.claude, 'Claude Code', '<b>Kurtis</b> typed', `<div class="ran cc"><div class="cl"><code><span class="ln1">${esc(s.launch)}</span></code><button class="tcopy" data-copy="${esc(s.launch)}" title="Copy this command">copy</button></div></div>${s.launch.startsWith('/mw ') ? '<div class="wnote">/mw starts the right agent for the run\'s current state.</div>' : ''}`)}</div>`;
     if (s.kind === 'gate' || s.who.some(isHuman)) return '';
     const ss = stages.filter((x) => x.chapter === s.chapter);
     const from = ss.slice(0, ss.indexOf(s)).reverse().find((x) => x.launch);
-    return from ? `<div class="rb"><div class="rbl">Nothing new typed. <code class="ccx">${esc(from.launch.split(' ')[0])}</code>, typed at <button class="fc-go" data-go="${from.id}">step ${esc(from.num)}</button>, started this agent too.</div></div>` : '';
+    return from ? `<div class="rb"><div class="rbl">Nothing new typed. <code class="ccx">${esc(from.launch.split(' ')[0])}</code>, typed in ${CC()} at <button class="fc-go" data-go="${from.id}">step ${esc(from.num)}</button>, started this agent too.</div></div>` : '';
+  }
+
+  const stateChip = (st) => `<span class="stc" data-tip="${esc(st)}|${esc(plainState(st))}">${esc(st)}</span>`;
+
+  // Files a person changed in an editor. Nothing is typed: saving the file is enough, and
+  // Millwright picks it up at the next command.
+  function editRow(s) {
+    const rows = s.edits.map((e) => {
+      const k = e.path.lastIndexOf('/');
+      return `<button class="ed" data-ide-open="${esc(e.repo)}|${esc(e.path)}" title="Open ${esc(e.path)}"><span class="ei">${icon.pen}</span><span class="en"><span class="e1"><b>${esc(e.path.slice(k + 1))}</b>${e.status ? `<span class="st ${e.status}">${e.status === 'A' ? 'new' : 'changed'}</span>` : ''}</span><span class="ew">${esc(e.what)}</span><span class="ep">in ${esc(e.path.slice(0, k + 1))}</span></span></button>`;
+    }).join('');
+    return `<div class="rb">${win('vs', icon.pen, 'VS Code', `<b>Kurtis</b> saved ${s.edits.length === 1 ? 'a file' : `${s.edits.length} files`}`, `<div class="eds">${rows}</div><div class="wnote">Nothing to type: Millwright reads them at the next command.</div>`)}</div>`;
   }
 
   function ranRow(s) {
     const human = s.who.some(isHuman) || s.kind === 'gate';
     const launch = launchRow(s);
     if (!s.commands.length) {
-      if (launch) return launch;
+      if (launch || s.edits.length) return launch;
       return human ? 'No command. Kurtis wrote his answers into the documents below.' : 'No command. The agent worked in its own session and wrote the files directly. Millwright records them at the next command.';
     }
     const stepAgents = s.who.filter((w) => !isHuman(w));
@@ -700,24 +723,26 @@
         const key = `${s.id}:${g.i}`;
         const open = state.cmdOpen.has(key);
         const names = new Set(g.items.map((x) => x.w.name));
-        const head = (what) => `<button class="cgh" data-cmd="${esc(key)}"><code>${esc(g.v)}</code><span>×${g.items.length} · ${what}</span><i>${open ? 'hide' : 'show all'}</i></button>`;
+        const head = (what) => `<button class="cgh" data-cmd="${esc(key)}"><span class="l1"><code>${esc(g.v)}</code><span class="n">ran ${g.items.length} times</span><i>${open ? 'hide' : 'show all'}</i></span><span class="l2">${what}</span></button>`;
         if (!b.person && names.size > 1) {
           const rows = g.items.map((x) => `<tr><td class="who">${esc(x.w.name)}</td><td>${x.c.from && x.c.to ? `${esc(x.c.from)} → <b>${esc(x.c.to)}</b>` : ''}</td><td><button class="tcopy" data-copy="${esc(x.c.cmd)}" title="Copy this command">copy</button></td></tr>`).join('');
-          return `<div class="cg">${head('once per agent')}${open ? `<table class="cgt"><thead><tr><th>Who ran it</th><th>The run moved</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : ''}</div>`;
+          const chain = g.items.every((x, k) => x.c.from && x.c.to && (k === 0 || x.c.from === g.items[k - 1].c.to));
+          const what = chain ? `<span class="mv">The run moved</span>${[g.items[0].c.from, ...g.items.map((x) => x.c.to)].map(stateChip).join('<span class="ar">→</span>')}` : `once per agent: ${[...names].map(esc).join(', ')}`;
+          return `<div class="cg">${head(what)}${open ? `<table class="cgt"><thead><tr><th>Who ran it</th><th>The run moved</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : ''}</div>`;
         }
         const to = g.items.map((x) => x.c.to).filter(Boolean);
         const moves = g.v === 'millwright transition' && new Set(to).size === to.length && to.length === g.items.length;
-        const what = moves ? `the run moves ${[g.items[0].c.from, ...to].filter(Boolean).map(esc).join(' → ')}` : differs(g.items.map((x) => x.c.cmd)) ?? `${g.items.length} times`;
+        const what = moves ? `<span class="mv">The run moved</span>${[g.items[0].c.from, ...to].filter(Boolean).map(stateChip).join('<span class="ar">→</span>')}` : differs(g.items.map((x) => x.c.cmd)) ?? '';
         return `<div class="cg">${head(what)}${open ? g.items.map((x) => line(x.c)).join('') : ''}</div>`;
       }).join('');
     };
-    const label = (b, k) => {
-      if (b.person) return launch && s.launch ? `Then Claude ran, as <b>Kurtis</b>` : `${k ? 'Then ' : ''}<b>Kurtis</b> ran`;
+    const label = (b) => {
+      if (b.person) return launch && s.launch ? 'Claude ran it, as <b>Kurtis</b>' : '<b>Kurtis</b> ran';
       const names = [...new Set(b.items.map((x) => x.w.name))];
-      if (names.length === 1) return `${k ? 'Then ' : ''}<b>${esc(names[0])}</b> ran`;
-      return `${k ? 'Then each' : 'Each'} agent ran this as it finished its work`;
+      if (names.length === 1) return `<b>${esc(names[0])}</b> ran`;
+      return 'each <b>agent</b> ran this as it finished';
     };
-    return launch + blocks.map((b, k) => `<div class="rb"><div class="rbl">${label(b, k + (launch ? 1 : 0))}</div><div class="ran">${body(b)}</div></div>`).join('');
+    return launch + blocks.map((b) => `<div class="rb">${win('tm', icon.term, 'Terminal', label(b), `<div class="ran">${body(b)}</div>`)}</div>`).join('');
   }
 
 
@@ -747,7 +772,9 @@
       const name = human ? 'Kurtis' : agents.length === 1 ? agents[0] : `${agents.length} agents`;
       const role = human ? 'a person' : agents.length === 1 ? 'an agent' : 'agents';
       who = `<div class="fc-who ${human ? 'p' : 'a'}"><span class="av">${human ? icon.person : icon.agent}</span><b>${esc(name)}</b>${agents.length > 1 && !human ? '' : `<span>${role}</span>`}${agents.length > 1 ? `<span class="names">${esc(agents.join(', '))}</span>` : ''}</div>`;
-      rows += row('Commands', ranRow(s));
+      if (s.edits.length) rows += row('Edited', editRow(s));
+      const ran = ranRow(s);
+      if (ran) rows += row('Commands', ran);
       if (s.reads || used.length) rows += row('Read', `${s.reads ? esc(s.reads) : ''}${chips(used)}`);
       const rc = s.rust?.commits?.length;
       if (s.writes || made.length) rows += row('Wrote', `${s.writes ? `${esc(s.writes)}${rc ? `, in ${rc} commits on story-1-accounts` : ''}` : ''}${chips(made)}`);
@@ -1214,6 +1241,90 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     ov.querySelector('.sm-s.on')?.scrollIntoView({ block: 'nearest' });
   }
 
+  // Every state a run of this step's kind can be in, grouped by the stage where this run entered
+  // it, with the step that moved it there. States the run never reached sit with the stage before.
+  function stateGroups(track) {
+    const t = D.tracks[track];
+    const order = [...(track === 'feature' ? ['CREATED'] : []), ...t.groups.flatMap((g) => g.states)];
+    const home = {}; const at = {};
+    stages.forEach((x, i) => {
+      if (x.track !== track) return;
+      const ss = stages.filter((y) => y.chapter === x.chapter);
+      const next = stages[i + 1];
+      // A gate that ends its stage opens the next one: its new state belongs there, unless it is
+      // the run's last state (the baseline run ends when the map is approved).
+      const opens = x.kind === 'gate' && ss[ss.length - 1] === x && next?.track === track;
+      for (const c of x.commands) {
+        if (c.source !== 'ledger' || c.run !== x.runState?.run) continue;
+        if (c.from && !(c.from in home) && !t.parallel[c.from]) { home[c.from] = x.chapter; at[c.from] = x; }
+        if (c.to && !(c.to in home) && !t.parallel[c.to]) { home[c.to] = opens && c.to !== order[order.length - 1] ? next.chapter : x.chapter; at[c.to] = x; }
+      }
+    });
+    const groups = [];
+    let later = null;
+    order.forEach((st, k) => {
+      let ch = home[st];
+      if (ch == null) {
+        const grp = t.groups.find((g) => g.states.includes(st));
+        const prev = order[k - 1];
+        const sameGrp = prev && grp?.states.includes(prev);
+        if (sameGrp && home[prev] != null) { ch = home[prev]; home[st] = ch; }
+        else if (sameGrp && later) { later.states.push(st); return; }
+        else { later = { title: `${grp?.label ?? 'Later'}, after this run ends`, later: true, states: [st] }; groups.push(later); return; }
+      }
+      const g = groups.find((x) => x.ch === ch);
+      if (g) g.states.push(st); else groups.push({ ch, title: D.chapters[ch].title, states: [st] });
+    });
+    // A stage of this run that enters no new state: the run stays where it was, and says so.
+    stages.forEach((x) => {
+      if (x.track !== track || groups.some((g) => g.ch === x.chapter)) return;
+      const before = groups.filter((g) => g.ch != null && g.ch < x.chapter);
+      const stay = stateOf(x);
+      if (!before.length || !stay || stay === order[order.length - 1]) return;
+      groups.splice(groups.indexOf(before[before.length - 1]) + 1, 0, { ch: x.chapter, title: D.chapters[x.chapter].title, states: [], stay });
+    });
+    const side = Object.entries(t.parallel).reduce((m, [k, v]) => ((m[v] ??= []).push(k), m), {});
+    return { order, groups, at, side, gates: t.gates };
+  }
+
+  function openStates() {
+    closeOverlay();
+    const p = pages[state.page];
+    const s = p.type === 'stage' ? p.stage : p.type === 'end' ? stages[stages.length - 1] : stages[0];
+    const track = s.runState ? s.track : 'baseline';
+    const t = D.tracks[track];
+    const { order, groups, at, side, gates } = stateGroups(track);
+    const cur = s.runState ? stateOf(s) : null;
+    const ci = cur ? order.indexOf(cur) : -1;
+    const row = (st) => {
+      const i = order.indexOf(st);
+      const cls = i < ci ? 'done' : i === ci ? 'cur' : 'next';
+      const from = at[st];
+      const lanes = side[st] ? `<div class="sx-side">Side lanes that run alongside it: ${side[st].map(stateChip).join(' ')}</div>` : '';
+      return `<div class="sx-s ${cls}${gates.includes(st) ? ' gate' : ''}"><span class="sx-n">${i + 1}</span><span class="sx-d">${gates.includes(st) ? '<i class="dia f"></i>' : '<i></i>'}</span><div class="sx-t"><code>${esc(st)}</code><span>${esc(plainState(st))}</span>${lanes}</div>${from ? `<button class="sx-go" data-go="${from.id}">step ${esc(from.num)}</button>` : ''}</div>`;
+    };
+    const card = (g) => {
+      const here = g.stay ? s.chapter === g.ch : g.states.includes(cur);
+      const body = g.stay ? `<div class="sx-stay">No new state. The run stays at ${stateChip(g.stay)} while this stage's work is recorded.</div>` : g.states.map(row).join('');
+      return `<div class="sx-c${here ? ' cur' : ''}${g.later ? ' later' : ''}"><div class="sx-ch"><b>${g.ch != null ? `${g.ch + 1}. ` : ''}${esc(g.title)}</b><span>${g.stay ? 'no new state' : `${g.states.length} state${g.states.length === 1 ? '' : 's'}`}${here ? ' · you are here' : ''}</span></div>${body}</div>`;
+    };
+    const runId = s.runState?.run;
+    const intro = cur
+      ? `A ${esc(t.label.toLowerCase())} has <b>${order.length} states</b>, ${gates.length} of them human gates (<i class="dia f"></i>)${Object.keys(t.parallel).length ? `, plus ${Object.keys(t.parallel).length} side lanes that run alongside` : ''}. After step ${esc(s.num)}, <b>${esc(runId)}</b> is at state <b>${ci + 1}</b>: <code>${esc(cur)}</code>, ${esc(plainState(cur).replace(/^./, (c) => c.toLowerCase()))}.`
+      : `No run yet. The first run, a ${esc(t.label.toLowerCase())}, starts in step 02. It has <b>${order.length} states</b>.`;
+    const ov = document.createElement('div');
+    ov.className = 'overlay';
+    ov.innerHTML = `<div class="stepmap sx" role="dialog" aria-label="Run states">
+      <div class="sm-h"><b>Run states</b><span>${esc(t.label)}${runId ? ` ${esc(runId)}` : ''}</span><span class="spacer"></span><span><i class="dia f"></i> a person decides</span><span class="sx-key"><i class="k done"></i>passed <i class="k cur"></i>now <i class="k next"></i>not yet</span></div>
+      <div class="sx-i">${intro} Only <code>millwright transition</code> moves a run from one state to the next, and the kernel checks every move.</div>
+      <div class="sx-b">${groups.map(card).join('')}</div></div>`;
+    document.body.appendChild(ov);
+    state.overlay = { el: ov, kind: 'states' };
+    ov.addEventListener('mousedown', (e) => { if (e.target === ov) closeOverlay(); });
+    ov.addEventListener('click', (e) => { if (e.target.closest('[data-go]')) closeOverlay(); });
+    ov.querySelector('.sx-c.cur')?.scrollIntoView({ block: 'nearest' });
+  }
+
   function pick(x) {
     closeOverlay();
     if (x.art != null) state.artifact[x.go] = x.art;
@@ -1227,7 +1338,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     ov.className = 'overlay';
     const rows = [
       ['<kbd>→</kbd> <kbd>PageDown</kbd>', 'Next step'], ['<kbd>←</kbd> <kbd>PageUp</kbd>', 'Previous step'], ['<kbd>Home</kbd> / <kbd>End</kbd>', 'Start page / where the run ends'],
-      ['<kbd>1</kbd> to <kbd>9</kbd>', 'First step of that stage'], ['<kbd>0</kbd>', 'Start page'], ['<kbd>G</kbd>', 'All steps, to go to any one'],
+      ['<kbd>1</kbd> to <kbd>9</kbd>', 'First step of that stage'], ['<kbd>0</kbd>', 'Start page'], ['<kbd>G</kbd>', 'All steps, to go to any one'], ['<kbd>M</kbd>', 'Every state the run can be in, and where it is now'],
       ['<kbd>S</kbd> <kbd>D</kbd> <kbd>C</kbd>', 'Story, Documents, Commands'], ['<kbd>Esc</kbd>', 'Close this, or go back to the Story'], ['<kbd>R</kbd>', 'Show or hide full detail: file tree, commits, commands'],
       ['<kbd>T</kbd>', 'Light or dark theme (for projectors)'], ['<kbd>F</kbd>', 'Full screen'], ['Browser Back', 'Previous place you visited. Every step has its own link.'],
     ];
@@ -1299,6 +1410,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     }
     const act = t.dataset.act;
     if (act === 'steps') openSteps();
+    if (act === 'states') openStates();
     if (act === 'help') openHelp();
     if (act === 'theme') toggleTheme();
     if (act === 'detail') toggleDetail();
@@ -1325,6 +1437,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     else if (k === 'End') location.hash = 'end';
     else if (k === 'g' || k === 'G' || k === '/') openSteps();
     else if (k === '?') openHelp();
+    else if (k === 'm' || k === 'M') openStates();
     else if (k === 'Escape') setLayer('story');
     else if (k === 's' || k === 'S') setLayer('story');
     else if ('dDeE'.includes(k)) setLayer('evidence');
