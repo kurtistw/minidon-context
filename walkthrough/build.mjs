@@ -338,6 +338,7 @@ for (const c of log) {
     writes: n.writes ?? null,
     commit: { sha: c.sha, short: c.short, date: c.date, author: c.author, tags: tagsBySha[c.sha] ?? [] },
     launch: n.launch ?? null,
+    sum: n.sum ?? null,
     after: n.after ?? null,
     chores: pendingChores,
     track, runState,

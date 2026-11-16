@@ -14,8 +14,8 @@ page, the commands that were run, and the diff.
 
 The page opens in a calm view: each step's story, who did it, the exact commands that
 ran (copyable) split by who ran them, drawn as the app each one happened in: a Claude Code window for the slash command Kurtis typed to start each stage's agents,
-a VS Code window for files a person edited (no command; click one to open it), and a Terminal window for shell commands, with who ran them,
-repeated `millwright transition` calls as one line with the states the run moved through, what it read and wrote, the next human gate, and one line with the real commit. The top bar groups the nine stages into three
+a VS Code window for files a person edited (no command; click one to open it), and a Terminal window for shell commands. Each window's title bar says in plain words who did what ("Kurtis starts the planning agent"),
+repeated `millwright transition` calls as one line with the states the run moved through, what it read and wrote, and one line with the real commit. The top bar groups the nine stages into three
 acts, with a person icon for each human gate (filled once approved); the row under it shows the steps of the current stage. Every step carries a scope label: **Whole rebuild** up to the
 research approval, then **Story 1 of 6: Accounts**. Research pack, Build, and Review and PR steps draw their loop
 in two lanes, agents and Kurtis, with the current step lit and a dashed arc for the way back

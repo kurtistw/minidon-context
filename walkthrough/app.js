@@ -666,9 +666,11 @@
   // of the same stage names the step where it was typed, because nothing new was typed there.
   const CC = () => `<span class="ccn">${icon.claude}Claude Code</span>`;
   // Each action is drawn as the app it happened in: a title bar naming the app and who used it.
+  // A window bar's summary, with the actor at its start in bold: "Kurtis starts the planning agent".
+  const sumText = (t) => esc(t).replace(/^(Kurtis|Claude|[\w-]+-agent|\d+ agents)/, '<b>$1</b>');
   const win = (kind, ico, app, who, body) => `<div class="win ${kind}"><div class="wbar">${ico}<b>${app}</b><span class="who2">${who}</span></div>${body}</div>`;
   function launchRow(s) {
-    if (s.launch) return `<div class="rb">${win('cc', icon.claude, 'Claude Code', '<b>Kurtis</b> typed', `<div class="ran cc"><div class="cl"><code><span class="ln1">${esc(s.launch)}</span></code><button class="tcopy" data-copy="${esc(s.launch)}" title="Copy this command">copy</button></div></div>${s.launch.startsWith('/mw ') ? '<div class="wnote">/mw starts the right agent for the run\'s current state.</div>' : ''}`)}</div>`;
+    if (s.launch) return `<div class="rb">${win('cc', icon.claude, 'Claude Code', s.sum?.cc ? sumText(s.sum.cc) : '<b>Kurtis</b> typed', `<div class="ran cc"><div class="cl"><code><span class="ln1">${esc(s.launch)}</span></code><button class="tcopy" data-copy="${esc(s.launch)}" title="Copy this command">copy</button></div></div>${s.launch.startsWith('/mw ') && !s.sum?.cc ? '<div class="wnote">/mw starts the right agent for the run\'s current state.</div>' : ''}`)}</div>`;
     if (s.kind === 'gate' || s.who.some(isHuman)) return '';
     const ss = stages.filter((x) => x.chapter === s.chapter);
     const from = ss.slice(0, ss.indexOf(s)).reverse().find((x) => x.launch);
@@ -684,7 +686,7 @@
       const k = e.path.lastIndexOf('/');
       return `<button class="ed" data-ide-open="${esc(e.repo)}|${esc(e.path)}" title="Open ${esc(e.path)}"><span class="ei">${icon.pen}</span><span class="en"><span class="e1"><b>${esc(e.path.slice(k + 1))}</b>${e.status ? `<span class="st ${e.status}">${e.status === 'A' ? 'new' : 'changed'}</span>` : ''}</span><span class="ew">${esc(e.what)}</span><span class="ep">in ${esc(e.path.slice(0, k + 1))}</span></span></button>`;
     }).join('');
-    return `<div class="rb">${win('vs', icon.pen, 'VS Code', `<b>Kurtis</b> saved ${s.edits.length === 1 ? 'a file' : `${s.edits.length} files`}`, `<div class="eds">${rows}</div><div class="wnote">Nothing to type: Millwright reads them at the next command.</div>`)}</div>`;
+    return `<div class="rb">${win('vs', icon.pen, 'VS Code', s.sum?.vs ? sumText(s.sum.vs) : `<b>Kurtis</b> saved ${s.edits.length === 1 ? 'a file' : `${s.edits.length} files`}`, `<div class="eds">${rows}</div><div class="wnote">Nothing to type: Millwright reads them at the next command.</div>`)}</div>`;
   }
 
   function ranRow(s) {
@@ -737,12 +739,12 @@
       }).join('');
     };
     const label = (b) => {
-      if (b.person) return launch && s.launch ? 'Claude ran it, as <b>Kurtis</b>' : '<b>Kurtis</b> ran';
+      if (b.person) return launch && s.launch ? `<span class="ccn">${icon.claude}Claude</span> ran these for <b>Kurtis</b>` : '<b>Kurtis</b> ran';
       const names = [...new Set(b.items.map((x) => x.w.name))];
       if (names.length === 1) return `<b>${esc(names[0])}</b> ran`;
       return 'each <b>agent</b> ran this as it finished';
     };
-    return launch + blocks.map((b) => `<div class="rb">${win('tm', icon.term, 'Terminal', label(b), `<div class="ran">${body(b)}</div>`)}</div>`).join('');
+    return launch + blocks.map((b, k) => `<div class="rb">${win('tm', icon.term, 'Terminal', s.sum?.tm?.[k] ? sumText(s.sum.tm[k]) : label(b), `<div class="ran">${body(b)}</div>`)}</div>`).join('');
   }
 
 
@@ -778,11 +780,8 @@
       if (s.reads || used.length) rows += row('Read', `${s.reads ? esc(s.reads) : ''}${chips(used)}`);
       const rc = s.rust?.commits?.length;
       if (s.writes || made.length) rows += row('Wrote', `${s.writes ? `${esc(s.writes)}${rc ? `, in ${rc} commits on story-1-accounts` : ''}` : ''}${chips(made)}`);
-      if (s.kind === 'arrive' || s.kind === 'atgate' || (ng && D.chapters[s.chapter]?.loop?.nodes.some((n) => n.id === ng.id))) {
-        next = '';
-      } else {
-        next = `<div class="fc-next"><span>Next human gate</span>${ng ? go(ng, `${esc(D.gatePlain[ng.gate.state].name)} approval, step ${esc(ng.num)}`) : '<b>A person opens the pull request, reviews it and merges it</b>'}</div>`;
-      }
+      // No "Next human gate" on a step card: the stage bar and step bar already show it.
+      next = '';
     }
     return `<div class="fcard">${who}<div class="fc-body">${rows}</div>${next}</div>`;
   }
@@ -1074,6 +1073,8 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
       }
       return `<div>${meta}${term(x.cmd)}</div>`;
     }).join('');
+    // What was typed or saved outside the terminal comes first, in the same app windows as the Story.
+    const before = (s.edits.length ? editRow(s) : '') + (s.launch ? launchRow(s) : '');
 
     const runs = Object.entries(s.runs);
     const chores = s.chores.map((ch) => `<div class="card" style="margin-top:10px"><div class="small">Also in history just before this step</div>
@@ -1104,7 +1105,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
         ${c.tags.length ? `<dt>Tag</dt><dd>${esc(c.tags.join(', '))}</dd>` : ''}
         <dt>Runs</dt><dd>${runs.length ? runs.map(([id, st]) => `${esc(id)}: ${esc(st)}`).join('<br>') : 'none yet'}</dd>
       </dl></div>${checkout.join('')}${chores}</section>
-      ${cmds ? `<section><h3>Commands</h3><p class="small" style="margin:0 0 4px">Rebuilt from what the run recorded. The kernel checks listed under each move all passed.</p>${cmds}</section>` : ''}
+      ${cmds || before ? `<section><h3>Commands</h3>${before ? `<div class="hood-before">${before}</div>` : ''}${cmds ? `<p class="small" style="margin:0 0 4px">${before ? 'Then, in the terminal, rebuilt' : 'Rebuilt'} from what the run recorded. The kernel checks listed under each move all passed.</p>${cmds}` : ''}</section>` : ''}
       ${rust}
       <section><h3>Files changed in minidon-context <span class="small" style="text-transform:none;letter-spacing:0">${s.files.length} files, +${s.files.reduce((n, f) => n + f.add, 0)} −${s.files.reduce((n, f) => n + f.del, 0)}</span></h3>${fileList(s.files, s.id)}</section>
     </div>`;

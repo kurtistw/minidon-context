@@ -115,6 +115,8 @@ const DEMO = 'Demo assumption: one person (Kurtis) held every role. Several answ
 
 export const steps = {
   '01': {
+    // What each app window in the Commands row did, in plain words (Claude Code, VS Code, then each Terminal block).
+    sum: { tm: ["Kurtis installs Millwright and syncs its agents"] },
     title: 'Install Millwright into a workspace',
     reads: 'The Millwright templates',
     story: ['Millwright is installed into a new, empty workspace that sits next to the legacy code.', 'It adds agents, commands and templates. It does not touch the legacy code.'],
@@ -126,6 +128,7 @@ export const steps = {
     note: 'Two documents were added here as discovery inputs: a meeting transcript and a decision record. In this run both were captured with a broken shell heredoc, and the transcript also held the facilitator answer key. They are shown here as they were. Both have since been repaired, and the answer key moved to walkthrough/answer-key.md, outside what agents read.',
   },
   '02': {
+    sum: { cc: "Kurtis starts the agents that map the old app", tm: ["Claude opens the map run for Kurtis", "5 agents each record a move as they finish"] },
     title: 'Agents map the legacy system',
     focus: { path: '.mw/context/conflicts.md', find: 'CF-001: Status edit window' },
     reads: 'The Python code and its documents (minidon@e1fbd3a)',
@@ -139,6 +142,7 @@ export const steps = {
     note: 'Two of the three planted disagreements came out as conflicts: the 30 versus 60 minute edit window (CF-001) and the half-built lists feature (CF-002). The third did not. The transcript says moderators can suspend anyone, but the code forbids suspending other staff. That rule surfaced only as open question OQ-016, from the code, and the transcript was never cited.',
   },
   '03': {
+    sum: { tm: ["Kurtis resolves 7 conflicts, signs off and approves the map"] },
     title: 'A human approves the map',
     story: ['A person works through all seven conflicts and the open questions, then signs off the map.', 'From here on, this approved map is what "current behaviour" means.'],
     who: ['human'],
@@ -158,6 +162,7 @@ export const steps = {
     note: 'The human-readable report at .mw/context/baseline-review-report.md was never updated after the gate. It still says PENDING. The JSON record is the real decision (and the research phase later said so explicitly).',
   },
   '04': {
+    sum: { vs: "Kurtis writes the ticket and adds the Rust repo" },
     title: 'Write the ticket',
     reads: 'The approved map',
     story: ['A person writes one ticket for the whole rebuild: rebuild minidon in Rust, keep the same behaviour and the same data, add nothing new.', 'It is epic-sized, so at step 10 it is split into six parts, one per area of the map.'],
@@ -168,6 +173,7 @@ export const steps = {
     edits: [['.mw/tickets/REBUILD-MINIDON.md', 'the ticket, written from scratch'], ['millwright.config.yaml', 'adds minidon-rust to project.repos']],
   },
   '05': {
+    sum: { tm: ["Kurtis opens a run for the ticket"] },
     title: 'Open a run for the ticket',
     reads: 'The ticket',
     story: ['Millwright opens a run for the ticket. From now on every move of this work is recorded.'],
@@ -176,6 +182,7 @@ export const steps = {
     artifacts: ['@run/ticket.md', '@run/run.json'],
   },
   '06': {
+    sum: { tm: ["Kurtis sets up the research folder"] },
     title: 'Set up research',
     reads: 'The ticket and the research template',
     story: ['Millwright creates an empty research folder with the questions research must answer.'],
@@ -184,6 +191,7 @@ export const steps = {
     commands: ['millwright research init --run REBUILD-MINIDON'],
   },
   '07': {
+    sum: { tm: ["Kurtis lists what research still needs: 30 gaps"] },
     title: 'Check what we already know',
     reads: 'The approved map and the research folder',
     story: ['Millwright checks the inputs against the approved map and lists the gaps.', 'It finds 30 gaps, 2 of them blocking.'],
@@ -192,6 +200,7 @@ export const steps = {
     artifacts: ['@run/research/gaps.md', '@run/research/inputs.json'],
   },
   '08': {
+    sum: { vs: "Kurtis adds who decides, and today's numbers", tm: ["Kurtis rechecks the gaps: 23 of 30 closed"] },
     title: 'Fill the gaps',
     reads: 'The list of gaps',
     story: ['A person supplies the missing inputs: who decides, and today\'s baseline numbers.', '23 of the 30 gaps are now closed. The two files close one gap each; the approved map already answered the other 21.'],
@@ -201,6 +210,7 @@ export const steps = {
     artifacts: ['@run/research/gaps.md', '@run/research/inputs/decision-makers.md', '@run/research/inputs/baseline-metrics.md'],
   },
   '09': {
+    sum: { tm: ["Kurtis waives 7 gaps, each with a reason, then rechecks"] },
     title: 'Waive what does not apply',
     reads: 'The 7 gaps still open',
     story: ['The last 7 gaps are optional for a lift and shift, so a person waives them, each with a written reason.'],
@@ -210,6 +220,7 @@ export const steps = {
     artifacts: ['@run/research/gaps.md'],
   },
   '10': {
+    sum: { cc: "Kurtis starts the planning agent", tm: ["planning-agent records the split and starts research"] },
     title: 'Split the rebuild, pick part 1',
     reads: 'The approved map',
     story: ['The rebuild is too big for one piece of work, so the planning agent splits it into six parts, one per area of the map. This run builds part 1, Accounts: sign-up, sign-in and profiles (14 rules).', 'The split comes first because it tells the agents which part of the code to read closely. Research still judges the whole rebuild; planning and building then focus on Accounts.'],
@@ -220,6 +231,7 @@ export const steps = {
     artifacts: ['@run/impact.json'],
   },
   '11': {
+    sum: { cc: "Kurtis starts the research agents", tm: ["research-agent records the draft and sends it for review"] },
     title: 'Research agent drafts the pack',
     focus: { path: '@run/research/outcome-brief.md', find: '## The outcome' },
     reads: 'The approved map, the ticket and the inputs',
@@ -239,6 +251,7 @@ export const steps = {
     artifacts: ['@run/research/reviews/research-review-001.md'],
   },
   '13': {
+    sum: { vs: "Kurtis corrects the inputs the review flagged", tm: ["Kurtis saves a snapshot and rechecks the gaps"] },
     title: 'A human corrects the inputs',
     reads: 'The review findings',
     story: ['A person fixes what the review flagged. The decisions made when the map was approved are the final word.'],
@@ -248,6 +261,7 @@ export const steps = {
     note: DEMO,
   },
   '14': {
+    sum: { tm: ["Kurtis snapshots the inputs before each redraft"] },
     title: 'Research agent redrafts',
     reads: 'The corrected inputs and the review',
     story: ['The research agent rewrites the pack from the corrected inputs.'],
@@ -264,6 +278,7 @@ export const steps = {
     artifacts: ['@run/research/reviews/research-review-002.md'],
   },
   '16': {
+    sum: { tm: ["Kurtis snapshots and rechecks after deciding the findings", "3 agents close the estimate, security and flow reviews"] },
     title: 'Security and flow findings decided',
     reads: 'The security and flow reviews',
     story: ['The design and user-flow agents finish their security and flow reviews, and a person accepts their findings into the design.', 'He also decides to copy the newline quirk on purpose, because this is a lift and shift. Fixing it comes later.'],
@@ -272,6 +287,7 @@ export const steps = {
     note: DEMO,
   },
   '17': {
+    sum: { tm: ["research-reviewer-agent hands the pack to Kurtis"] },
     title: 'Research waits for a human',
     reads: 'The reviewed research pack',
     story: ['The run stops at the research gate. Only a person can let it through.'],
@@ -279,6 +295,7 @@ export const steps = {
     artifacts: ['@run/research/outcome-brief.md'],
   },
   '18': {
+    sum: { tm: ["Kurtis approves the research"] },
     title: 'Research approved',
     focus: { path: '@run/research/inputs/human-decisions.md', find: 'parity denominator is' },
     story: ['A person approves the research. Planning can start.'],
@@ -298,6 +315,7 @@ export const steps = {
     },
   },
   '19': {
+    sum: { cc: "Kurtis starts the planning agent", tm: ["planning-agent hands the one-page plan to Kurtis"] },
     title: 'Plan on one page',
     launch: '/mw-plan REBUILD-MINIDON',
     focus: { path: '@run/plan-onepager.md', find: 'Whole epic at a glance' },
@@ -317,6 +335,7 @@ export const steps = {
     note: DEMO,
   },
   '21': {
+    sum: { tm: ["Kurtis approves the plan"] },
     title: 'Plan approved',
     story: ['A person approves the plan. The agents can now write the spec.'],
     who: ['human'],
@@ -335,6 +354,7 @@ export const steps = {
     },
   },
   '22': {
+    sum: { cc: "Kurtis starts the spec, test and design agents", tm: ["3 agents finish in parallel, then the spec waits for Kurtis"] },
     title: 'Spec, tests and design, in parallel',
     reads: 'The approved plan and the rules in the map',
     story: ['Three agents work side by side: one writes the spec, one plans the tests, one writes the design decisions.', 'Every requirement traces back to a rule in the map.'],
@@ -352,6 +372,7 @@ export const steps = {
     note: DEMO,
   },
   '24': {
+    sum: { tm: ["Kurtis approves the spec"] },
     title: 'Ready for development',
     story: ['A person approves the spec and design. Code planning starts.'],
     who: ['human'],
@@ -370,6 +391,7 @@ export const steps = {
     },
   },
   '25': {
+    sum: { cc: "Kurtis starts the code-plan agent", tm: ["code-plan-agent sends the plan for review"] },
     title: 'Plan the code, file by file',
     reads: 'The approved spec, tests and design',
     story: ['An agent plans every file it will write in the Rust repo. It also confirms the Python repo will not change.'],
@@ -378,6 +400,7 @@ export const steps = {
     artifacts: ['@run/repos/minidon-rust/plan.md', '@run/repos/minidon/plan.md'],
   },
   '26': {
+    sum: { cc: "Kurtis starts the next agent: the plan reviewer", tm: ["plan-reviewer-agent hands the plan to Kurtis"] },
     title: 'Another agent reviews the plan',
     focus: { path: '@run/reviews/plan-review-001.md', find: 'Major findings' },
     reads: 'The code plan and the Python code',
@@ -396,6 +419,7 @@ export const steps = {
     note: DEMO,
   },
   '28': {
+    sum: { tm: ["Kurtis approves the code plan"] },
     title: 'Code plan approved',
     story: ['A person approves the plan with its known findings. The build starts.'],
     who: ['human'],
@@ -412,6 +436,7 @@ export const steps = {
     },
   },
   '29': {
+    sum: { cc: "Kurtis starts the coding agent", tm: ["coding-agent runs the tests and records the build"] },
     title: 'Build Accounts in Rust, test first',
     reads: 'The approved code plan and spec',
     story: ['The coding agent builds Accounts in Rust in 28 small steps. It writes each test before the code it tests, and all 292 tests pass.', 'Every behaviour is checked against the running Python app, so both versions give the same answers.'],
@@ -425,6 +450,7 @@ export const steps = {
     rust: true,
   },
   '30': {
+    sum: { cc: "Kurtis starts the next agents: testing, then review", tm: ["2 agents measure coverage, lint, and hand the code to Kurtis"] },
     title: 'Test and independent review',
     focus: { path: '@run/reviews/review-report-001.md', find: 'M-01.' },
     reads: 'The Rust code on story-1-accounts',
@@ -448,6 +474,7 @@ export const steps = {
     note: DEMO,
   },
   '32': {
+    sum: { tm: ["Kurtis approves the code"] },
     title: 'Code approved',
     story: ['A person approves the reviewed code. The run moves to PR_RAISED.', 'Next, an agent writes the pull request.'],
     who: ['human'],
@@ -465,6 +492,7 @@ export const steps = {
     rust: true,
   },
   '33': {
+    sum: { cc: "Kurtis starts the PR agent" },
     title: 'The pull request is written',
     focus: { path: '@run/repos/minidon-rust/pr.json', find: 'oversized' },
     reads: 'The reviewed code and the review report',

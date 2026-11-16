@@ -688,6 +688,8 @@ kbd { display: inline-block; min-width: 1.6em; padding: 0 4px; border: 1px solid
 /* Slash command typed in Claude Code */
 .ccn { display: inline-flex; align-items: center; gap: 4px; color: var(--ink); font-weight: 600; white-space: nowrap; }
 .ccn svg { color: var(--claude); }
+.hood-before { margin: 6px 0 14px; }
+.hood-before .rb + .rb { margin-top: 10px; }
 
 /* Each action as the app it happened in: VS Code, Claude Code, or the terminal */
 .win { border: 1px solid var(--line2); border-radius: 8px; overflow: hidden; background: var(--pane); }
