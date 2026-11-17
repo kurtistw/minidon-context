@@ -55,9 +55,12 @@ What the audience sees on each step:
 - **Human gates** (person icon in the top bar): what the work was, the one question a person
   answered, and what Millwright checked, including that a person decided.
 - **Scope label**: *Whole rebuild* until research is approved, then *Story 1 of 6: Accounts*.
+- **Two diagrams.** Step 07 shows where a team adds context the map can't know (research inputs).
+  Step 25 shows that every story's code plan reads the target repo as it is today; press **What if
+  the target moved on?** to show a mismatch being caught at the code plan gate (an invented example).
 
-Good places to stop: **03** (the first human gate), **08** (a person edits files, no command),
-**11 to 18** (the research loop), **29** (the build and its comparisons with Python), and **33**
+Good places to stop: **03** (the first human gate), **07** (adding your own context), **08** (a person edits files, no command),
+**11 to 18** (the research loop), **25** (the plan reads the target repo), **29** (the build and its comparisons with Python), and **33**
 (what happens to the pull request next).
 
 Be clear with the room that this was a demo run: one person (Kurtis) played every role, and some

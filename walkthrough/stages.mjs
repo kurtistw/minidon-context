@@ -198,6 +198,9 @@ export const steps = {
     who: ['human'],
     numbers: [['30', 'gaps'], ['2', 'blocking']],
     artifacts: ['@run/research/gaps.md', '@run/research/inputs.json'],
+    // Where a team adds context the map cannot know. The 11 research inputs as of the research gate
+    // (research/inputs.json): 4 supplied, 7 waived.
+    fig: { kind: 'context', found: ['Problem', 'Metrics', 'Who decides', 'Architecture'], waived: ['Incidents', 'Compliance', 'User evidence', 'Delivery history', 'Design', 'Competitors', 'Spikes'] },
   },
   '08': {
     sum: { vs: "Kurtis adds who decides, and today's numbers", tm: ["Kurtis rechecks the gaps: 23 of 30 closed"] },
@@ -398,6 +401,9 @@ export const steps = {
     who: ['code-plan-agent'],
     launch: '/mw-code-plan REBUILD-MINIDON',
     artifacts: ['@run/repos/minidon-rust/plan.md', '@run/repos/minidon/plan.md'],
+    // Every story's plan reads the target repo as it is today. plan.md section 1: "The repository is empty and new".
+    fig: { kind: 'target' },
+    targetRead: 'minidon-rust as it is today (empty)',
   },
   '26': {
     sum: { cc: "Kurtis starts the next agent: the plan reviewer", tm: ["plan-reviewer-agent hands the plan to Kurtis"] },
@@ -445,6 +451,7 @@ export const steps = {
     numbers: [['475', 'of 576 comparisons match Python exactly'], ['75', 'differ as agreed beforehand'], ['26', 'new: the agent stopped and Kurtis decided']],
     writes: 'Rust code and tests',
     milestone: 'Accounts built in Rust',
+    targetRead: 'minidon-rust as it is today',
     artifacts: ['@run/build/wave-0-1.md', '@run/build/wave-2-3.md', '@run/build/wave-4-5.md', '@run/build/wave-6.md', 'rust:src/accounts/validate.rs', 'rust:CRATES.md'],
     commands: ['nix develop -c cargo test', 'COMPAT_PYTHON_ONLY=1 nix develop -c cargo test --test compat_accounts'],
     rust: true,

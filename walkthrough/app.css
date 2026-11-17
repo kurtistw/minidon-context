@@ -22,6 +22,8 @@
   --del-bg: rgba(170, 50, 40, 0.07);
   --agent: #2f6a4c;
   --claude: #b9532f;
+  --tgt: #3d6d96;
+  --tgt-bg: #edf2f7;
   --claude-bg: #fbf0ea;
   --claude-line: #efd5c7;
   --dark: #1f1d1a;
@@ -37,7 +39,7 @@
   --ink: #ededee; --ink2: #cfcfd2; --muted: #a3a3aa; --faint: #8c8c94; --line: #2a2a2e; --line2: #38383d; --dot: #3c3c42;
   --accent: #f07a4a; --accent-soft: rgba(240, 122, 74, 0.15);
   --add: #6fd197; --add-bg: rgba(111, 209, 151, 0.08); --mod: #e0bd6a; --mod-bg: rgba(224, 189, 106, 0.08); --del: #f1998f; --del-bg: rgba(241, 153, 143, 0.08);
-  --agent: #8cc5a2; --claude: #ec9a79; --claude-bg: rgba(236, 154, 121, 0.1); --claude-line: rgba(236, 154, 121, 0.28); --dark: #ededee; --dark-ink: #161616; --dark-muted: #55555b; --shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+  --agent: #8cc5a2; --tgt: #8db4d8; --tgt-bg: rgba(141, 180, 216, 0.1); --claude: #ec9a79; --claude-bg: rgba(236, 154, 121, 0.1); --claude-line: rgba(236, 154, 121, 0.28); --dark: #ededee; --dark-ink: #161616; --dark-muted: #55555b; --shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
   color-scheme: dark;
 }
 
@@ -807,3 +809,31 @@ kbd { display: inline-block; min-width: 1.6em; padding: 0 4px; border: 1px solid
 .af-r b { font-weight: 600; }
 .af-r.ok b { color: var(--agent); } .af-r.back b { color: var(--accent); }
 .cch { color: var(--faint); font-size: 12px; }
+
+/* Step diagrams: your own context (07), and what every code plan reads (25) */
+.fig { margin: 2px 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--pane); padding: 12px 12px 10px; }
+.fig svg { display: block; width: 100%; height: auto; font-family: var(--sans); }
+.fg-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: var(--faint); }
+.fg-cap { font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 6px; text-wrap: pretty; }
+.fg-cap b { color: var(--ink); font-weight: 600; }
+.fg-box { fill: var(--bg); stroke: var(--line2); }
+.fg-box.t { fill: var(--tgt-bg); stroke: var(--tgt); }
+.fg-box.t.bad { fill: var(--accent-soft); stroke: var(--accent); }
+.fg-box.a { fill: var(--pane); stroke: var(--agent); }
+.fg-box.u { fill: var(--pane); stroke: var(--faint); stroke-dasharray: 4 3; }
+.fg-ti { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.fg-ti.t { fill: var(--tgt); } .fg-ti.bad { fill: var(--accent); } .fg-ti.a { fill: var(--agent); }
+.fg-su { font-size: 11px; fill: var(--muted); }
+.fg-su.m { font-family: var(--mono); font-size: 10.5px; }
+.fg-ln { stroke: var(--line2); stroke-width: 1.5; fill: none; }
+.fg-ln.t { stroke: var(--tgt); } .fg-ln.bad { stroke: var(--accent); }
+.fg-ah { fill: var(--line2); } .fg-ah.t { fill: var(--tgt); } .fg-ah.bad { fill: var(--accent); }
+.fg-flag { fill: var(--accent); font-size: 11px; font-weight: 600; }
+.fg-slot { fill: none; stroke: var(--faint); stroke-dasharray: 3 2; }
+.fg-slot.f { fill: var(--add-bg); stroke: var(--add); stroke-dasharray: none; }
+.fg-sl { font-size: 10.5px; fill: var(--ink2); } .fg-sl.w { fill: var(--muted); }
+.fg-tog { border: 1px solid var(--line2); background: var(--pane); border-radius: 999px; padding: 2px 10px; font: 12px var(--sans); color: var(--ink2); cursor: pointer; }
+.fg-tog:hover { color: var(--accent); }
+.fg-tog[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.fchip.tgt { border-color: var(--tgt); color: var(--tgt); background: var(--tgt-bg); cursor: default; }
+.fchip.tgt:hover { color: var(--tgt); border-color: var(--tgt); }

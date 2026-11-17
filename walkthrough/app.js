@@ -8,7 +8,7 @@
   const byId = Object.fromEntries(pages.map((p, i) => [p.id, i]));
   const app = document.getElementById('app');
 
-  const state = { cmdOpen: new Set(), vsOpen: new Set(), detail: false, page: 0, layer: 'story', artifact: {}, artView: {}, openFiles: new Set(), overlay: null, ide: {}, scrollTree: false, treeMode: 'changes' };
+  const state = { figBad: false, cmdOpen: new Set(), vsOpen: new Set(), detail: false, page: 0, layer: 'story', artifact: {}, artView: {}, openFiles: new Set(), overlay: null, ide: {}, scrollTree: false, treeMode: 'changes' };
 
   // ---------------------------------------------------------------- helpers
 
@@ -777,7 +777,8 @@
       if (s.edits.length) rows += row('Edited', editRow(s));
       const ran = ranRow(s);
       if (ran) rows += row('Commands', ran);
-      if (s.reads || used.length) rows += row('Read', `${s.reads ? esc(s.reads) : ''}${chips(used)}`);
+      const tgt = s.targetRead ? `<div class="fchips"><span class="fchip tgt" title="The target repo is read as it is today, fresh for every story">${esc(s.targetRead)}</span></div>` : '';
+      if (s.reads || used.length || tgt) rows += row('Read', `${s.reads ? esc(s.reads) : ''}${tgt}${chips(used)}`);
       const rc = s.rust?.commits?.length;
       if (s.writes || made.length) rows += row('Wrote', `${s.writes ? `${esc(s.writes)}${rc ? `, in ${rc} commits on story-1-accounts` : ''}` : ''}${chips(made)}`);
       // No "Next human gate" on a step card: the stage bar and step bar already show it.
@@ -837,6 +838,41 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
 
   // The research loop as two lanes, agents above and Kurtis below, so the back and forth can be
   // pointed at. Each node is a step; the current one is lit, and a step that waits lights the next.
+  // One small diagram for an idea that first matters on this step: where a team adds its own
+  // context (step 07), and what every story's code plan reads, the target repo included (step 25).
+  function figVis(s) {
+    const f = s.fig;
+    if (!f) return '';
+    const arrow = (x1, y1, x2, y2, c = '') => `<path class="fg-ln ${c}" d="M${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2 - 6} ${y2}"/><path class="fg-ah ${c}" d="M${x2} ${y2} l-7 -4 v8 z"/>`;
+    const box = (cls, x, y, w, h) => `<rect class="fg-box ${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="8"/>`;
+    const txt = (cls, x, y, t, mid) => `<text class="${cls}" x="${x}" y="${y}"${mid ? ' text-anchor="middle"' : ''}>${esc(t)}</text>`;
+    if (f.kind === 'context') {
+      const slots = [...f.found.map((n) => [n, 1]), ...f.waived.map((n) => [n, 0])];
+      const cells = slots.map(([n, ok], i) => {
+        const x = 12 + (i % 4) * 106, y = 92 + Math.floor(i / 4) * 28;
+        return `<rect class="fg-slot ${ok ? 'f' : ''}" x="${x}" y="${y}" width="100" height="22" rx="11"/>${txt(`fg-sl ${ok ? '' : 'w'}`, x + 50, y + 15, n, 1)}`;
+      }).join('');
+      return `<div class="fig"><svg viewBox="0 0 600 182" role="img" aria-label="The map and your own context both feed research">
+        ${box('', 0, 0, 200, 46)}${txt('fg-ti', 12, 20, 'The map')}${txt('fg-su', 12, 36, 'what the old code says, from discovery')}
+        ${box('u', 0, 60, 436, 120)}${txt('fg-ti', 12, 80, '+ Your context')}${txt('fg-su m', 112, 80, 'research/inputs/')}${cells}
+        ${box('a', 496, 66, 104, 44)}${txt('fg-ti a', 548, 93, 'Research', 1)}
+        ${arrow(200, 23, 496, 80)}${arrow(436, 120, 496, 96)}</svg>
+        <div class="fg-cap"><b>The map only knows the code.</b> Incidents, compliance rules and user research go in here: save a file named after the input, then rescan. Green was supplied in this run, dashed was waived.</div></div>`;
+    }
+    const b = state.figBad;
+    return `<div class="fig"><div class="fg-h"><span>What the plan is drafted from, for every story</span><button class="fg-tog" data-fig aria-pressed="${b}">${b ? 'Example on: the target moved on' : 'What if the target moved on?'}</button></div>
+      <svg viewBox="0 0 600 176" role="img" aria-label="The map, the research and spec, and the target repo feed the code plan">
+        ${box('', 0, 0, 176, 46)}${txt('fg-ti', 12, 20, 'The map')}${txt('fg-su', 12, 36, b ? 'old app: SQLite' : 'how the old app behaves')}
+        ${box('', 0, 62, 176, 46)}${txt('fg-ti', 12, 82, 'Research and spec')}${txt('fg-su', 12, 98, 'this story\'s rules and tests')}
+        ${box(b ? 't bad' : 't', 0, 124, 176, 46)}${txt(`fg-ti ${b ? 'bad' : 't'}`, 12, 144, 'The target repo, today')}${txt('fg-su', 12, 160, b ? 'ADR-007: Postgres' : 'minidon-rust: empty in story 1')}
+        ${arrow(176, 23, 268, 76)}${arrow(176, 85, 268, 86)}${arrow(176, 147, 268, 96, b ? 'bad' : 't')}
+        ${box('a', 268, 62, 130, 48)}${txt('fg-ti a', 333, 83, 'Code plan', 1)}${txt('fg-su', 333, 99, 'file by file', 1)}
+        ${arrow(398, 86, 470, 86, b ? 'bad' : '')}
+        ${box('', 470, 62, 130, 48)}${txt('fg-ti', 535, 83, 'Review, then you', 1)}${txt('fg-su', 535, 99, 'code plan gate', 1)}
+        ${b ? `${txt('fg-flag', 535, 132, '⚠ Map and target differ', 1)}${txt('fg-su', 535, 148, 'a person decides here', 1)}` : ''}</svg>
+      <div class="fg-cap">${b ? '<b>Caught at the plan, not at release.</b> The map is not rewritten. The plan follows the target, the review flags the difference, and a person decides at the gate. <span class="faint">Invented example.</span>' : '<b>Read fresh for every story.</b> Story 2 plans against story 1\'s code. If the target changes, nothing upstream needs redoing.'}</div></div>`;
+  }
+
   function loopVis(s) {
     const loop = D.chapters[s.chapter]?.loop;
     if (!loop) return '';
@@ -888,7 +924,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
       <div class="vb-top"><div class="eyebrow">${eyebrow}</div>
       <h1 class="h1">${esc(s.title)}</h1>
       ${gate ? '' : `<div class="vb-story">${s.story.map((p) => `<p>${gloss(p)}</p>`).join('')}</div>`}
-      ${gate ? '' : nums(s, 3)}${afterPr(s)}${loopVis(s)}${body}${s.aside ? `<div class="vb-aside"><b>Worth knowing</b><span>${esc(s.aside)}</span></div>` : ''}${proofLine(s)}</div>
+      ${gate ? '' : nums(s, 3)}${afterPr(s)}${figVis(s)}${loopVis(s)}${body}${s.aside ? `<div class="vb-aside"><b>Worth knowing</b><span>${esc(s.aside)}</span></div>` : ''}${proofLine(s)}</div>
       <div class="vb-bottom">${state.detail ? `<div class="vb-row"><span></span>${moreLinks()}</div>` : ''}</div></div>`;
   }
 
@@ -1372,9 +1408,10 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
   // ---------------------------------------------------------------- events
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-cmd],[data-go],[data-act],[data-layer],[data-art],[data-view],[data-file],[data-copy],[data-tree],[data-pick],[data-repo],[data-ide-tab],[data-ide-open],[data-tree-mode]');
+    const t = e.target.closest('[data-fig],[data-cmd],[data-go],[data-act],[data-layer],[data-art],[data-view],[data-file],[data-copy],[data-tree],[data-pick],[data-repo],[data-ide-tab],[data-ide-open],[data-tree-mode]');
     if (!t) return;
     if (t.dataset.copy != null) return copy(t.dataset.copy, t);
+    if (t.dataset.fig != null) { state.figBad = !state.figBad; rerenderLayer(); return document.querySelector('[data-fig]')?.focus(); }
     if (t.dataset.cmd) { state.cmdOpen.has(t.dataset.cmd) ? state.cmdOpen.delete(t.dataset.cmd) : state.cmdOpen.add(t.dataset.cmd); return rerenderLayer(); }
     if (t.dataset.go) return go(t.dataset.go);
     if (t.dataset.layer) return setLayer(t.dataset.layer);
