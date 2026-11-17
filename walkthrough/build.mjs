@@ -43,7 +43,10 @@ function git(dir, gitArgs, { allowFail = false } = {}) {
 const configText = readFileSync(path.join(repo, 'millwright.config.yaml'), 'utf8');
 const configRepos = [...configText.matchAll(/- name:\s*(\S+)\s*\n\s*path:\s*(\S+)\s*\n\s*role:\s*(\S+)/g)]
   .map(([, name, p, role]) => ({ name, path: p, role }));
-const rustDir = path.resolve(opt('rust', configRepos.find((r) => r.name === 'minidon-rust')?.path ?? path.join(repo, '..', 'minidon-rust')));
+// The config holds absolute paths from the machine the run was made on. On any other machine,
+// use the clone next to this repo.
+const configRust = configRepos.find((r) => r.name === 'minidon-rust')?.path;
+const rustDir = path.resolve(opt('rust', configRust && existsSync(path.join(configRust, '.git')) ? configRust : path.join(repo, '..', 'minidon-rust')));
 const hasRust = existsSync(path.join(rustDir, '.git'));
 if (!hasRust) warn(`minidon-rust not found at ${rustDir}; code stages will have no Rust commits`);
 

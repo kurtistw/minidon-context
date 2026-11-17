@@ -1,65 +1,105 @@
 # minidon-context
 
-A worked example of a Millwright run, for onboarding teams to the harness. A small Python app,
-minidon, is mapped by agents, approved by a human, and the first of its six parts (Accounts) is
-rebuilt in Rust.
+A worked example of a real Millwright run, used to onboard teams to the harness. Agents map a
+small Python app (minidon), a person approves the map, and part 1 of 6 (Accounts) is rebuilt in
+Rust. The walkthrough page replays the run step by step, one step per commit.
 
-**Start here: open [walkthrough/index.html](walkthrough/index.html) in a browser.** It is one
-self-contained file and needs no server. Each of the 33 steps is one real commit in this repo, with
-the same number (`10 - ...` is step 10). The
-left side tells the story of the step and draws it as a flow: what was read, who did the work
-(an agent or a person), what was written, and the next human decision. The right side shows the repository right after that
-commit: the file tree with new files in green and changed ones in yellow, any file as a readable
-page, the commands that were run, and the diff.
+## Run the walkthrough
 
-The page opens in a calm view: each step's story, who did it, the exact commands that
-ran (copyable) split by who ran them, drawn as the app each one happened in: a Claude Code window for the slash command Kurtis typed to start each stage's agents,
-a VS Code window for files a person edited (no command; click one to open it), and a Terminal window for shell commands. Each window's title bar says in plain words who did what ("Kurtis starts the planning agent"),
-repeated `millwright transition` calls as one line with the states the run moved through, what it read and wrote, and one line with the real commit. The top bar groups the nine stages into three
-acts, with a person icon for each human gate (filled once approved); the row under it shows the steps of the current stage. Every step carries a scope label: **Whole rebuild** up to the
-research approval, then **Story 1 of 6: Accounts**. Research pack, Build, and Review and PR steps draw their loop
-in two lanes, agents and Kurtis, with the current step lit and a dashed arc for the way back
-(another review round, or a rejection at the gate). The last step also shows what happens to the pull request next: merged, or
-back round the review loop with fixes. A human gate step shows three bands: the work done
-since the last gate (by agents and by Kurtis), the one question a person answers (with what they read and what they decided), and what Millwright checks. **Full detail**
-(top bar, or `R`) adds the file tree, the commit footer, the gate as it ran in the terminal with every check, and the Commands tab for developers. Each step that points at a document opens it at the passage that matters, with an Open repo in VS
-Code button: it opens the whole repository first, then the file at that passage. **Run states** (next to the scope label, or `M`)
-opens every state the run can be in, grouped by stage, with how many each stage has, the step that entered each one, and
-where the run is after this step. It stays hidden until you open it.
+You need git, Node 18 or newer, a browser, and read access to the three repos. VS Code is
+optional (for the "Open in VS Code" buttons).
 
-Keys: arrows to step, `1`-`9` to jump to a stage, `G` (or the All steps button) to see every step and click one, `M` for the run states, `S` / `D` / `C` for the Story,
-Documents and Commands tabs, `R` for full detail, `T` for the theme, `F` for full screen, and `?` for how the page works and all keys.
+```sh
+mkdir millwright-demo && cd millwright-demo
+git clone git@github.com:kurtistw/minidon.git
+git clone git@github.com:kurtistw/minidon-context.git
+git clone git@github.com:kurtistw/minidon-rust.git
+git -C minidon-rust switch story-1-accounts
+cd minidon-context
+node walkthrough/build.mjs
+open walkthrough/index.html
+```
 
-## The three repositories
+The build should end with `33 steps ... 28 Rust commits ... 0 warning(s)`. Always build once after
+cloning: the committed page points its file links and VS Code buttons at the author's machine,
+and the build repoints them at your clones. The page is one self-contained file, so no server is
+needed, and it works offline. On Windows or Linux, open the file in a browser instead of using `open`.
+
+## Presenting it
+
+The left side tells what happened at the step. The right side shows the repository right after
+that step's commit: the file tree, any file as a readable page, and the diff.
+
+| Do this | How |
+|---|---|
+| Next or previous step | Arrow keys, or the links at the bottom |
+| Jump to a stage | `1` to `9`, or click it in the top bar |
+| See every step and pick one | `G`, or **All steps** |
+| Show every state the run can be in, and where it is now | `M`, or **Run states** next to the scope label |
+| Show the developer view (file tree, Commands tab, every check) | `R`, or **Full detail** |
+| Story, Documents and Commands tabs | `S`, `D`, `C` |
+| Light or dark theme (dark suits projectors) | `T` |
+| Full screen | `F` |
+| How the page works, and all keys | `?` |
+
+What the audience sees on each step:
+
+- **Who did it**: an agent or a person.
+- **Commands**, drawn as the app they happened in: a Claude Code window for the slash command
+  that started the agents, a VS Code window for files a person edited, and a Terminal window for
+  shell commands. Each title bar says in plain words who did what. Repeated
+  `millwright transition` calls collapse into one line; **show all** opens them.
+- **Read** and **Wrote**: click a document to open it on the right.
+- **The loop** on Research pack, Build, and Review and PR: draft, review, correct, and round
+  again until a person approves.
+- **Human gates** (person icon in the top bar): what the work was, the one question a person
+  answered, and what Millwright checked, including that a person decided.
+- **Scope label**: *Whole rebuild* until research is approved, then *Story 1 of 6: Accounts*.
+
+Good places to stop: **03** (the first human gate), **08** (a person edits files, no command),
+**11 to 18** (the research loop), **29** (the build and its comparisons with Python), and **33**
+(what happens to the pull request next).
+
+Be clear with the room that this was a demo run: one person (Kurtis) played every role, and some
+answers were drafted by an agent in his name. The page marks these as demo assumptions.
+Facilitator notes on the planted discovery traps are in
+[walkthrough/answer-key.md](walkthrough/answer-key.md). Don't show them before the discovery
+steps.
+
+## The repositories
 
 | Repository | Role |
 |---|---|
-| [minidon](https://github.com/kurtistw/minidon) | The legacy Python app. Read only, never changed by the run. |
-| minidon-context (this repo) | The Millwright workspace: the map, the run, every review and decision, one commit per step. |
-| [minidon-rust](https://github.com/kurtistw/minidon-rust) | The Rust rebuild. Part 1 (Accounts) is on branch `story-1-accounts`, ready to raise as a PR into `main`. |
+| [minidon](https://github.com/kurtistw/minidon) | The legacy Python app. Read only. The run never changes it. |
+| minidon-context (this repo) | The Millwright workspace: the map, the run, every review and decision. |
+| [minidon-rust](https://github.com/kurtistw/minidon-rust) | The Rust rebuild. Part 1 (Accounts) is on branch `story-1-accounts`. |
 
-Clone all three side by side, in one folder. The walkthrough reads `../minidon-rust` for the
-build stages, and `millwright.config.yaml` lists the repo paths.
+Where the run stands:
 
-## Where the run is
+- Run `REBUILD-MINIDON` is at `PR_RAISED`. Part 1 is built, reviewed, and approved at the code
+  approval gate.
+- The pull request description is in `.mw/runs/REBUILD-MINIDON/repos/minidon-rust/pr.json`. The
+  PR itself has not been opened. A person opens, reviews and merges it, then release approval
+  follows.
 
-- Run `REBUILD-MINIDON` is at `PR_RAISED`: part 1 of 6 is built, reviewed and approved at the code approval gate.
-- Millwright wrote the pull request description in
-  `.mw/runs/REBUILD-MINIDON/repos/minidon-rust/pr.json`. No pull request has been opened yet.
-  Reviewing and merging it is a human decision, and the release approval comes after that.
-- Every step commit is named `NN - activity: what happened` (`01 - ...` to `33 - ...`). Tags
-  `stage-01` to `stage-03` mark discovery. Commits without that pattern, such as
-  `38 - add walkthrough site` and `add walkthrough`, only add the walkthrough and are not steps.
-- `git checkout <sha>` shows the workspace as it was after that step. Older snapshots do not
-  contain `walkthrough/`, so run `git checkout main` to come back.
+How the history maps to the page:
 
-## Rebuilding the walkthrough
+- Commits `01 - ...` to `33 - ...` are the steps, and commit N is step N. Tags `stage-01` to
+  `stage-03` mark discovery.
+- Other commits (`chore - ...`, `38 - add walkthrough site`, `Walkthrough: ...`) change tooling or
+  this page, and are not steps.
+- `git checkout <sha>` shows the workspace after that step. Old snapshots have no
+  `walkthrough/` folder, so run `git checkout main` to come back.
 
-```sh
-node walkthrough/build.mjs
-```
+## Changing the walkthrough
 
-Needs Node 18+ and git, nothing else. It reads the git history of this repo and of
-`../minidon-rust` (or `--rust <path>`). The plain-language text and the gate decisions are in
-`walkthrough/stages.mjs`. Facilitator notes on the planted discovery traps are in
-`walkthrough/answer-key.md`.
+| File | Holds |
+|---|---|
+| `walkthrough/stages.mjs` | All the wording: stages and loops, and for each step its story, window summaries (`sum`), edited files (`edits`), slash command (`launch`) and gate decisions |
+| `walkthrough/build.mjs` | Reads git and the run ledger, writes `index.html` |
+| `walkthrough/app.js`, `app.css` | How the page renders |
+
+After any change, run `node walkthrough/build.mjs` and commit `index.html` with it. The build warns
+when the wording disagrees with git, for example a step that claims to edit a file its commit
+never touched. Keep it at 0 warnings. Use `--rust <path>` if minidon-rust is not next to this
+repo.
