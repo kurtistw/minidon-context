@@ -422,11 +422,21 @@ const facts = {
   } : null,
 };
 
+// Every workshop beat's proof must be a real step.
+for (const b of N.workshop.beats) {
+  for (const n of [...b.proof, ...(b.from ? [b.from] : [])]) if (!N.steps[n]) warn(`workshop beat ${b.key} names step ${n}, which does not exist`);
+  // A beat that quotes the run names where the words come from; they must still be there.
+  for (const [p, text] of b.checks ?? []) {
+    const body = git(repo, ['show', `${ref}:${p}`], { allowFail: true });
+    if (!body?.includes(text)) warn(`workshop beat ${b.key} quotes "${text}", which is not in ${p}`);
+  }
+}
+
 const data = {
   generated: new Date().toISOString(),
   repo: { path: repo, ref, branch: ref === 'HEAD' ? git(repo, ['rev-parse', '--abbrev-ref', 'HEAD']).trim() : ref, head: git(repo, ['rev-parse', '--short', ref]).trim() },
   rustRepo: hasRust ? { path: rustDir, head: rustHead.slice(0, 7) } : null,
-  intro: N.intro, outro: N.outro, glossary: N.glossary, gatePlain: N.gatePlain, stateWords: N.stateWords, agentRoles: N.agentRoles, chapters: N.chapters.map(({ steps, loop, ...c }) => ({ ...c, loop: loop && { ...loop, nodes: loop.nodes.map(([num, label]) => ({ id: idOf(num), label })) } })), scopes: N.scopes, tracks: N.tracks, gateNames: N.gateNames,
+  workshop: N.workshop, intro: N.intro, outro: N.outro, glossary: N.glossary, gatePlain: N.gatePlain, stateWords: N.stateWords, agentRoles: N.agentRoles, chapters: N.chapters.map(({ steps, loop, ...c }) => ({ ...c, loop: loop && { ...loop, nodes: loop.nodes.map(([num, label]) => ({ id: idOf(num), label })) } })), scopes: N.scopes, tracks: N.tracks, gateNames: N.gateNames,
   stages, facts, warnings, paths: allPaths,
   rustTree: hasRust ? {
     paths: git(rustDir, ['ls-tree', '-r', '--name-only', rustHead]).trim().split('\n').filter(Boolean),

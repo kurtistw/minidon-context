@@ -4,11 +4,14 @@
 
   const D = JSON.parse(document.getElementById('wt-data').textContent);
   const stages = D.stages;
-  const pages = [{ id: 'start', type: 'start' }, ...stages.map((s, i) => ({ id: s.id, type: 'stage', stage: s, index: i })), { id: 'end', type: 'end' }];
+  // The workshop beats come first: they are what the room sees. The 33 steps follow as the proof.
+  const W = D.workshop;
+  const beats = W.beats.map((b, i) => ({ id: `w-${b.key}`, type: 'beat', beat: b, index: i }));
+  const pages = [...beats, { id: 'start', type: 'start' }, ...stages.map((s, i) => ({ id: s.id, type: 'stage', stage: s, index: i })), { id: 'end', type: 'end' }];
   const byId = Object.fromEntries(pages.map((p, i) => [p.id, i]));
   const app = document.getElementById('app');
 
-  const state = { figBad: false, cmdOpen: new Set(), vsOpen: new Set(), detail: false, page: 0, layer: 'story', artifact: {}, artView: {}, openFiles: new Set(), overlay: null, ide: {}, scrollTree: false, treeMode: 'changes' };
+  const state = { rev: {}, notes: false, figBad: false, cmdOpen: new Set(), vsOpen: new Set(), detail: false, page: 0, layer: 'story', artifact: {}, artView: {}, openFiles: new Set(), overlay: null, ide: {}, scrollTree: false, treeMode: 'changes' };
 
   // ---------------------------------------------------------------- helpers
 
@@ -49,9 +52,11 @@
   function frame() {
     app.innerHTML = `
       <header class="top">
-        <div class="brand" data-go="start"><span class="mark">${icon.mark}</span><span class="word">Millwright</span></div>
+        <div class="brand" data-go="${beats[0].id}"><span class="mark">${icon.mark}</span><span class="word">Millwright</span></div>
         <div class="crumbs" id="crumbs"></div>
         <div class="spacer"></div>
+        <button class="tbtn" data-act="workshop" id="wsbtn" title="The workshop: 11 beats in 45 minutes">Workshop</button>
+        <button class="tbtn" data-act="notes" id="notesbtn" title="Show what to say and what the room does. Keep it off the projector.">Presenter notes</button>
         <button class="tbtn" data-act="steps" title="Every step on one page. Press G.">All steps</button>
         <button class="tbtn" data-act="detail" id="detailbtn" title="Show or hide the file tree, commits and commands"><span>Full detail</span></button>
         <button class="tbtn q" data-act="help" title="How this page works">?</button>
@@ -71,6 +76,10 @@
   // gate in a stage. The second shows the current stage: one tick per step, and the steps either side.
   function renderTimeline() {
     const cur = pages[state.page];
+    document.getElementById('wsbtn').classList.toggle('on', cur.type === 'beat');
+    document.getElementById('notesbtn').hidden = cur.type !== 'beat';
+    document.getElementById('notesbtn').classList.toggle('on', state.notes);
+    if (cur.type === 'beat') { document.getElementById('timeline').innerHTML = arcNav(cur.beat); renderCrumbs(); return; }
     const curStage = cur.type === 'stage' ? cur.stage : null;
     const curIdx = curStage ? stages.indexOf(curStage) : cur.type === 'end' ? stages.length : -1;
     const dia = (on, st) => `<i class="dia ${on ? 'f' : ''}" data-tip="Human gate ${ORDER.indexOf(st) + 1} of ${ORDER.length}${on ? ' · approved' : ''}|${esc(D.gatePlain[st].q)}"></i>`;
@@ -116,6 +125,12 @@
     const p = pages[state.page];
     const prev = pages[state.page - 1];
     const next = pages[state.page + 1];
+    if (p.type === 'beat') {
+      const pb = beats[p.index - 1], nb = beats[p.index + 1];
+      const b = (x, dir) => x ? `<button class="nav ${dir}" data-go="${x.id}">${dir === 'prev' ? '← ' : ''}${esc(x.beat.title)}${dir === 'next' ? ' →' : ''}</button>` : '<span class="nav empty"></span>';
+      document.getElementById('foot').innerHTML = `${b(pb, 'prev')}<span class="mid wmid">Beat ${p.index + 1} of ${beats.length} · minute ${p.beat.min} of ${W.minutes}</span>${nb ? b(nb, 'next') : '<button class="nav next" data-go="start">All 33 steps →</button>'}`;
+      return;
+    }
     const label = (x) => x.type === 'start' ? ['', 'Start'] : x.type === 'end' ? ['', 'Where the run ends'] : [x.stage.num, x.stage.title];
     const btn = (x, dir) => {
       if (!x) return '<span class="nav empty"></span>';
@@ -1147,6 +1162,90 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     </div>`;
   }
 
+  // ---------------------------------------------------------------- workshop
+
+  const stageByNum = (n) => stages.find((s) => s.num === n);
+  // The beat a step belongs to, for "Back to the workshop" from a step page.
+  const beatForStage = (s) => beats.find((x) => x.beat.proof.includes(s.num)) ?? beats[0];
+
+  // The story arc: each beat higher for "what could be", lower for "what is". A dot under a beat
+  // means the room does something there.
+  function arcNav(cur) {
+    const B = W.beats, Wd = 1000;
+    const x = (i) => 40 + i * ((Wd - 80) / (B.length - 1)), y = (lv) => 72 - lv * 22;
+    const pts = B.map((b, i) => [x(i), y(b.lv)]);
+    let d = `M${pts[0][0]} ${pts[0][1]}`;
+    for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], m = (x0 + x1) / 2; d += ` C ${m} ${y0}, ${m} ${y1}, ${x1} ${y1}`; }
+    const acts = [];
+    B.forEach((b, i) => { const a = acts[acts.length - 1]; if (a && a.n === b.act) a.to = i; else acts.push({ n: b.act, from: i, to: i }); });
+    const bands = acts.map((a, k) => { const x0 = x(a.from) - 26, x1 = x(a.to) + 26; return `${k % 2 ? `<rect class="wb" x="${x0}" y="2" width="${x1 - x0}" height="110" rx="8"/>` : ''}<text class="wl" x="${x0 + 8}" y="16">${esc(a.n)}</text>`; }).join('');
+    const dots = B.map((b, i) => {
+      const on = b === cur, past = B.indexOf(cur) > i;
+      return `<g class="wd ${on ? 'on' : ''}${past ? ' past' : ''}" data-go="w-${b.key}" role="button" tabindex="0"><title>${i + 1}. ${esc(b.title)}</title><rect class="hit" x="${x(i) - 26}" y="2" width="52" height="110"/>
+        <circle class="d" cx="${x(i)}" cy="${y(b.lv)}" r="${on ? 7 : 5}"/>${b.room ? `<circle class="rm" cx="${x(i)}" cy="${y(b.lv) + 15}" r="3"/>` : ''}
+        <text class="wt" x="${x(i)}" y="106" text-anchor="middle">${on ? esc(b.title) : `${b.min}′`}</text></g>`;
+    }).join('');
+    return `<div class="warc"><svg viewBox="0 0 ${Wd} 114" role="group" aria-label="The workshop as a story arc">${bands}<path class="wp" d="${d}"/>${dots}</svg>
+      <div class="wkey"><span><i class="k1"></i>higher: what could be · lower: what is</span><span><i class="k2"></i>the room does something</span></div></div>`;
+  }
+
+  function renderBeat(b) {
+    const r = !!state.rev[b.key];
+    const reveal = (label) => `<button class="w-rev" data-rev="${b.key}">${esc(label ?? b.revealLabel ?? 'Reveal')}</button>`;
+    let body = '';
+    if (b.kind === 'promise') {
+      body = `<h2 class="w-h">${esc(b.head)}</h2><div class="w-tiles">${b.items.map((t, i) => `<div class="w-tile"><span class="n">${i + 1}</span><b>${esc(t)}</b></div>`).join('')}</div>`;
+    } else if (b.kind === 'prompt') {
+      body = `<h2 class="w-h big">${esc(b.head)}</h2>`;
+    } else if (b.kind === 'ticket') {
+      const q = b.quote.map((l) => esc(l).replace(esc(b.mark), `<mark>${esc(b.mark)}</mark>`)).join('<br>');
+      body = `<div class="w-ticket"><span class="id">${esc(b.file)}</span>${q}</div><div class="w-ask">${esc(b.ask)}</div>`;
+    } else if (b.kind === 'surprise') {
+      const card = ([f, v, w]) => `<div class="w-vc"><span>${esc(f)}</span><b>${esc(v)}</b><em>${esc(w)}</em></div>`;
+      body = `<p class="w-lead">${esc(b.lead)}</p><div class="w-vs">${card(b.a)}<span class="x">vs</span>${card(b.b)}</div>
+        ${r ? `<div class="w-ans">${b.answer.map((t, i) => i ? `<span>${esc(t)}</span>` : `<b>${esc(t)}</b>`).join('')}</div>` : reveal()}`;
+    } else if (b.kind === 'gate') {
+      body = `<div class="w-gl"><i class="dia f"></i>${esc(b.gate)}</div><h2 class="w-h">${esc(b.q)}</h2>
+        <div class="w-btns"><span class="y">Approve</span><span>Send back</span></div><p class="w-note">${esc(b.note)}</p>
+        ${r ? `<div class="w-ans"><b>${esc(b.answer)}</b></div>` : reveal("Show Kurtis's call")}`;
+    } else if (b.kind === 'context') {
+      const f = stageByNum(b.from)?.fig;
+      body = `<h2 class="w-h">${esc(b.head)}</h2><div class="w-ctx"><b>+ Your context</b><code>research/inputs/</code>
+        <div class="w-slots">${f.found.map((n) => `<span class="f">${esc(n)}</span>`).join('')}${f.waived.map((n) => `<span>${esc(n)}</span>`).join('')}</div></div><p class="w-note">${esc(b.foot)}</p>`;
+    } else if (b.kind === 'loop') {
+      body = `<h2 class="w-h">${esc(b.head)}</h2><div class="w-loop">${b.nodes.map(([k, t, sub]) => `<div class="w-node ${k}"><b>${esc(t)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`).join('')}</div><p class="w-again">↺ ${esc(b.again)}</p>`;
+    } else if (b.kind === 'target') {
+      const n = (cls, t, sub) => `<div class="w-node ${cls}"><b>${esc(t)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`;
+      body = `<p class="w-lead">Every story's code plan reads three things, fresh</p><div class="w-tf">
+        <div class="w-col">${n('', 'The map', r ? 'old app: SQLite' : 'how the old app behaves')}${n('', 'Research and spec', "this story's rules and tests")}${n(r ? 'bad' : 't', 'The target repo, today', r ? 'ADR-007: Postgres' : 'minidon-rust: empty in story 1')}</div>
+        <span class="ar">→</span>${n('a', 'Code plan', 'file by file')}<span class="ar">→</span>${n('p', 'You', r ? '⚠ map and target differ' : 'code plan gate')}</div>
+        ${r ? '<p class="w-note">Invented example. The map is not rewritten: the plan follows the target, and a person decides at the gate.</p>' : reveal()}`;
+    } else if (b.kind === 'bar') {
+      const nums = stageByNum(b.from).numbers.map(([v, l]) => [+v, l]);
+      const total = nums.reduce((t, [v]) => t + v, 0);
+      body = `<h2 class="w-h">${esc(b.head)}</h2>${r ? `<div class="w-bar">${nums.map(([v], i) => `<div class="s${i}" style="width:${(v / total) * 100}%">${v / total > 0.08 ? v : ''}</div>`).join('')}</div>
+        <div class="w-barl">${nums.map(([v, l], i) => `<span><i class="s${i}"></i><b>${v}</b> ${esc(l.replace(/^of \d+ comparisons /, ''))}</span>`).join('')}</div>
+        <p class="w-note">${total} comparisons. 292 tests, each written before its code. ${D.facts?.rust?.commits ?? ''} commits.</p>` : `<p class="w-lead big">Of <b>${total}</b> comparisons, how many matched exactly?</p>${reveal()}`}`;
+    } else if (b.kind === 'bliss') {
+      body = `<div class="w-ba"><div class="b"><h4>What is</h4>${b.before.map((t) => `<p>${esc(t)}</p>`).join('')}</div><div class="a"><h4>What could be</h4>${b.after.map((t) => `<p>${esc(t)}</p>`).join('')}</div></div>`;
+    } else if (b.kind === 'card') {
+      body = `<div class="w-card"><h3>${esc(b.head)}</h3>${b.fields.map(([k, v]) => `<div class="w-fill">${esc(k)}<span>${esc(v)}</span></div>`).join('')}</div>`;
+    }
+    const room = b.room ? `<div class="w-room"><span class="t">Your turn · ${b.room.minutes} min</span><span>${esc(b.room.text)}</span></div>` : '';
+    const proof = b.proof.length ? `<div class="w-proof"><span>See it in the run:</span>${b.proof.map((n) => { const s = stageByNum(n); return `<button class="w-pf" data-go="${s.id}" title="${esc(s.title)}">step ${esc(n)}</button>`; }).join('')}</div>` : '';
+    const notes = state.notes ? `<aside class="w-notes" aria-label="Presenter notes"><div class="nl">Say</div><p>${esc(b.say)}</p>
+      ${b.room ? `<div class="nl">The room does, ${b.room.minutes} min</div><p>${esc(b.room.text)}</p>` : ''}
+      <div class="nl">Why this beat</div><div class="w-why">${b.why.map((t) => `<span>${esc(t)}</span>`).join('')}</div></aside>` : '';
+    return `<div class="bt"><section class="w-scr ${b.kind}"><div class="w-body">${body}</div>${room}
+      <div class="w-foot">${b.act !== 'Open' ? `<span class="w-core">${esc(W.core)}</span>` : '<span></span>'}${proof}</div></section>${notes}</div>`;
+  }
+
+  function toggleNotes() {
+    state.notes = !state.notes;
+    try { localStorage.setItem('wt-notes', state.notes ? '1' : '0'); } catch {}
+    render();
+  }
+
   // ---------------------------------------------------------------- render and routing
 
   function render() {
@@ -1154,8 +1253,8 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     renderTimeline();
     renderFoot();
     const main = document.getElementById('main');
-    main.innerHTML = p.type === 'start' ? `<div class="scroll">${renderStart()}</div>` : p.type === 'end' ? `<div class="scroll">${renderEnd()}</div>` : renderStage(p.stage);
-    document.title = `${p.type === 'stage' ? `${p.stage.num} ${p.stage.title}` : p.type === 'end' ? 'Where it ends' : 'Start'} · Millwright walkthrough`;
+    main.innerHTML = p.type === 'beat' ? `<div class="scroll">${renderBeat(p.beat)}</div>` : p.type === 'start' ? `<div class="scroll">${renderStart()}</div>` : p.type === 'end' ? `<div class="scroll">${renderEnd()}</div>` : renderStage(p.stage);
+    document.title = `${p.type === 'beat' ? p.beat.title : p.type === 'stage' ? `${p.stage.num} ${p.stage.title}` : p.type === 'end' ? 'Where it ends' : 'Start'} · Millwright walkthrough`;
     state.scrollTree = true;
     afterRender();
   }
@@ -1246,7 +1345,17 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
       if (el) el.scrollIntoView({ block: 'center' });
     }
   }
-  const step = (d) => { const i = Math.max(0, Math.min(pages.length - 1, state.page + d)); if (i !== state.page) location.hash = pages[i].id; };
+  const step = (d) => {
+    const p = pages[state.page];
+    if (p.type === 'beat') {
+      if (d > 0 && p.beat.reveal && !state.rev[p.beat.key]) { state.rev[p.beat.key] = true; return render(); }
+      const nb = beats[p.index + d];
+      if (nb) location.hash = nb.id;
+      return;
+    }
+    const i = Math.max(beats.length, Math.min(pages.length - 1, state.page + d));
+    if (i !== state.page) location.hash = pages[i].id;
+  };
   const setLayer = (l) => { if (pages[state.page].type === 'stage' && state.layer !== l) { state.layer = l; rerenderLayer(); } };
 
   // ---------------------------------------------------------------- all steps
@@ -1375,7 +1484,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     ov.className = 'overlay';
     const rows = [
       ['<kbd>→</kbd> <kbd>PageDown</kbd>', 'Next step'], ['<kbd>←</kbd> <kbd>PageUp</kbd>', 'Previous step'], ['<kbd>Home</kbd> / <kbd>End</kbd>', 'Start page / where the run ends'],
-      ['<kbd>1</kbd> to <kbd>9</kbd>', 'First step of that stage'], ['<kbd>0</kbd>', 'Start page'], ['<kbd>G</kbd>', 'All steps, to go to any one'], ['<kbd>M</kbd>', 'Every state the run can be in, and where it is now'],
+      ['<kbd>1</kbd> to <kbd>9</kbd>', 'First step of that stage'], ['<kbd>0</kbd>', 'First workshop beat'], ['<kbd>G</kbd>', 'All steps, to go to any one'], ['<kbd>N</kbd>', 'Presenter notes on a workshop beat (keep them off the projector)'], ['<kbd>Space</kbd>', 'On a workshop beat: reveal, then next'], ['<kbd>M</kbd>', 'Every state the run can be in, and where it is now'],
       ['<kbd>S</kbd> <kbd>D</kbd> <kbd>C</kbd>', 'Story, Documents, Commands'], ['<kbd>Esc</kbd>', 'Close this, or go back to the Story'], ['<kbd>R</kbd>', 'Show or hide full detail: file tree, commits, commands'],
       ['<kbd>T</kbd>', 'Light or dark theme (for projectors)'], ['<kbd>F</kbd>', 'Full screen'], ['Browser Back', 'Previous place you visited. Every step has its own link.'],
     ];
@@ -1408,9 +1517,10 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
   // ---------------------------------------------------------------- events
 
   document.addEventListener('click', (e) => {
-    const t = e.target.closest('[data-fig],[data-cmd],[data-go],[data-act],[data-layer],[data-art],[data-view],[data-file],[data-copy],[data-tree],[data-pick],[data-repo],[data-ide-tab],[data-ide-open],[data-tree-mode]');
+    const t = e.target.closest('[data-rev],[data-fig],[data-cmd],[data-go],[data-act],[data-layer],[data-art],[data-view],[data-file],[data-copy],[data-tree],[data-pick],[data-repo],[data-ide-tab],[data-ide-open],[data-tree-mode]');
     if (!t) return;
     if (t.dataset.copy != null) return copy(t.dataset.copy, t);
+    if (t.dataset.rev) { state.rev[t.dataset.rev] = true; return render(); }
     if (t.dataset.fig != null) { state.figBad = !state.figBad; rerenderLayer(); return document.querySelector('[data-fig]')?.focus(); }
     if (t.dataset.cmd) { state.cmdOpen.has(t.dataset.cmd) ? state.cmdOpen.delete(t.dataset.cmd) : state.cmdOpen.add(t.dataset.cmd); return rerenderLayer(); }
     if (t.dataset.go) return go(t.dataset.go);
@@ -1450,6 +1560,8 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     if (act === 'steps') openSteps();
     if (act === 'states') openStates();
     if (act === 'help') openHelp();
+    if (act === 'notes') toggleNotes();
+    if (act === 'workshop') { const p = pages[state.page]; go(p.type === 'stage' ? beatForStage(p.stage).id : beats[0].id); }
     if (act === 'theme') toggleTheme();
     if (act === 'detail') toggleDetail();
   });
@@ -1471,11 +1583,13 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     const k = e.key;
     if (k === 'ArrowRight' || k === 'PageDown') step(1);
     else if (k === 'ArrowLeft' || k === 'PageUp') step(-1);
-    else if (k === 'Home') location.hash = 'start';
+    else if (k === 'Home') location.hash = beats[0].id;
     else if (k === 'End') location.hash = 'end';
     else if (k === 'g' || k === 'G' || k === '/') openSteps();
     else if (k === '?') openHelp();
     else if (k === 'm' || k === 'M') openStates();
+    else if (k === 'n' || k === 'N') toggleNotes();
+    else if (k === ' ' && pages[state.page].type === 'beat') step(1);
     else if (k === 'Escape') setLayer('story');
     else if (k === 's' || k === 'S') setLayer('story');
     else if ('dDeE'.includes(k)) setLayer('evidence');
@@ -1483,7 +1597,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
     else if (k === 't' || k === 'T') toggleTheme();
     else if (k === 'r' || k === 'R') toggleDetail();
     else if (k === 'f' || k === 'F') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); }
-    else if (k === '0') location.hash = 'start';
+    else if (k === '0') location.hash = beats[0].id;
     else if (/^[1-9]$/.test(k)) { const s = stages.find((x) => x.chapter === +k - 1); if (s) location.hash = s.id; else return; }
     else return;
     e.preventDefault();
@@ -1509,6 +1623,7 @@ ${(c.checks.length ? c.checks : s.gate.checks).map((k) => `<span class="ck">✓<
 
   try { if (localStorage.getItem('wt-theme') === 'dark') document.documentElement.classList.add('dark'); } catch {}
   try { state.detail = localStorage.getItem('wt-detail') === '1'; } catch {}
+  try { state.notes = localStorage.getItem('wt-notes') === '1'; } catch {}
   try { JSON.parse(sessionStorage.getItem('wt-vs') ?? '[]').forEach((r) => state.vsOpen.add(r)); } catch {}
   // After the repo opens in VS Code, offer the file itself. The link navigates first, then the label changes.
   document.addEventListener('click', (e) => {
